@@ -31,10 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 fragment1.fragment1_function();
             }
         });
-        int num = 10;
-        System.out.println(num);
-        int num2 = 20;
-        System.out.println(num2);
     }
 
     private void show() {
