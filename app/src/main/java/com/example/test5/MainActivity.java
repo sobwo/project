@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
                 fragment1.fragment1_function();
             }
         });
+        int num1 = 10;
+        System.out.println(num1);
     }
 
     private void show() {
