@@ -40,7 +40,6 @@ public class Calendar extends AppCompatActivity {
             d = Integer.toString(dayOfMonth);
             birth = y+m+d;
             Singleton.getInstance().setBirthdate(birth);
-            System.out.println("날짜: "+Singleton.getInstance().getBirthdate);
         }
     };
 

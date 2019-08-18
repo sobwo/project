@@ -23,8 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Care_list"></activity>
-        <activity android:name=".Photo">
-        </activity>
+        <activity android:name=".Photo" />
+
+        <service android:name=".alert" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.test5"
