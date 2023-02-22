@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "99230245839",
+    "firebase_url": "https://datealert-ff64a.firebaseio.com",
+    "project_id": "datealert-ff64a",
+    "storage_bucket": "datealert-ff64a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99230245839:android:0e5748b54f26a9fd",
+        "android_client_info": {
+          "package_name": "com.example.kakao_sound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99230245839-er094245fhv1lthva7nklbgfqsqfq0mo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV7xoXWCsaDq4K13uBsp1oBQ15E7J2JWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99230245839-er094245fhv1lthva7nklbgfqsqfq0mo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
