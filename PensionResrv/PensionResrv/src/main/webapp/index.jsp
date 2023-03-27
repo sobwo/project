@@ -103,13 +103,8 @@
 						color:#fff;
 						font-weight:bold;
 						border:0;
+						cursor:pointer;
 					}
-			footer{
-				width:1920px;
-				height:500px;
-				background:#444;
-			}
-			
 			a{
 				cursor:pointer;
 			}
@@ -125,8 +120,8 @@
 				</div>
 				<nav>
 					<ul>
-						<li><a href="#">공지사항</a></li>
-						<li><a href="#">실시간 예약</a></li>
+						<li><a href="board/boardNoti.jsp">공지사항</a></li>
+						<li><a href="reservation/reserv.jsp">실시간 예약</a></li>
 						<li><a href="#">예약가이드</a></li>
 						<li><a href="#">예약확인/취소</a></li>
 						<li><a href="member/memberLogin.jsp">로그인</a></li>
@@ -142,12 +137,10 @@
 						<span>oo펜션 실시간 예약사이트에 방문해주셔서 감사합니다.<br/>인터넷을 활용해 누구나 쉽고 빠르게 실시간으로 예약이 가능합니다.</span>
 					</div>
 					<div>
-						<span style="display:block;"><input id="btn" name="btn" type="button" value="예약 바로가기"></span>
+						<span style="display:block;"><input id="btn" name="btn" type="button" value="예약 바로가기" onclick="location.href='reservation/reserv.jsp'"></span>
 					</div>
 				</section>
 			</main>
 		</div>
-		<footer>
-		</footer>
 	</body>
 </html>
