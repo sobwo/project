@@ -1,0 +1,201 @@
+@charset "utf-8";
+
+.h4{
+	font-size:25px;
+	margin:20px 0;
+	font-weight:bold;
+}
+
+#reserv_wrap{
+	height:1600px;
+}
+
+#pensionInfo_wrap, #dateInfo_wrap, #roomInfo_wrap, #roomOption_wrap,#totalPrice_wrap{
+	margin-left:25px;
+	margin-bottom:80px;
+}
+#pensionInfo{
+	width:950px;
+	height:170px;
+	background:#e4e4e4;
+	border:0;
+	font-size:17px;
+	text-indent:15px;
+	line-height:25px;
+}
+
+#dateInfo{
+	width:950px;
+	height:50px;
+	background:#fff;
+	border:2px solid #e4e4e4;
+	font-size:17px;
+	line-height:50px;
+	margin-bottom:80px;
+}
+#dateInfo div{
+	display:inline-block;
+}
+
+#dateInfo #dateImage{
+	background-image:url("../images/calendar.png");
+	background-repeat: no-repeat;
+   	background-position: center;
+    background-size:cover;
+	width:40px;
+	height:40px;
+	vertical-align:top;
+	margin-top:5px;
+	margin-left:15px;
+}
+
+#begin p, #end p, #checkIn, #checkOut{
+	display:inline-block;
+}
+
+#begin{
+	margin-left:50px;
+	margin-right:150px;
+}
+
+#nights{
+	font-size:20px;
+	font-weight:bold;
+}
+
+#end{
+	margin-left:150px;
+}
+
+#checkIn, #checkOut{
+	margin-left:15px;
+}
+#checkIn input, #checkOut input{
+	border:1px solid #e4e4e4;
+	font-size:17px;
+}
+
+.roomInfo, #roomOption, #totalPrice{
+	width:950px;
+	border-top:2px solid #e4e4e4;
+	padding-top:10px;
+}
+
+.room, #option, #price{
+	background:#e4e4e4;
+	width:950px;
+	height:180px;
+	font-size:17px;
+}
+.room div, #option div, #price div{
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.roomInfo_inner, #option_inner, #price_inner{
+	height:160px;
+	margin:10px 0 10px 15px;
+}
+
+.roomImage{
+	background:#000;
+	width:130px;
+	height:100%;
+}
+
+.roomInfo_inner_m, #option_inner_m, #price_inner_m{
+	margin-left:30px;
+	height:95%;
+}
+.roomInfo_inner_m p{
+	display:block;
+	height:19px;
+	line-height:19px;
+}
+
+.roomPeople, #optionCnt{
+	margin-left:250px;
+	font-weight:bold;
+}
+
+.roomPeople > div{
+	display:block;
+}
+
+.child{
+	margin:30px 0;
+}
+
+.adult input, .adult p, .child input, .child p, .baby input, .baby p, #cnt input, #cnt p{
+	display:inline-block;
+}
+
+.adult input, .child input, .baby input, #optionCnt input{
+	margin:0 15px;
+	width:30px;
+	height:30px;
+}
+
+.adult p:nth-child(3), .child p:nth-child(3), .baby p:nth-child(3){
+	font-weight:normal;
+}  
+
+.roomBtn, #optionBtn{
+	margin-left:50px;
+	text-align:center;
+}
+
+.roomBtn input, #optionBtn input, #priceBtn input{
+	width:130px;
+	height:40px;
+	border:0;
+	border-radius:5px;
+	font-size:17px;
+	font-weight:bold;
+	color:#fff;
+	background:rgb(211, 0, 0);
+	margin-bottom:40px;
+	cursor:pointer;
+}
+
+.roomBtn p, #optionBtn p{
+	font-size:25px;
+	font-weight:bold;
+}
+
+#roomOption_wrap{
+	margin-bottom:50px;
+}
+
+#option_inner_m p{
+	line-height:140px;
+	font-size:18px;
+	font-weight:bold;
+}
+
+#optionCnt{
+	margin-left:489px;
+}
+
+#price{
+	background:#fff;
+}
+
+#price_inner_m{
+	margin-left:440px;
+	font-size:25px;
+	line-height:100px;
+}
+#price_inner_m div{
+	color:red;
+	font-size:30px;
+	font-weight:bold;
+	height:100%;
+	line-height:145px;
+}
+#priceBtn{
+	margin-left:35px;
+	margin-top:30px;
+}
+
+

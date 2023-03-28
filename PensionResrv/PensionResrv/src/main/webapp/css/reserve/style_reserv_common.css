@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+#h2{
+	font-size:30px;
+	font-weight:bold;
+	margin-bottom:50px;
+}
+
+.h4{
+	font-size:25px;
+	margin:20px 0;
+	font-weight:bold;
+}
+
+#reserv_wrap{
+	width:1000px;
+	height:1200px;
+	background:#fff;
+	padding-top:50px;
+	border:0;
+}
+
+#reserv_menu_wrap,#calendar_inner_wrap{
+	width:950px;
+	height:100px;
+	margin:0 auto;
+	border-bottom:2px solid #e4e4e4;
+	text-align:center;
+}
+
+#reserv_menu_wrap div{
+	display:inline-block;
+	width:90px;
+	height:45px;
+	border:1px solid #e4e4e4;
+	border-radius:5px;
+	color:gray;
+	line-height:45px;
+	font-size:16px;
+	font-weight:bold;
+}
+
+

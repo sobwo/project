@@ -5,7 +5,6 @@
 	height:200px;
 	background:#e4e4e4;
 	text-align:center;
-	margin-top:-150px;
 }
 #reserv_inner_wrap{
 	width:100%;
@@ -135,24 +134,50 @@ input[type='date']:valid::before {
 }
 
 
-#calender_wrap table{
+#calendar{
 	margin:0 auto;
 	font-size:20px;
 }
 
-#calender_wrap table th{
+#calendar th{
 	font-size:20px;
 	font-weight:bold;
 }
 
-#calender_wrap table td{
+#calendar #dateMove{
+	height:30px;
+}
+
+#calendar td{
 	width:220px;
 	height:130px;
 	border:1px solid #444;
 	line-height:30px;
 }
 
-#calender_wrap table #week{
+#calendar #week{
 	line-height:100px;
 	background:#e4e4e4;
 }
+
+#noti_wrap_main, #map_wrap_main{
+	width:700px;
+	height:500px;
+	padding:0 15px;
+	display:inline-block;
+}
+
+#noti_wrap_main h3, #map_wrap_main h3{
+	font-size:25px;
+	padding-bottom:10px;
+	font-weight:bold;
+}
+#map_wrap_main{
+	margin-left:125px;
+}
+#map{
+	outline:1px solid #f00;
+	width:600px;
+	height:400px;
+}
+

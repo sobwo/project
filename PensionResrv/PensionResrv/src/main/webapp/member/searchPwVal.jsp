@@ -6,36 +6,8 @@
 		<meta charset="utf-8">
 		<title>비밀번호 찾기 결과</title>
 		<link href="../css/reset.css" rel="stylesheet"/>
-		<link href="../css/style_search.css" rel="stylesheet"/>
-		<style>
-			#search_inner_wrap{
-				height:200px;
-				display: flex; 
-				justify-content: center; 
-				flex-direction: column; 
-				align-items: center; 
-			}
-			#searchVal{
-				width:100%;
-			}
-			#searchVal div span{
-				display:block;
-				margin-bottom:20px;
-			}
-		
-			#searchVal label{
-				display:inline-block;
-				width:130px;
-				font-weight:bold;
-				font-size:15px;
-			}
-			#searchVal input{
-				width:200px;
-				height:25px;
-				font-size:15px;
-			}
-			
-		</style>
+		<link href="../css/member/style_search.css" rel="stylesheet"/>
+		<link href="../css/member/style_searchPwVal.css" rel="stylesheet"/>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp" flush="false" />

@@ -1,0 +1,142 @@
+@charset "utf-8";
+
+.h4{
+	font-size:25px;
+	margin:20px 0;
+	font-weight:bold;
+}
+
+#reserv_wrap{
+	height:850px;
+}
+
+#selectRoom_wrap, #insertInfo_wrap,#payInfo_wrap{
+	margin-left:25px;
+	margin-bottom:80px;
+}
+
+#insertInfo_wrap,#payInfo_wrap{
+	display:inline-block;
+
+}
+
+#roomTable{
+	margin-top:20px;
+	border:2px solid #444;
+}
+
+#roomTable thead th{
+	font-size:17px;
+	background:gray;
+	font-weight:bold;
+	width:155px;
+	height:25px;
+	line-height:25px;
+	border:1px solid #e4e4e4;
+	color:#fff;
+}
+
+#roomTable tbody td{
+	border:1px solid #e4e4e4;
+	height:100px;
+	vertical-align:middle;
+	text-align:center;
+}
+
+#insertInfo_wrap{
+	width:450px;
+}
+
+#insertInfo_subject *, #check *{
+	display:inline-block;
+	vertical-align:middle;
+}
+
+#check{
+	margin-left:120px;
+	font-size:16px;
+}
+
+#check input{
+	width:18px;
+	height:18px;
+}
+
+#insertInfo_contents{
+	width:100%;
+	height:450px;
+	background:#e4e4e4;
+}
+
+#insertInfo_table{
+	margin-left:30px;
+	width:430px;
+	font-size:17px;
+	table-layout:fixed;
+}
+
+#insertInfo_table td{
+	width:130px;
+	height:50px;
+	line-height:50px;
+}
+
+#insertInfo_table td:first-child{
+	font-weight:bold;
+}
+#insertInfo_table td:last-child{
+	width:200px;
+}
+
+#insertInfo_table input{
+	width:100%;
+	height:30px;
+	border:1px solid #e4e4e4;
+}
+
+
+#insertInfo_table textarea{
+	width: 100%;
+    height: 40px;
+    border: none;
+    resize: none;
+}
+
+#insertInfo_table input[type='checkbox']{
+	width:20px;
+	height:20px;
+}
+
+#payInfo{
+	background:#e4e4e4;
+	width:450px;
+	height:250px;
+	padding-top:20px;
+}
+
+#payInfo table{
+	font-size:18px;
+	margin-left:30px;
+}
+
+#payInfo td{
+	height:80px;
+}
+
+#payBtn{
+	text-align:center;
+}
+
+#payBtn input{
+	display:inline-block;
+	border:0;
+	border-radius:5px;
+	width:180px;
+	height:45px;
+	background:#3498db;
+	margin:0 13px;
+	font-size:20px;
+	color:#fff;
+	cursor:pointer;
+}
+

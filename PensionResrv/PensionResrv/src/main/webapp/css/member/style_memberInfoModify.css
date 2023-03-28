@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+#reserv_wrap{
+	height:1050px;
+}
+
+#memberInfo_wrap{
+	margin-left:25px;
+	margin-bottom:100px;
+}
+
+#memberInfo{
+	width:950px;
+	height:400px;
+	background:#e4e4e4;
+	padding-top:30px;
+}
+
+#memberInfo_table{
+	margin-left:80px;
+	width:430px;
+	font-size:17px;
+}
+
+#memberInfo_table td{
+	width:130px;
+	height:50px;
+	line-height:50px;
+}
+
+#memberInfo_table td:first-child{
+	font-weight:bold;
+}
+#memberInfo_table td:last-child{
+	width:200px;
+}
+
+#memberInfo_table input{
+	width:100%;
+	height:30px;
+	border:1px solid #e4e4e4;
+}
+
+#payBtn input:last-child{
+	background:#3498db;
+}

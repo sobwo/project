@@ -3,10 +3,11 @@
 body{
 	background:#e4e4e4;
 }
+
 #header{
 	width:1910px;
 	height:120px;
-	margin-bottom:200px;
+	margin-bottom:100px;
 	border-bottom:1px solid #444;
 	background:#fff;
 }

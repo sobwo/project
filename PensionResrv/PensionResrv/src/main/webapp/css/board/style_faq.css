@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+#h2{
+	font-size:30px;
+	font-weight:bold;
+	margin-bottom:50px;
+}
+
+.h4{
+	font-size:25px;
+	margin:20px 0;
+	font-weight:bold;
+}
+
+#faq_wrap{
+	width:1000px;
+	height:1300px;
+	background:#fff;
+	padding-top:50px;
+}
+
+#faq,#question{
+	width:780px;
+	margin:0 auto;
+	margin-bottom:100px;
+}
+
+#faq{
+	margin-bottom:200px;
+}
+
+#write {
+	margin-bottom: 5px;
+	margin-left: 710px;
+}
+
+#write input {
+	font-size: 14px;
+	font-weight: bold;
+	width: 70px;
+	height: 35px;
+	cursor: pointer;
+}
+
+#write input:hover{
+	background-color: gray;
+}

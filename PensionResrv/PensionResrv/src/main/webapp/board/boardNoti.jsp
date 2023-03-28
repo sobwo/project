@@ -6,8 +6,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>oo펜션 공지사항</title>
-		<link href="../css/reset.css" rel="stylesheet">
-		<link href="../css/style_board.css" rel="stylesheet">
+		<link href="../css/board/style_board.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script>
 			$(document).ready(function(){
@@ -26,6 +25,7 @@
 			}
 			
 			function changePage(){
+				alert("");
 				var dataPerPage = $("#dataPerPage").val();
 				var fm2 = document.frm2;
 				fm2.action = "${pageContext.request.contextPath}/board/boardList.do?page=${pm.getScri().getPage()}&dataPerPage="+dataPerPage+"&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}";
@@ -110,5 +110,6 @@
 				</form>
 			</div>
 		</div>
+		<jsp:include page="../footer.jsp"></jsp:include>
 	</body>
 </html>

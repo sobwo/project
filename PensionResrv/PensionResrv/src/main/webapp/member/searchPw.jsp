@@ -6,63 +6,8 @@
 		<meta charset="utf-8">
 		<title>비밀번호 찾기</title>
 		<link href="../css/reset.css" rel="stylesheet"/>
-		<link href="../css/style_search.css" rel="stylesheet"/>
-		<style>
-		#search_wrap{
-			height:900px;
-		}
-		#search_inner_wrap{
-			height:700px;
-		}
-		#search_inner_wrap h3{
-				display:inline-block;
-				margin:30px 0 5px 10px;
-				font-weight:bold;
-				font-size:17px;
-			}
-			.searchInfo{
-				font-size:14px;	
-			}
-				
-				#searchPhone, #searchEmail{
-					width:600px;
-					margin-bottom:50px;
-				}
-				
-				#searchPhone div, #searchEmail div{
-					margin-left:30px;
-					margin-bottom:10px;
-					width:100%;
-				}
-				
-				#searchPhone span, #searchEmail span{
-					display:block;
-					margin-bottom:20px;
-				}
-				
-				#searchPhone label, #searchEmail label{
-					display:inline-block;
-					width:150px;
-					font-weight:bold;
-					font-size:15px;
-				}
-				
-				#searchPhone input[type=text], #searchEmail input[type=text]{
-					width:300px;
-					height:30px;
-					font-size:15px;
-				}
-				
-				#searchBtn{
-					width:600px;
-					text-align:center;
-				}
-				#searchBtn input{
-					width:200px;
-					background:#3498db;
-					color:#fff;
-				}
-		</style>
+		<link href="../css/member/style_search.css" rel="stylesheet"/>
+		<link href="../css/member/style_searchPw.css" rel="stylesheet"/>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp" flush="false" />

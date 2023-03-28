@@ -1,0 +1,69 @@
+@charset "utf-8";
+
+#calendar_inner_wrap{
+	height:300px;
+	margin-bottom:30px;
+}
+
+#calendar_inner_wrap #date{
+	font-size:25px;
+	padding-top:100px;
+	font-weight:bold;
+}
+
+#calendar_inner_wrap #current_date{
+	font-size:18px;
+}
+
+#payPerDate{
+	padding-top:90px;
+	float:right;
+	height:30px;
+}
+#payPerDate *{
+	display:inline-block;
+	height:17px;
+	line-height:12px;
+	vertical-align:bottom;
+}
+#payPerDate input{
+	width:17px;
+}
+
+#status_noti{
+	width:330px;
+	height:40px;
+	border:1px solid #e4e4e4;
+	border-radius:5px;
+	margin-left:45px;
+	margin-bottom:30px;
+	font-size:15px;
+	line-height:40px;
+}
+#status_noti strong:nth-child(1){
+	background:#d0fe87;
+}
+#status_noti strong:nth-child(2){
+	background:#ffd400;
+}
+#status_noti strong:nth-child(3){
+	background:#f05650;
+}
+
+#calendar{
+	font-size:15px;
+}
+
+#dateMove th a{
+	font-size:15px;
+}
+
+#calendar #week th{
+	height:30px;
+	line-height:30px;
+	border:1px solid #444;
+}
+#calendar td{
+	height:100px;
+	width:130px;
+}

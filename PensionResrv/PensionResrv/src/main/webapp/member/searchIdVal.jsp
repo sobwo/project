@@ -6,34 +6,8 @@
 		<meta charset="utf-8">
 		<title>ID 찾기 결과</title>
 		<link href="../css/reset.css" rel="stylesheet"/>
-		<link href="../css/style_search.css" rel="stylesheet"/>
-		<style>
-			#search_inner_wrap{
-				height:200px;
-				display: flex; 
-				justify-content: center; 
-				flex-direction: column; 
-				align-items: center; 
-			}
-			#searchVal{
-				width:100%;
-			}
-			#searchVal div{
-				margin:20px 0;
-			}
-			#searchVal div span{
-				display:inline-block;
-				margin-left:10px;
-				margin-right:40px;
-			}
-			#searchVal div span:nth-child(2){
-				width:100px;
-				font-weight:bold;
-			}
-			#searchVal div span:last-child{
-				font-size:13px;
-			}
-		</style>
+		<link href="../css/member/style_search.css" rel="stylesheet"/>
+		<link href="../css/member/style_searchIdVal.css" rel="stylesheet"/>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp" flush="false" />
