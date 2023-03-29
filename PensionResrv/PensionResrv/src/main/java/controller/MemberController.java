@@ -13,12 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.MemberVo;
-import domain.SearchVo;
 import service.MemberDao;
 
-/**
- * Servlet implementation class MemberController
- */
 @WebServlet("/MemberController")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -138,46 +134,6 @@ public class MemberController extends HttpServlet {
 			 
 			PrintWriter out = response.getWriter();
 			out.println("{\"value\": \""+value+"\"}");
-		}
-		
-		else if (str.equals("/member/searchId.do")){
-			RequestDispatcher rd = request.getRequestDispatcher("/member/searchId.jsp");
-			rd.forward(request, response);
-		}
-		
-		else if (str.equals("/member/searchIdAction.do")) {
-			System.out.println("searchIdAction.do 들어옴");
-			
-			ArrayList<MemberVo> value = new ArrayList<>();
-			String memberPhone = null;
-			String memberEmail = null;
-			String searchMeasure = request.getParameter("searchMeasure");
-			String memberName = request.getParameter("memberName");
-			
-			if(request.getParameter("memberPhone") == "") memberPhone = "010";
-			else memberPhone = request.getParameter("memberPhone");
-			
-			if(request.getParameter("memberEmail") == "") memberEmail = "a";
-			else memberEmail = request.getParameter("memberEmail");
-			SearchVo sv = new SearchVo();
-			MemberDao md = new MemberDao();
-			
-			sv.setSearchMeasure(searchMeasure);
-			sv.setMemberName(memberName);
-			sv.setMemberPhone(memberPhone);
-			sv.setMemberEmail(memberEmail);
-			
-			value = md.searchId(sv);
-			
-			request.setAttribute("memberValue", value);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/member/searchIdVal.jsp");
-			rd.forward(request, response);
-		}
-		
-		else if (str.equals("/member/searchPwAction.do")) {
-			System.out.println("searchPwAction.do 들어옴");
-			
 		}
 	}
 

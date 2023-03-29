@@ -32,6 +32,10 @@ public class FrontController extends HttpServlet {
 			ReservController bc = new ReservController(str);
 			bc.doGet(request, response);
 		}
+		else if(strHub.equals("search")) {
+			SearchController sc = new SearchController(str);
+			sc.doGet(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -113,54 +113,5 @@ public class MemberDao {
 		}	
 		return mv;
 	}
- 	
-	public ArrayList<MemberVo> searchId(SearchVo sv){
-		ArrayList<MemberVo> value = new ArrayList<>();
-		MemberVo mv = null;
-		String str = null;
-		String sql_val=null;
-		
-		if(sv.getSearchMeasure().equals("phone")) {
-			str = "memberPhone = ?";
-			sql_val = sv.getMemberPhone();
-		}
-		
-		else if(sv.getSearchMeasure().equals("email")) {
-			str = "memberEmail = ?";
-			sql_val = sv.getMemberEmail();
-		}
-		
-		String sql = "select memberId, TO_CHAR(joinDate,'yyyy-mm-dd') AS joinDate from member where memberName = ? and "+str;
-		System.out.println(sql);
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, sv.getMemberName());
-			pstmt.setString(2, sql_val);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				mv = new MemberVo();
-				mv.setMemberId(rs.getString("memberId"));
-				mv.setJoinDate(rs.getString("joinDate"));
-				value.add(mv);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		return value;
-	}
+
 }

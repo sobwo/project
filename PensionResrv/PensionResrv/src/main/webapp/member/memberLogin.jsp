@@ -40,8 +40,8 @@
 					</div>
 				</form>
 				<div id="searchInfo">
-					<span><input type="button" value="아이디 찾기" onclick="location.href='${pageContext.request.contextPath}/member/searchId.do'"></span>
-					<span><input type="button" value="비밀번호 찾기" onclick="location.href='${pageContext.request.contextPath}/member/searchPw.do'"></span>
+					<span><input type="button" value="아이디 찾기" onclick="location.href='${pageContext.request.contextPath}/search/searchId.do'"></span>
+					<span><input type="button" value="비밀번호 찾기" onclick="location.href='${pageContext.request.contextPath}/search/searchPw.do'"></span>
 					<span><input type="button" value="회원가입" onclick="location.href='${pageContext.request.contextPath}/member/memberJoin.do'"></span>
 				</div>
 			</div>

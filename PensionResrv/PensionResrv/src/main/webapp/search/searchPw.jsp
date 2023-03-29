@@ -16,15 +16,18 @@
 				$("input:radio[name=searchMeasure]").click(function(){
 					if($("input[name=searchMeasure]:checked").val() == "phone"){
 						$('#phoneInput').show();
+						$('#emailInput').hide();
 					}
 					else if($("input[name=searchMeasure]:checked").val() == "email"){
 						$('#emailInput').show();
+						$('#phoneInput').hide();
 					}
 				});
 			});
 			
 			function search(){
-			f	m.action ="${pageContext.request.contextPath}/member/searchPwAction.do";
+				alter("");
+				fm.action ="${pageContext.request.contextPath}/search/searchAction.do?var=2";
 				fm.method = "post";
 				fm.submit();
 				fm.reset();

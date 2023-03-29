@@ -14,17 +14,19 @@
 				$('#emailInput').hide();
 				$("input:radio[name=searchMeasure]").click(function(){
 					if($("input[name=searchMeasure]:checked").val() == "phone"){
+						$('#emailInput').hide();
 						$('#phoneInput').show();
 					}
 					else if($("input[name=searchMeasure]:checked").val() == "email"){
 						$('#emailInput').show();
+						$('#phoneInput').hide();
 					}
 				});
 			});
 			
 			function search(){
 				var fm = document.frm;
-				fm.action ="${pageContext.request.contextPath}/member/searchIdAction.do";
+				fm.action ="${pageContext.request.contextPath}/search/searchAction.do?var=1";
 				fm.method = "post";
 				fm.submit();
 				fm.reset();

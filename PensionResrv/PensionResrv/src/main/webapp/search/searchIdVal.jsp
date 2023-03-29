@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+ <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
 		<script>
 			function search(){
 				var fm = document.frm;
-				fm.action ="${pageContext.request.contextPath}/member/searchPw.jsp";
+				fm.action ="${pageContext.request.contextPath}/search/searchPw.jsp";
 				fm.method = "post";
 				fm.submit();
 				fm.reset();
@@ -30,7 +30,7 @@
 				<div id="search_inner_wrap">
 					<form name="frm">
 						<div id="searchVal">
-							<c:forEach var="mv" items="${memberValue}">
+							<c:forEach var="mv" items="${memberId}">
 								<div>
 									<input type="radio" name="searchId" value="${mv.memberId}"><span>${mv.memberId}</span><span>가입 : ${mv.joinDate}</span>
 								</div>
