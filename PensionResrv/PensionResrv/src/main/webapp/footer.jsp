@@ -7,7 +7,7 @@
 		<title>footer</title>
 	</head>
 	<body>
-		<footer style="width:1920px;height:500px;background:#444;margin-top:100px;">
+		<footer style="width:1920px;height:500px;background:#444;">
 		</footer>
 	</body>
 </html>

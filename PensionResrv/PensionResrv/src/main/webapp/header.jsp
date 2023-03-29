@@ -13,8 +13,16 @@
 		<header id="header">
 			<div id="top_nav">
 				<ul>
-					<li><a href="../member/memberLogin.jsp">로그인</a></li>
-					<li><a href="../member/memberJoin.jsp">회원가입</a></li>
+					<c:choose>
+						<c:when test="${sessionScope.memberNo == null}">
+							<li><a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a></li>
+							<li><a href="${pageContext.request.contextPath}/member/memberJoin.do">회원가입</a></li>
+						</c:when>
+						<c:otherwise>
+							<li>${sessionScope.memberName}</li>
+							<li><a href="${pageContext.request.contextPath}/member/memberLogoutAction.do">로그아웃</a></li>
+						</c:otherwise>
+					</c:choose>
 					<li><a href="../reservation/reserv_status.jsp">실시간예약</a></li>
 					<li><a href="../member/memberInfo.jsp">마이페이지</a></li>
 				</ul>

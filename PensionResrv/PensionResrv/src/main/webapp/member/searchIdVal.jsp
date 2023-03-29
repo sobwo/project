@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 	<html>
 	<head>
@@ -8,6 +9,15 @@
 		<link href="../css/reset.css" rel="stylesheet"/>
 		<link href="../css/member/style_search.css" rel="stylesheet"/>
 		<link href="../css/member/style_searchIdVal.css" rel="stylesheet"/>
+		<script>
+			function search(){
+				var fm = document.frm;
+				fm.action ="${pageContext.request.contextPath}/member/searchPw.jsp";
+				fm.method = "post";
+				fm.submit();
+				fm.reset();
+			}
+		</script>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp" flush="false" />
@@ -20,15 +30,17 @@
 				<div id="search_inner_wrap">
 					<form name="frm">
 						<div id="searchVal">
-							<div>
-								<input type="radio" name="searchVal"><span>ID</span><span>가입 : oooo년oo월oo일</span>
-							</div>
+							<c:forEach var="mv" items="${memberValue}">
+								<div>
+									<input type="radio" name="searchId" value="${mv.memberId}"><span>${mv.memberId}</span><span>가입 : ${mv.joinDate}</span>
+								</div>
+							</c:forEach>
 						</div>
 					</form>
 				</div>
 				<div id="searchBtn">
-					<span><input type="button" value="로그인하기"></span>
-					<span><input type="button" value="비밀번호찾기"></span>
+					<span><input type="button" value="로그인하기" onclick="location.href='${pageContext.request.contextPath}/member/memberLogin.do'"></span>
+					<span><input type="button" value="비밀번호찾기" onclick="search()"></span>
 				</div>
 			</div>
 		</main>

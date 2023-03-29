@@ -12,100 +12,80 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function(){});
-		var isYN = 1;
+
 		function check(){
-				var fm = document.frm;
-				
-				let memberId = $("#memberId").val();
-				let memberPw = $("#memberPw").val();
-				let memberPw2 = $("#memberPw2").val();
-				let memberName = $("#memberName").val();
-				let memberPhone = $("#memberPhone").val();
-				let memberEmail = $("#memberEmail").val();
-				let birth_yy = $("#birth_yy").val();
-				let birth_dd = $("#birth_dd").val();
-				
-				$("#idMsg").text("");
-				$("#pwMsg").text("");
-				$("#pw2Msg").text("");
-				$("#nameMsg").text("");
-				$("#phoneMsg").text("");
-				$("#emailMsg").text("");
-				$("#birthMsg").text("");
-				
-				if(!memberId) {
-					$("#idMsg").text("필수 정보입니다.");
-					$("#memberId").focus();
-					isYN = 0;
-				}
-				
-				if(!memberPw) {
-					$("#pwMsg").text("필수 정보입니다."); 
-					$("#memberPw").focus();
-					isYN = 0;
-				}
-				
-				if(!memberPw2) {
-					$("#pw2Msg").text("필수 정보입니다."); 
-					$("#memberPw2").focus();
-					isYN = 0;
-				}
-				
-				else if(memberPw!=memberPw2){
-					$("#pw2Msg").text("비밀번호가 일치하지 않습니다."); 
-					$("memberPw2").focus();
-					isYN = 0;
-				}
-				
-				if(!memberName) {
-					$("#nameMsg").text("필수 정보입니다."); 
-					$("#name").focus();
-					isYN = 0;
-				}
-				
-				if(!memberPhone) {
-					$("#phoneMsg").text("필수 정보입니다."); 
-					$("#memberPhone").focus();
-					isYN = 0;
-				}
-				else if(isNaN(memberPhone)){
-					$("#phoneMsg").text("숫자를 입력해주세요."); 
-					$("#memberPhone").focus();
-					isYN = 0;
-				}
-				
-				if(!memberEmail) {
-					$("#emailMsg").text("필수 정보입니다."); 
-					$("#memberEmail").focus();
-					isYN = 0;
-				}
-				
-				if(!birth_yy || !birth_dd) {
-					$("#birthMsg").text("필수 정보입니다.");  
-					$("#memberBirth").focus();
-					isYN = 0;
-				}
-				
-				else if((isNaN(birth_yy)) || (isNaN(birth_dd))){
-					$("#birthMsg").text("숫자를 입력해 주세요."); 
-					$("#birth_yy").focus();
-					isYN = 0;
-				}
-				
-				//IdCheck();
-				
-				if(isYN == 1){
-					alert("회원가입 완료");	
-					fm.action ="${pageContext.request.contextPath}/member/memberData.do";
-					fm.method = "post";
-					fm.submit();
-					fm.reset();
-				}
+			var isYN;
+			
+			let memberId = $("#memberId").val();
+			let memberPw = $("#memberPw").val();
+			let memberPw2 = $("#memberPw2").val();
+			let memberName = $("#memberName").val();
+			let memberPhone = $("#memberPhone").val();
+			let memberEmail = $("#memberEmail").val();
+			let birth_yy = $("#birth_yy").val();
+			let birth_dd = $("#birth_dd").val();
+			
+			$("#idMsg").text("");
+			$("#pwMsg").text("");
+			$("#pw2Msg").text("");
+			$("#nameMsg").text("");
+			$("#phoneMsg").text("");
+			$("#emailMsg").text("");
+			$("#birthMsg").text("");
+			
+			if(!memberId) {
+				$("#idMsg").text("필수 정보입니다.");
+				$("#memberId").focus();
+				isYN = 0;
+			}
+			
+			if(!memberPw) {
+				$("#pwMsg").text("필수 정보입니다."); 
+				$("#memberPw").focus();
+				isYN = 0;
+			}
+			
+			if(!memberPw2) {
+				$("#pw2Msg").text("필수 정보입니다."); 
+				$("#memberPw2").focus();
+				isYN = 0;
+			}
+			
+			else if(memberPw!=memberPw2){
+				$("#pw2Msg").text("비밀번호가 일치하지 않습니다."); 
+				$("memberPw2").focus();
+				isYN = 0;
+			}
+			
+			if(!memberName) {
+				$("#nameMsg").text("필수 정보입니다."); 
+				$("#name").focus();
+				isYN = 0;
+			}
+			
+			if(!memberPhone) {
+				$("#phoneMsg").text("필수 정보입니다."); 
+				$("#memberPhone").focus();
+				isYN = 0;
+			}
+			else if(isNaN(memberPhone)){
+				$("#phoneMsg").text("숫자를 입력해주세요."); 
+				$("#memberPhone").focus();
+				isYN = 0;
+			}
+			
+			if(!memberEmail) {
+				$("#emailMsg").text("필수 정보입니다."); 
+				$("#memberEmail").focus();
+				isYN = 0;
+			}
+			
+			else IdCheck();
 		}
 		
 		function IdCheck(){
  			let memberId = $("#memberId").val();
- 			
+ 			var isYN;
  			$.ajax({
  				url: "${pageContext.request.contextPath}/member/memberIdCheck.do",		
  				method: "POST",
@@ -115,10 +95,15 @@
 	 					if (data.value == 1){
 	 						$("#idMsg").text("중복된 ID 입니다.");
 	 						$("#memberId").focus();
-	 						isYN = 0;
 	 					}
-	 					else
-	 						isYN = 1;
+	 					else{
+ 							alert("회원가입 완료");	
+ 							var fm = document.frm;
+ 							fm.action ="${pageContext.request.contextPath}/member/memberJoinAction.do";
+ 							fm.method = "post";
+ 							fm.submit();
+ 							fm.reset();
+	 					}
  					},
  					error : function(request,status,error){
  						alert("다시 시도하시기 바랍니다.");		
