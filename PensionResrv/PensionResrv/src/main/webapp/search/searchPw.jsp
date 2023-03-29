@@ -26,7 +26,7 @@
 			});
 			
 			function search(){
-				alter("");
+				var fm = document.frm;
 				fm.action ="${pageContext.request.contextPath}/search/searchAction.do?var=2";
 				fm.method = "post";
 				fm.submit();
