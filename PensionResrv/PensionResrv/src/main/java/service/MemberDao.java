@@ -51,7 +51,7 @@ public class MemberDao {
 	
  	public int memberIdCheck(String memberId){
 		int value=0;
-		String sql="select count(*) as cnt from member where memberid=?";
+		String sql="select count(*) as cnt from member where memberid=? and delYn='N'";
 		PreparedStatement pstmt=null;
 		ResultSet rs =null;
 		try {
@@ -78,7 +78,7 @@ public class MemberDao {
 
 	public MemberVo memberLogin(String memberId, String memberPw) {
 		MemberVo mv = null;
-		String sql = "select * from member where memberId =? and memberPw = ?";
+		String sql = "select * from member where memberId =? and memberPw = ? and delYn='N'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -112,6 +112,100 @@ public class MemberDao {
 			}
 		}	
 		return mv;
+	}
+	
+	public MemberVo selectInfo(int memberNo){
+		MemberVo mv = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "select * from member where memberNo=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				mv = new MemberVo();
+				mv.setMemberId(rs.getString("memberId"));
+				mv.setMemberPw(rs.getString("memberPw"));
+				mv.setMemberName(rs.getString("memberName"));
+				mv.setMemberBirth(rs.getString("memberBirth"));
+				mv.setMemberPhone(rs.getString("memberPhone"));
+				mv.setMemberEmail(rs.getString("memberEmail"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}	
+		return mv;
+	}
+	
+	public int modifyInfo(MemberVo mv) {
+		int value = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = "update member set memberPw=?,membername=?,memberBirth=?,memberPhone=?,memberEmail=? where memberNo=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mv.getMemberPw());
+			pstmt.setString(2, mv.getMemberName());
+			pstmt.setString(3, mv.getMemberBirth());
+			pstmt.setString(4, mv.getMemberPhone());
+			pstmt.setString(5, mv.getMemberEmail());
+			pstmt.setInt(6, mv.getMemberNo());
+			
+			value = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return value;
+	}
+	
+	public int quitMember(int memberNo) {
+		int value = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = "update member set delYn='Y' where memberNo=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			
+			value = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return value;
 	}
 
 }

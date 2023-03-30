@@ -61,16 +61,18 @@ input[type='date']:valid::before {
 	left:52%;
 	text-align:center;
 }
-
-#adult,#child{
+#pNum_popup{
+	height:400px;
+}
+#adult,#child,#baby{
 	height:50px;
 }
 
-#adult p, #child p,#adult input, #child input{
+#adult p, #child p,#adult input, #child input,#baby p, #baby input{
 	display:inline-block;
 	font-size:20px;
 }
-#adult input, #child input{
+#adult input, #child input,#baby input{
 	width:30px;
 	height:30px;
 	border:1px solid #444;
@@ -79,9 +81,14 @@ input[type='date']:valid::before {
 	margin:0 15px;
 }
 
-#adult_value,#child_value{
+#adult_value,#child_value,#baby_value{
 	margin-left:30px;
 }
+
+#adult_value:focus, #child_value:focus,#baby_value:focus{
+	outline:none;
+}
+
 .btn_check, .btn_close, .btn_close2{
 	width:100px;
 	height:50px;
@@ -93,12 +100,29 @@ input[type='date']:valid::before {
 
 #roomName_popup{
 	width:350px;
-	height:300px;
+	height:350px;
 	left:70%;
 }
 
 #roomName_popup table{
-	margin:30px auto;
+	margin:30px auto 0 auto;
+}
+
+#roomName_popup table th{
+	width:100px;
+	height:50px;
+	background:#e4e4e4;
+	font-size:15px;
+	font-weight:bold;
+	border:1px solid gray;
+	vertical-align:middle;
+}
+
+#roomName_popup table td{
+	height:30px;
+	font-size:15px;
+	vertical-align:middle;
+	border:1px solid #e4e4e4;
 }
 			
 #reservBtn input{

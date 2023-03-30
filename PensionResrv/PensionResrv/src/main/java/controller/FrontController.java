@@ -28,7 +28,7 @@ public class FrontController extends HttpServlet {
 			BoardController bc = new BoardController(str);
 			bc.doGet(request, response);
 		}
-		else if(strHub.equals("reserv")) {
+		else if(strHub.equals("reservation")) {
 			ReservController bc = new ReservController(str);
 			bc.doGet(request, response);
 		}

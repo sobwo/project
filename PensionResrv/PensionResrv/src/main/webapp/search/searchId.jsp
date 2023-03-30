@@ -51,7 +51,7 @@
 								<span class="searchInfo">회원정보에 등록한 휴대전화 번호와 입력한 휴대전화 번호가 같아야 합니다.</span>
 							</div>
 							<div id="phoneInput">
-								<span><label>이름</label><input type="text" name="memberName"></span>
+								<span><label>이름</label><input type="text" name="memberName_phone"></span>
 								<span><label>휴대전화 번호</label><input type="text" name="memberPhone"></span>
 							</div>
 						</div>
@@ -63,7 +63,7 @@
 								<span class="searchInfo">회원정보에 등록한 이메일 주소와 입력한 이메일 주소가 같아야 합니다.</span>
 							</div>
 							<div id="emailInput">
-								<span><label>이름</label><input type="text" name="memberName"></span>
+								<span><label>이름</label><input type="text" name="memberName_email"></span>
 								<span><label>이메일 주소</label><input type="text" name="memberEmail"></span>
 							</div>
 						</div>

@@ -34,7 +34,6 @@ public class SearchDao {
 		}
 		
 		String sql = "select memberId, TO_CHAR(joinDate,'yyyy-mm-dd') AS joinDate from member where memberName = ? and "+str;
-		System.out.println(sql);
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -82,14 +81,16 @@ public class SearchDao {
 			sql_val = sv.getMemberEmail();
 		}
 		
-		String sql = "select count(*) from member where memberId=? and memberName = ? and "+str;
-		System.out.println(sql);
+		String sql = "select count(*) as cnt from member where memberId=? and memberName = ? and "+str;
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, sv.getMemberId());
 			pstmt.setString(2, sv.getMemberName());
+			
+			
 			pstmt.setString(3, sql_val);
 			
 			rs = pstmt.executeQuery();
@@ -123,8 +124,9 @@ public class SearchDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memberId);
-			pstmt.setString(2, memberPw);
+			pstmt.setString(1, memberPw);
+			pstmt.setString(2, memberId);
+			
 			
 			value = pstmt.executeUpdate();
 			

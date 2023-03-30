@@ -8,11 +8,79 @@
 		<title>예약페이지</title>
 		<link href="../css/reserve/style_reserv_main.css" rel="stylesheet"/>
 		<link href="../css/board/style_board.css" rel="stylesheet"/>
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#adult_minusBtn').click(function(){
+					var adult_minus = $('#adult_value').val();
+					if(adult_minus > 0){
+						adult_minus = parseInt(adult_minus)-1;
+						$('#adult_value').attr("value",adult_minus);
+					}
+				});
+				
+				$('#adult_plusBtn').click(function(){
+					var adult_plus = $('#adult_value').val();
+					adult_plus = parseInt(adult_plus)+1;
+					$('#adult_value').attr("value",adult_plus);
+				});
+				
+				$('#child_minusBtn').click(function(){
+					var child_minus = $('#child_value').val();
+					if(child_minus > 0){
+						child_minus = parseInt(child_minus)-1;
+						$('#child_value').attr("value",child_minus);
+					}
+				});
+				
+				$('#child_plusBtn').click(function(){
+					var child_plus = $('#child_value').val();
+					child_plus = parseInt(child_plus)+1;
+					$('#child_value').attr("value",child_plus);
+				});
+				
+				$('#baby_minusBtn').click(function(){
+					var baby_minus = $('#baby_value').val();
+					if(baby_minus > 0){
+						baby_minus = parseInt(baby_minus)-1;
+						$('#baby_value').attr("value",baby_minus);
+					}
+				});
+				
+				$('#baby_plusBtn').click(function(){
+					var baby_plus = $('#baby_value').val();
+					baby_plus = parseInt(baby_plus)+1;
+					$('#baby_value').attr("value",baby_plus);
+				});
+				
+				$(document).on("click", "#selectRoom", function(){
+					var roomName = $(this).val();
+					
+					$('#rName').text(roomName);
+					$('#roomName_popup').hide();
+				});
+			});
+			
+			function selectPeople(){
+				let adult_value = $('#adult_value').val();
+				let child_value = $('#child_value').val();
+				let baby_value = $('#baby_value').val();
+				$('#pNum').text("성인"+adult_value+"명/아동"+child_value+"명/유아"+baby_value);
+				$('#pNum_popup').hide();
+			}
+			
+			function searchRoom(){
+				var fm = document.frm;
+				fm.action="${pageContext.request.contextPath}/reservation/reservAction.do";
+				fm.method="post";
+				fm.submit();
+			}
+		</script>
 	</head>
 	<body onload="autoReload();" style="background:#fff;">
 		<jsp:include page="../header.jsp"/>
 		<main>
-			<form>
+			<form name="frm">
 				<div id="reserv_wrap">
 					<div id="reserv_inner_wrap">
 						<div id="checkIn">
@@ -36,19 +104,28 @@
 						</div>
 						<div id="pNum_popup" style="display:none; border:1px solid black;">
 							<div id="adult">
-								<input type="button" value="&#45;">
+								<input id="adult_minusBtn" type="button" value="&#45;">
 								<p>성인<p>
-								<input type="button" value="&#43;">
-								<p id="adult_value">0</p>
+								<input id="adult_plusBtn" type="button" value="&#43;">
+								<input id="adult_value" type="text" name="adult" value="0" readonly
+										style="	border:0;"/>
 							</div>
 							<div id="child">
-								<input type="button" value="&#45;">
+								<input id="child_minusBtn" type="button" value="&#45;">
 								<p>아동<p>
-								<input type="button" value="&#43;">
-								<p id="child_value">0</p>
+								<input id="child_plusBtn" type="button" value="&#43;">
+								<input id="child_value" type="text" name="child" value="0" readonly
+										style="	border:0;"/>
+							</div>
+							<div id="baby">
+								<input id="baby_minusBtn" type="button" value="&#45;">
+								<p>아동<p>
+								<input id="baby_plusBtn" type="button" value="&#43;">
+								<input id="baby_value" type="text" name="baby" value="0" readonly
+										style="	border:0;"/>
 							</div>
 							<div id="popup_btn" style="display:block;">
-								<input type="button" value="확인" class="btn_check">
+								<input type="button" value="확인" class="btn_check" onclick="selectPeople()">
 								<input type="button" value="취소" class="btn_close">
 							</div>
 						</div>	
@@ -60,16 +137,18 @@
 								<thead>
 									<tr>
 										<th>방이름</th>
-										<th>수용인원</th>
-										<th>기타내용</th>
+										<th>수용인원<br/>(기준/최대)</th>
+										<th>가격</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<th>1</th>
-										<th>1</th>
-										<th>1</th>
-									</tr>
+									<c:forEach var="rlist" items="${rlist}">
+										<tr>
+											<td><input type="button" id="selectRoom" value="${rlist.roomName}"/></td>
+											<td>${rlist.capacity}</td>
+											<td>${rlist.price}</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 							<div id="popup_btn2" style="display:block;">
@@ -77,45 +156,12 @@
 							</div>
 						</div>
 						<div id="reservBtn">
-							<input type="button" value="검색" onclick=>
+							<input type="button" value="검색" onclick="searchRoom()">
 						</div>
 					</div>
 				</div>
 			</form>
-			<div id="reserv_status_wrap">
-				<div id="reserv_status">
-					<h3>실시간 예약 현황</h3>
-				</div>
-				<div id="calender_wrap">
-					<div id="date">
-						<h3>날짜(연/월/일)</h3>
-					</div>
-					<table id="calendar">
-						<thead>
-							<tr id="dateMove">
-								<th>
-									<a id="before" href="javascript:beforem()"></a>
-								</th>
-								<th colspan="5" align="center">
-									<div id="yearmonth"></div>
-								</th>
-								<th>
-									<a id="next" href="javascript:nextm()"></a>
-								</th>
-							</tr>
-							<tr id="week">
-								<th> 월 </th>
-								<th> 화 </th>
-								<th> 수 </th>
-								<th> 목 </th>
-								<th> 금 </th>
-								<th><font color="#009de0">토</font></th>
-								<th><font color="#ed5353">일</font></th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-			</div>
+			<div style="height:200px;"></div>
 			<div id="noti_wrap_main">
 				<h3>공지사항</h3><br/>
 				<table id="main_board" style="margin:0;">

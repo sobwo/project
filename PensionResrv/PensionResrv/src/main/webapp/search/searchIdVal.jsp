@@ -30,9 +30,9 @@
 				<div id="search_inner_wrap">
 					<form name="frm">
 						<div id="searchVal">
-							<c:forEach var="mv" items="${memberId}">
+							<c:forEach var="vi" items="${valueId}">
 								<div>
-									<input type="radio" name="searchId" value="${mv.memberId}"><span>${mv.memberId}</span><span>가입 : ${mv.joinDate}</span>
+									<input type="radio" name="searchId" value="${vi.memberId}"><span>${vi.memberId}</span><span>가입 : ${vi.joinDate}</span>
 								</div>
 							</c:forEach>
 						</div>

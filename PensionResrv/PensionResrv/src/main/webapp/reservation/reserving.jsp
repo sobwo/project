@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,6 +8,52 @@
 		<title>oo펜션 실시간 예약하기</title>
 		<link href="../css/reserve/style_reserv_common.css" rel="stylesheet"/>
 		<link href="../css/reserve/style_reserving.css" rel="stylesheet"/>
+				<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#adult_minusBtn').click(function(){
+					var adult_minus = $('#adult_value').val();
+					if(adult_minus > 0){
+						adult_minus = parseInt(adult_minus)-1;
+						$('#adult_value').attr("value",adult_minus);
+					}
+				});
+				
+				$('#adult_plusBtn').click(function(){
+					var adult_plus = $('#adult_value').val();
+					adult_plus = parseInt(adult_plus)+1;
+					$('#adult_value').attr("value",adult_plus);
+				});
+				
+				$('#child_minusBtn').click(function(){
+					var child_minus = $('#child_value').val();
+					if(child_minus > 0){
+						child_minus = parseInt(child_minus)-1;
+						$('#child_value').attr("value",child_minus);
+					}
+				});
+				
+				$('#child_plusBtn').click(function(){
+					var child_plus = $('#child_value').val();
+					child_plus = parseInt(child_plus)+1;
+					$('#child_value').attr("value",child_plus);
+				});
+				
+				$('#baby_minusBtn').click(function(){
+					var baby_minus = $('#baby_value').val();
+					if(baby_minus > 0){
+						baby_minus = parseInt(baby_minus)-1;
+						$('#baby_value').attr("value",baby_minus);
+					}
+				});
+				
+				$('#baby_plusBtn').click(function(){
+					var baby_plus = $('#baby_value').val();
+					baby_plus = parseInt(baby_plus)+1;
+					$('#baby_value').attr("value",baby_plus);
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp"/>
@@ -27,9 +74,9 @@
 				<div id="pensionInfo_wrap">
 					<h4 class="h4">예약정보</h4>
 					<div id="pensionInfo">
-						<br/><p>주소 :</p><br/>
-						<p>연락처 :</p><br/>
-						<p>결제방법 :</p>
+						<br/><p>주소 : 전라북도 전주시 덕진구 덕진동</p><br/>
+						<p>연락처 : 010-1234-5678</p><br/>
+						<p>결제방법 : 카드결제, 무통장입금 (계좌번호 : 농협 0000-0000-0000)</p>
 					</div>
 				</div>
 				<div id="dateInfo_wrap">
@@ -43,12 +90,12 @@
 									data-placeholder="숙박 시작일" 
 									required
 					 				aria-required="true"
-					 				value={startDateValue}
+					 				value="${rv.checkIn}"
 					  				onChange={StartDateValueHandler}/>
 			  				</div>
 				  		</div>
 				  		<div id="nights">
-				  			<p>0박</p>
+				  			<p>${night}박</p>
 				  		</div>
 				  		<div id="end">
 				  			<p>체크아웃</p>
@@ -57,7 +104,7 @@
 									data-placeholder="숙박 종료일" 
 									required
 				 					aria-required="true"
-				 					value={startDateValue}
+				 					value="${rv.checkOut}"
 				  					onChange={StartDateValueHandler}>
 							</div>
 						</div>
@@ -66,41 +113,46 @@
 				<div id="roomInfo_wrap">
 					<h4 class="h4">객실정보</h4>
 					<div class="roomInfo">
-						<div class="room">
-							<div class="roomInfo_inner">
-								<div class="roomImage"></div>
-								<div class="roomInfo_inner_m">
-									<p style="background:#20de07; color:#fff;">예약 가능</p><br/>
-									<p>101호</p><br/>
-									<p>기준 4명, 최대 6명</p><br/>
-									<p>거실+객실 / 32평</p>
+						<c:forEach var="rlist" items="${rlist}">
+							<div class="room">
+								<div class="roomInfo_inner">
+									<div class="roomImage"></div>
+									<div class="roomInfo_inner_m">
+										<p style="background:#20de07; color:#fff;">예약 가능</p><br/>
+										<p>${rlist.roomName}</p><br/>
+										<p>${rlist.capacity}</p><br/>
+										<p>${rlist.numOfRoom} / ${rlist.sqft}</p>
+									</div>
+									<div class="roomPeople">
+										<div class="adult">
+											<p>성인<p>
+											<input id="adult_minusBtn" type="button" value="&#45;">
+											<input id="adult_value" type="text" name="adult" value="${rv.adultNum}" readonly
+													style="	border:0;"/>
+											<input id="adult_plusBtn" type="button" value="&#43;">
+										</div>
+										<div class="child">
+											<p>아동<p>
+											<input id="child_minusBtn" type="button" value="&#45;">
+											<input id="child_value" type="text" name="child" value="${rv.childNum}" readonly
+													style="	border:0;"/>
+											<input id="child_plusBtn" type="button" value="&#43;">
+										</div>
+										<div class="baby">
+											<p>유아<p>
+											<input id="baby_minusBtn" type="button" value="&#45;">
+											<input id="baby_value" type="text" name="baby" value="${rv.babyNum}" readonly
+													style="	border:0;"/>
+											<input id="baby_plusBtn" type="button" value="&#43;">
+										</div>
+									</div>
+									<div class="roomBtn">
+											<input type="button" value="선택">
+											<p>200,000원</p>
+									</div>								
 								</div>
-								<div class="roomPeople">
-									<div class="adult">
-										<p>성인<p>
-										<input type="button" value="&#45;">
-										<p>0</p>
-										<input type="button" value="&#43;">
-									</div>
-									<div class="child">
-										<p>아동<p>
-										<input type="button" value="&#45;">
-										<p>0</p>
-										<input type="button" value="&#43;">
-									</div>
-									<div class="baby">
-										<p>유아<p>
-										<input type="button" value="&#45;">
-										<p>0</p>
-										<input type="button" value="&#43;">
-									</div>
-								</div>
-								<div class="roomBtn">
-										<input type="button" value="선택">
-										<p>200,000원</p>
-								</div>								
 							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 				<div id="roomOption_wrap">

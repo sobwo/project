@@ -23,8 +23,8 @@
 							<li><a href="${pageContext.request.contextPath}/member/memberLogoutAction.do">로그아웃</a></li>
 						</c:otherwise>
 					</c:choose>
-					<li><a href="../reservation/reserv_status.jsp">실시간예약</a></li>
-					<li><a href="../member/memberInfo.jsp">마이페이지</a></li>
+					<li><a href="${pageContext.request.contextPath}/reservation/reserv_status.jsp">실시간예약</a></li>
+					<li><a href="${pageContext.request.contextPath}/member/memberInfo.do">마이페이지</a></li>
 				</ul>
 			</div>
 			<div id="logo_menu">
@@ -32,12 +32,12 @@
 			</div>
 			<nav id="main_nav">
 				<ul>
-					<li><a href="../board/boardNoti.jsp">공지사항</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/boardNoti.jsp">공지사항</a></li>
 					<li><a href="#">객실 안내</a></li>
-					<li><a href="../reservation/reserv_status.jsp">실시간 예약</a></li>
-					<li><a href="../reservation/reserv_check.jsp">예약확인/취소</a></li>
+					<li><a href="${pageContext.request.contextPath}/reservation/reserv_status.jsp">실시간 예약</a></li>
+					<li><a href="${pageContext.request.contextPath}/reservation/reserv_check.jsp">예약확인/취소</a></li>
 					<li><a href="#">오시는길</a></li>
-					<li><a href="../board/faq.jsp">FAQ</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/faq.jsp">FAQ</a></li>
 				</ul>
 			</nav>
 		</header>

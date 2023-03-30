@@ -37,17 +37,21 @@ public class SearchController extends HttpServlet {
 			
 			ArrayList<MemberVo> valueId = new ArrayList<>();
 			int valuePwCheck = 0;
+			String searchMeasure = request.getParameter("searchMeasure");
 			String memberPhone = null;
 			String memberEmail = null;
+			String memberName = null;
 			String memberId=null;
-			String searchMeasure = request.getParameter("searchMeasure");
-			String memberName = request.getParameter("memberName");
 			
-			if(request.getParameter("memberPhone") == "") memberPhone = "010";
-			else memberPhone = request.getParameter("memberPhone");
+			if(request.getParameter("searchMeasure").equals("phone")) {
+				memberPhone = request.getParameter("memberPhone");
+				memberName = request.getParameter("memberName_phone"); 
+			}
 			
-			if(request.getParameter("memberEmail") == "") memberEmail = "a";
-			else memberEmail = request.getParameter("memberEmail");
+			else if(request.getParameter("searchMeasure").equals("email")) {
+				memberEmail = request.getParameter("memberEmail");
+				memberName = request.getParameter("memberName_email"); 
+			}
 			
 			SearchVo sv = new SearchVo();
 			SearchDao sd = new SearchDao();
@@ -56,21 +60,28 @@ public class SearchController extends HttpServlet {
 			sv.setMemberName(memberName);
 			sv.setMemberPhone(memberPhone);
 			sv.setMemberEmail(memberEmail);
-
+			
 			if(var==1) { // ID찾기
 				System.out.println("아이디 찾기 들어옴");
-				valueId = sd.searchId(sv); 
-				request.setAttribute("memberId", valueId);
+				valueId = sd.searchId(sv);
+				request.setAttribute("valueId", valueId);
 				RequestDispatcher rd = request.getRequestDispatcher("/search/searchIdVal.jsp");
 				rd.forward(request, response);
 			}
 			
 			if(var==2) { //비밀번호 찾기
 				System.out.println("비밀번호 찾기 들어옴");
-				memberId = request.getParameter("memberId");
+				if(request.getParameter("searchMeasure").equals("phone")) {
+					memberId = request.getParameter("memberId_phone"); 
+				}
+				
+				else if(request.getParameter("searchMeasure").equals("email")) {
+					memberId = request.getParameter("memberId_email"); 
+				}
+				
 				sv.setMemberId(memberId);
 				valuePwCheck = sd.searchPwCheck(sv);
-				
+	
 				if(valuePwCheck == 1) {
 					request.setAttribute("memberId", memberId);
 					RequestDispatcher rd = request.getRequestDispatcher("/search/searchPwVal.jsp");
@@ -103,8 +114,11 @@ public class SearchController extends HttpServlet {
 			value = sd.searchPwReset(memberId, memberPw);
 			
 			if(value==1) {
-				String path = request.getContextPath()+"/member/memberLogin.do";
-			 	response.sendRedirect(path);
+				response.setContentType("text/html; charset=UTF-8");
+			    PrintWriter out = response.getWriter();
+			    out.println("<script>alert('비밀번호가 변경되었습니다.'); location.href='"+request.getContextPath()+"/member/memberLogin.do';</script>");
+			    out.flush();
+			    return ;
 			}
 		}
 	}

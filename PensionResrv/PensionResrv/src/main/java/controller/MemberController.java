@@ -54,11 +54,7 @@ public class MemberController extends HttpServlet {
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("memberNo", memberNo);
-				session.setAttribute("memberPw", memberPw);
 				session.setAttribute("memberName", memberName);
-				session.setAttribute("memberBirth", memberBirth);
-				session.setAttribute("memberPhone", memberPhone);
-				session.setAttribute("memberEmail", memberEmail);
 				
 				response.sendRedirect(request.getContextPath()+"/");
 			}
@@ -69,12 +65,7 @@ public class MemberController extends HttpServlet {
 			System.out.println("memberLogoutAction.do 들어옴");
 			HttpSession session = request.getSession();
 			session.removeAttribute("memberNo");
-			session.removeAttribute("memberId");
-			session.removeAttribute("memberPw");
 			session.removeAttribute("memberName");
-			session.removeAttribute("memberBirth");
-			session.removeAttribute("memberPhone");
-			session.removeAttribute("memberEmail");
 			session.invalidate();
 				
 			response.sendRedirect(request.getContextPath()+"/");
@@ -135,11 +126,93 @@ public class MemberController extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println("{\"value\": \""+value+"\"}");
 		}
+		
+		else if (str.equals("/member/memberInfo.do")) {
+			System.out.println("memberInfo.do 들어옴");
+			HttpSession session = request.getSession();
+			int memberNo = (int) session.getAttribute("memberNo");
+			MemberVo mv = new MemberVo();
+			MemberDao md = new MemberDao();
+			
+			mv = md.selectInfo(memberNo);
+			
+			request.setAttribute("mv", mv);
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/member/memberInfo.jsp");
+			rd.forward(request, response);
+		}
+		
+		else if(str.equals("/member/memberInfoModifyAction.do")) {
+			System.out.println("memberInfoModifyAction.do 들어옴");
+			int value = 0;
+			HttpSession session = request.getSession();
+			int memberNo = (int) session.getAttribute("memberNo");
+			
+			String memberPw = request.getParameter("memberPw");
+			String memberName = request.getParameter("memberName");
+			String memberBirth = request.getParameter("memberBirth");
+			String memberPhone = request.getParameter("memberPhone");
+			String memberEmail = request.getParameter("memberEmail");
+			
+			MemberVo mv = new MemberVo();
+			mv.setMemberNo(memberNo);
+			mv.setMemberPw(memberPw);
+			mv.setMemberName(memberName);
+			mv.setMemberBirth(memberBirth);
+			mv.setMemberPhone(memberPhone);
+			mv.setMemberEmail(memberEmail);
+			
+			MemberDao md = new MemberDao();
+			
+			value = md.modifyInfo(mv);
+			
+			if(value == 1) {
+				response.setContentType("text/html; charset=UTF-8");
+			    PrintWriter out = response.getWriter();
+			    out.println("<script>alert('비밀번호가 변경되었습니다.'); location.href='"+request.getContextPath()+"/member/memberInfo.do';</script>");
+			    out.flush();
+			    return ;
+			}
+			else {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+			    out.println("<script>alert('비밀번호가 변경이 불가합니다.'); history.go(-1);</script>");
+			    out.flush();
+			    return ;
+			}
+		}
+		
+		else if(str.equals("/member/memberQuitAction.do")) {
+			int value = 0;
+			HttpSession session = request.getSession();
+			int memberNo = (int) session.getAttribute("memberNo");
+			
+			MemberDao md = new MemberDao();
+			value=md.quitMember(memberNo);
+			
+			if(value==1) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+			    out.println("<script>alert('회원 탈퇴 되었습니다.');location.href='"+request.getContextPath()+"/member/memberLogoutAction.do'</script>");
+			    out.flush();
+			    return ;
+			}
+			
+			else {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+			    out.println("<script>alert('회원탈퇴가 불가합니다.'); history.go(-1);</script>");
+			    out.flush();
+			    return ;
+			}
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	
 
 }

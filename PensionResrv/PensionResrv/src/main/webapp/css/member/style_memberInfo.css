@@ -47,6 +47,14 @@
     border: none;
     resize: none;
 }
+#memberInfo_table input{
+	font-weight:normal;
+	font-size:18px;
+	background:#e4e4e4;
+}
+#memberInfo_table input:focus{
+	outline:none;
+}
 
 #memberInfo_table input[type='checkbox']{
 	width:20px;
