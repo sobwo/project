@@ -65,7 +65,7 @@ public class ReservController extends HttpServlet {
     		else baby = Integer.parseInt(request.getParameter("baby"));
     		if(request.getParameter("roomName")==null) roomName = "0호";
     		else roomName = request.getParameter("roomName");
-    		
+    		System.out.println(roomName);
     		int roomNo = rd.selectRoomNo(roomName);
     		
     		rv.setCheckIn(checkIn);

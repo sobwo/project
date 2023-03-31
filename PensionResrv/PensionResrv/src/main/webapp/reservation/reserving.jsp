@@ -10,9 +10,19 @@
 		<link href="../css/reserve/style_reserving.css" rel="stylesheet"/>
 				<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script>		
-			$(document).ready(function(){
-				${}
+			$(document).ready(function(){ //확인해볼것
+// 				var length = $('input[id=roomNameCheck]').length;
+// 				alert(length);
+// 				alert($('input[name=roomNameCheck]').val());
+// 				alert($('input[id=roomNameCheck]').siblings("input[type='button']").val());
+				
+// 				for(var i=0;i<length;i++){
+// 					if($('input[name=roomNameCheck]').eq(i).val()==${rv.roomNo}){
+// 						$('input[name=roomNameCheck]').eq(i).siblings("input[type='button']").trigger("click");
+// 					}
+// 				}
 			});
+			
 			$(document).on("click","#adult_minusBtn",function(){
 				var adult_minus = $(this).closest("div").find("input[type='text']").val();
 				if(adult_minus > 0){
@@ -57,7 +67,27 @@
 			});
 			
 			$(document).on("click","#rBtn",function(){
-				check();
+				var totalPrice = $("input[name=totalPrice]").val();
+				var rBtn_option = $(this).closest("div").find("input[type='text']").val();
+
+				var price = $(this).siblings("p").text();
+				var index = price.indexOf("원");
+				price = price.substring(0,index);
+				
+				if(rBtn_option=="1"){
+					totalPrice = parseInt(totalPrice) + parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','rgb(211, 0, 0)');
+					$(this).closest("div").find("input[type='text']").attr("value","2");
+				}
+				else if(rBtn_option=="2"){
+					totalPrice = parseInt(totalPrice) - parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','#3498db');
+					$(this).closest("div").find("input[type='text']").attr("value","1"); 
+				}
 			});
 			
 			$(document).on("click","#option_minusBtn",function(){
@@ -102,52 +132,28 @@
 				
 				if(oBtn_option=="1"){
 					totalPrice = parseInt(totalPrice) + parseInt(price);
-					
 					$("input[name=totalPrice]").attr("value",totalPrice);
 					$(this).css('background-color','rgb(211, 0, 0)');
 					$(this).closest("div").find("input[type='text']").attr("value","2");
 				}
 				
 				else if(oBtn_option=="2"){
+					$("#option_value").attr("value","0");  // 동적할당시 변경 필요
+					$("#optionPrice").text("0원"); // 동적할당시 변경 필요
 					totalPrice = parseInt(totalPrice) - parseInt(price);
-					
 					$("input[name=totalPrice]").attr("value",totalPrice);
 					$(this).css('background-color','#3498db');
 					$(this).closest("div").find("input[type='text']").attr("value","1"); 
 				}
 			});
-			
-			
+					
 			function pay(){
 				var fm = document.frm;
 				fm.action="${pageContext.request.contextPath}/reservation/reserving_next.do";
 				fm.method="post";
 				fm.submit();
 			}
-			
-			function check(){
-				var totalPrice = $("input[name=totalPrice]").val();
-				var rBtn_option = $(this).closest("div").find("input[type='text']").val();
 
-				var price = $(this).siblings("p").text();
-				var index = price.indexOf("원");
-				price = price.substring(0,index);
-				
-				if(rBtn_option=="1"){
-					totalPrice = parseInt(totalPrice) + parseInt(price);
-					
-					$("input[name=totalPrice]").attr("value",totalPrice);
-					$(this).css('background-color','rgb(211, 0, 0)');
-					$(this).closest("div").find("input[type='text']").attr("value","2");
-				}
-				else if(rBtn_option=="2"){
-					totalPrice = parseInt(totalPrice) - parseInt(price);
-					
-					$("input[name=totalPrice]").attr("value",totalPrice);
-					$(this).css('background-color','#3498db');
-					$(this).closest("div").find("input[type='text']").attr("value","1"); 
-				}
-			}
 		</script>
 	</head>
 	<body>
@@ -157,7 +163,7 @@
 			<form name="frm">
 				<div id="reserv_menu_wrap">
 					<div>
-						<a href="${pageContext.request.contextPath}/reservation/reserv_status.do"">예약 현황</a>
+						<a href="${pageContext.request.contextPath}/reservation/reserv_status.do">예약 현황</a>
 					</div>
 					<div style="margin:0 40px; background:rgba(230, 34, 34, 0.37);">
 						<a href="${pageContext.request.contextPath}/reservation/reserveAction.do">예약하기</a>
@@ -203,8 +209,6 @@
 				  					onChange={StartDateValueHandler}>
 							</div>
 						</div>
-						<input type="text" id="roomNameCheck" name="roomNameCheck" value="${rv.roomNo}"
-								style="display:none"/>
 					</div>
 				</div>
 				<div id="roomInfo_wrap">
@@ -247,6 +251,8 @@
 									</div>
 									<div class="roomBtn">
 											<input id="rBtn" type="button" value="선택"/>
+											<input type="button" id="roomNameCheck" name="roomNameCheck" value="${rlist.roomNo}"
+												style="display:none"/>
 											<input id="rBtn_option" type="text" value="1" 
 													style="display:none"/>
 											<p>${rlist.price}원</p>
@@ -299,5 +305,6 @@
 			</form>
 		</div>
 		<jsp:include page="../footer.jsp"></jsp:include>
+		<input type="text" name="test" value="test">
 	</body>
 </html>
