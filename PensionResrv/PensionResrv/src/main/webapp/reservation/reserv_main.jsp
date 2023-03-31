@@ -71,7 +71,7 @@
 			
 			function searchRoom(){
 				var fm = document.frm;
-				fm.action="${pageContext.request.contextPath}/reservation/reservAction.do";
+				fm.action="${pageContext.request.contextPath}/reservation/reserveAction.do";
 				fm.method="post";
 				fm.submit();
 			}

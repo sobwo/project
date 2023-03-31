@@ -149,6 +149,11 @@
 	outline:none;
 }
 
+#adult_value, #child_value, #baby_value{
+	font-size:16px;
+	cursor:default;
+}
+
 .adult p:nth-child(3), .child p:nth-child(3), .baby p:nth-child(3){
 	font-weight:normal;
 }  
@@ -166,7 +171,7 @@
 	font-size:17px;
 	font-weight:bold;
 	color:#fff;
-	background:rgb(211, 0, 0);
+	background:#3498db;
 	margin-bottom:40px;
 	cursor:pointer;
 }
@@ -187,7 +192,11 @@
 }
 
 #optionCnt{
-	margin-left:489px;
+	margin-left:420px;
+}
+
+#option_value{
+	font-size:16px;
 }
 
 #price{
@@ -199,16 +208,22 @@
 	font-size:25px;
 	line-height:100px;
 }
-#price_inner_m div{
+#price_inner_m input{
 	color:red;
 	font-size:30px;
 	font-weight:bold;
-	height:100%;
 	line-height:145px;
+	border:0;
+	width:100px;
+	height:30px;
+}
+
+#price_inner_m input:focus{
+	outline:none;
 }
 #priceBtn{
 	margin-left:35px;
-	margin-top:30px;
+	margin-top:-10px;
 }
 
 

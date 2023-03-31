@@ -9,66 +9,161 @@
 		<link href="../css/reserve/style_reserv_common.css" rel="stylesheet"/>
 		<link href="../css/reserve/style_reserving.css" rel="stylesheet"/>
 				<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-		<script>
+		<script>		
 			$(document).ready(function(){
-				$('#adult_minusBtn').click(function(){
-					var adult_minus = $('#adult_value').val();
-					if(adult_minus > 0){
-						adult_minus = parseInt(adult_minus)-1;
-						$('#adult_value').attr("value",adult_minus);
-					}
-				});
-				
-				$('#adult_plusBtn').click(function(){
-					var adult_plus = $('#adult_value').val();
-					adult_plus = parseInt(adult_plus)+1;
-					$('#adult_value').attr("value",adult_plus);
-				});
-				
-				$('#child_minusBtn').click(function(){
-					var child_minus = $('#child_value').val();
-					if(child_minus > 0){
-						child_minus = parseInt(child_minus)-1;
-						$('#child_value').attr("value",child_minus);
-					}
-				});
-				
-				$('#child_plusBtn').click(function(){
-					var child_plus = $('#child_value').val();
-					child_plus = parseInt(child_plus)+1;
-					$('#child_value').attr("value",child_plus);
-				});
-				
-				$('#baby_minusBtn').click(function(){
-					var baby_minus = $('#baby_value').val();
-					if(baby_minus > 0){
-						baby_minus = parseInt(baby_minus)-1;
-						$('#baby_value').attr("value",baby_minus);
-					}
-				});
-				
-				$('#baby_plusBtn').click(function(){
-					var baby_plus = $('#baby_value').val();
-					baby_plus = parseInt(baby_plus)+1;
-					$('#baby_value').attr("value",baby_plus);
-				});
+				${}
 			});
+			$(document).on("click","#adult_minusBtn",function(){
+				var adult_minus = $(this).closest("div").find("input[type='text']").val();
+				if(adult_minus > 0){
+					adult_minus = parseInt(adult_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",adult_minus);
+				}
+			});
+			
+			$(document).on("click","#adult_plusBtn",function(){
+				var adult_plus = $(this).closest("div").find("input[type='text']").val();
+				adult_plus = parseInt(adult_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",adult_plus);
+				
+			});
+			
+			$(document).on("click","#child_minusBtn",function(){ 
+				var child_minus = $(this).closest("div").find("input[type='text']").val();
+				if(child_minus > 0){
+					child_minus = parseInt(child_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",child_minus);
+				}
+			});
+			
+			$(document).on("click","#child_plusBtn",function(){
+				var child_plus = $(this).closest("div").find("input[type='text']").val();
+				child_plus = parseInt(child_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",child_plus);
+			});
+				
+			$(document).on("click","#baby_minusBtn",function(){
+				var baby_minus = $(this).closest("div").find("input[type='text']").val();
+				if(baby_minus > 0){
+					baby_minus = parseInt(baby_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",baby_minus);
+				}
+			});
+			
+			$(document).on("click","#baby_plusBtn",function(){
+				var baby_plus = $(this).closest("div").find("input[type='text']").val();
+				baby_plus = parseInt(baby_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",baby_plus);
+			});
+			
+			$(document).on("click","#rBtn",function(){
+				check();
+			});
+			
+			$(document).on("click","#option_minusBtn",function(){
+				var option_minus = $(this).closest("div").find("input[type='text']").val();
+				if(option_minus > 0){
+					option_minus = parseInt(option_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",option_minus);
+					
+					var option_price = $('#optionPrice').text();
+					var index = option_price.indexOf("원");
+					option_price = option_price.substring(0,index);
+					option_price = parseInt(option_price) - 20000;
+					
+					$("#optionPrice").text(option_price+"원");
+				}
+			});
+			
+			$(document).on("click","#option_plusBtn",function(){
+				var option_plus = $(this).closest("div").find("input[type='text']").val();
+				option_plus = parseInt(option_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",option_plus);
+				
+				var option_price = $('#optionPrice').text();
+				var index = option_price.indexOf("원");
+				option_price = option_price.substring(0,index);
+				option_price = parseInt(option_price) + 20000;
+				
+				$("#optionPrice").text(option_price+"원");
+			});
+			
+			$(document).on("click","#oBtn",function(){
+				var totalPrice = $("input[name=totalPrice]").val();
+				var oBtn_option = $("#option_oBtn").val();
+				
+				var price = $(this).siblings("p").text();
+				var index = price.indexOf("원");
+				price = price.substring(0,index);
+				
+				if(price <= 0){
+					oBtn_option = 2;
+				}
+				
+				if(oBtn_option=="1"){
+					totalPrice = parseInt(totalPrice) + parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','rgb(211, 0, 0)');
+					$(this).closest("div").find("input[type='text']").attr("value","2");
+				}
+				
+				else if(oBtn_option=="2"){
+					totalPrice = parseInt(totalPrice) - parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','#3498db');
+					$(this).closest("div").find("input[type='text']").attr("value","1"); 
+				}
+			});
+			
+			
+			function pay(){
+				var fm = document.frm;
+				fm.action="${pageContext.request.contextPath}/reservation/reserving_next.do";
+				fm.method="post";
+				fm.submit();
+			}
+			
+			function check(){
+				var totalPrice = $("input[name=totalPrice]").val();
+				var rBtn_option = $(this).closest("div").find("input[type='text']").val();
+
+				var price = $(this).siblings("p").text();
+				var index = price.indexOf("원");
+				price = price.substring(0,index);
+				
+				if(rBtn_option=="1"){
+					totalPrice = parseInt(totalPrice) + parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','rgb(211, 0, 0)');
+					$(this).closest("div").find("input[type='text']").attr("value","2");
+				}
+				else if(rBtn_option=="2"){
+					totalPrice = parseInt(totalPrice) - parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','#3498db');
+					$(this).closest("div").find("input[type='text']").attr("value","1"); 
+				}
+			}
 		</script>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp"/>
 		<h2 id="h2">실시간 예약</h2>
 		<div id="reserv_wrap">
-			<form>
+			<form name="frm">
 				<div id="reserv_menu_wrap">
 					<div>
-						<a href="reserv_status.jsp">예약 현황</a>
+						<a href="${pageContext.request.contextPath}/reservation/reserv_status.do"">예약 현황</a>
 					</div>
 					<div style="margin:0 40px; background:rgba(230, 34, 34, 0.37);">
-						<a href="reserving.jsp">예약하기</a>
+						<a href="${pageContext.request.contextPath}/reservation/reserveAction.do">예약하기</a>
 					</div>
 					<div style="width:130px;">
-						<a href="reserv_check.jsp">예약확인/취소</a>
+						<a href="${pageContext.request.contextPath}/reservation/reserv_check.jsp">예약확인/취소</a>
 					</div>
 				</div>
 				<div id="pensionInfo_wrap">
@@ -95,7 +190,7 @@
 			  				</div>
 				  		</div>
 				  		<div id="nights">
-				  			<p>${night}박</p>
+				  			<p></p>
 				  		</div>
 				  		<div id="end">
 				  			<p>체크아웃</p>
@@ -108,6 +203,8 @@
 				  					onChange={StartDateValueHandler}>
 							</div>
 						</div>
+						<input type="text" id="roomNameCheck" name="roomNameCheck" value="${rv.roomNo}"
+								style="display:none"/>
 					</div>
 				</div>
 				<div id="roomInfo_wrap">
@@ -119,8 +216,10 @@
 									<div class="roomImage"></div>
 									<div class="roomInfo_inner_m">
 										<p style="background:#20de07; color:#fff;">예약 가능</p><br/>
+										<input type="text" id="rlist_roomNo" name="rlist_roomNo" value="${rlist.roomNo}"
+												style="display:none"/>
 										<p>${rlist.roomName}</p><br/>
-										<p>${rlist.capacity}</p><br/>
+										<p id="capacity" class="capacity">${rlist.capacity}</p><br/>
 										<p>${rlist.numOfRoom} / ${rlist.sqft}</p>
 									</div>
 									<div class="roomPeople">
@@ -128,27 +227,29 @@
 											<p>성인<p>
 											<input id="adult_minusBtn" type="button" value="&#45;">
 											<input id="adult_value" type="text" name="adult" value="${rv.adultNum}" readonly
-													style="	border:0;"/>
+													style="border:0;"/>
 											<input id="adult_plusBtn" type="button" value="&#43;">
 										</div>
 										<div class="child">
 											<p>아동<p>
 											<input id="child_minusBtn" type="button" value="&#45;">
 											<input id="child_value" type="text" name="child" value="${rv.childNum}" readonly
-													style="	border:0;"/>
+													style="border:0;"/>
 											<input id="child_plusBtn" type="button" value="&#43;">
 										</div>
 										<div class="baby">
 											<p>유아<p>
 											<input id="baby_minusBtn" type="button" value="&#45;">
 											<input id="baby_value" type="text" name="baby" value="${rv.babyNum}" readonly
-													style="	border:0;"/>
+													style="border:0;"/>
 											<input id="baby_plusBtn" type="button" value="&#43;">
 										</div>
 									</div>
 									<div class="roomBtn">
-											<input type="button" value="선택">
-											<p>200,000원</p>
+											<input id="rBtn" type="button" value="선택"/>
+											<input id="rBtn_option" type="text" value="1" 
+													style="display:none"/>
+											<p>${rlist.price}원</p>
 									</div>								
 								</div>
 							</div>
@@ -165,14 +266,17 @@
 								</div>
 								<div id=optionCnt>
 									<div id="cnt">
-										<input type="button" value="&#45;">
-										<p>0</p>
-										<input type="button" value="&#43;">
+										<input id="option_minusBtn" type="button" value="&#45;">
+										<input id="option_value" type="text" name="option_value" value=0 readonly
+													style="border:0;"/>
+										<input id="option_plusBtn" type="button" value="&#43;">
 									</div>
 								</div>
 								<div id="optionBtn">
-									<input type="button" value="선택">
-									<p>20,000원</p>
+									<input id="oBtn" type="button" value="선택">
+									<p id="optionPrice">0원</p>
+									<input id="option_oBtn" type="text" value="1" 
+											style="display:none"/>
 								</div>								
 							</div>
 						</div>
@@ -183,10 +287,10 @@
 						<div id="price">
 							<div id="price_inner">
 								<div id="price_inner_m">
-									총 결제 금액 :&nbsp;&nbsp;&nbsp;<div>220,000</div>&nbsp;원
+									총 결제 금액 :&nbsp;&nbsp;&nbsp;<input type="text" id="totalPrice" name="totalPrice" value=0 readonly>원
 								</div>
 								<div id="priceBtn">
-									<input type="button" value="결제" onclick="location.href='reserving_next.jsp'">
+									<input type="button" value="결제" onclick="pay()">
 								</div>								
 							</div>
 						</div>

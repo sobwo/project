@@ -23,7 +23,7 @@
 							<li><a href="${pageContext.request.contextPath}/member/memberLogoutAction.do">로그아웃</a></li>
 						</c:otherwise>
 					</c:choose>
-					<li><a href="${pageContext.request.contextPath}/reservation/reserv_status.jsp">실시간예약</a></li>
+					<li><a href="${pageContext.request.contextPath}/reservation/reserv_status.do">실시간예약</a></li>
 					<li><a href="${pageContext.request.contextPath}/member/memberInfo.do">마이페이지</a></li>
 				</ul>
 			</div>

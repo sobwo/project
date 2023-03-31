@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -20,10 +21,10 @@
 				</div>
 				<nav>
 					<ul>
-						<li><a href="board/boardNoti.jsp">공지사항</a></li>
-						<li><a href="reservation/reserv_status.jsp">실시간 예약</a></li>
+						<li><a href="${pageContext.request.contextPath}/board/boardNoti.jsp">공지사항</a></li>
+						<li><a href="${pageContext.request.contextPath}/reservation/reserv_status.jsp">실시간 예약</a></li>
 						<li><a href="#">예약가이드</a></li>
-						<li><a href="#">예약확인/취소</a></li>
+						<li><a href="${pageContext.request.contextPath}/reservation/reserv_check.jsp">예약확인/취소</a></li>
 						<c:choose>
 							<c:when test="${sessionScope.memberNo == null}">
 								<li><a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a></li>

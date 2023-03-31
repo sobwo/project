@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,9 +47,6 @@ public class MemberController extends HttpServlet {
 			else {
 				int memberNo = mv.getMemberNo();
 				String memberName = mv.getMemberName();
-				String memberBirth = mv.getMemberBirth();
-				String memberPhone = mv.getMemberPhone();
-				String memberEmail = mv.getMemberEmail();
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("memberNo", memberNo);
@@ -130,7 +126,9 @@ public class MemberController extends HttpServlet {
 		else if (str.equals("/member/memberInfo.do")) {
 			System.out.println("memberInfo.do 들어옴");
 			HttpSession session = request.getSession();
-			int memberNo = (int) session.getAttribute("memberNo");
+			int memberNo = 0;
+			if(session.getAttribute("memberNo")==null) memberNo = 0;
+			else memberNo = (int) session.getAttribute("memberNo");
 			MemberVo mv = new MemberVo();
 			MemberDao md = new MemberDao();
 			

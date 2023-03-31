@@ -15,10 +15,10 @@
 			<form>
 				<div id="reserv_menu_wrap">
 					<div>
-						<a href="reserv_status.jsp">예약 현황</a>
+						<a href="${pageContext.request.contextPath}/reservation/reserv_status.do">예약 현황</a>
 					</div>
 					<div style="margin:0 40px; ">
-						<a href="reserving.jsp">예약하기</a>
+						<a href="${pageContext.request.contextPath}/reservation/reserveAction.do">예약하기</a>
 					</div>
 					<div style="width:130px; background:rgba(230, 34, 34, 0.37);">
 						<a href="reserv_check.jsp">예약확인/취소</a>
