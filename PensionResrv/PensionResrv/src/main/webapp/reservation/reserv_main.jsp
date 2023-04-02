@@ -9,73 +9,6 @@
 		<link href="../css/reserve/style_reserv_main.css" rel="stylesheet"/>
 		<link href="../css/board/style_board.css" rel="stylesheet"/>
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-		<script>
-			$(document).ready(function(){
-				$('#adult_minusBtn').click(function(){
-					var adult_minus = $('#adult_value').val();
-					if(adult_minus > 0){
-						adult_minus = parseInt(adult_minus)-1;
-						$('#adult_value').attr("value",adult_minus);
-					}
-				});
-				
-				$('#adult_plusBtn').click(function(){
-					var adult_plus = $('#adult_value').val();
-					adult_plus = parseInt(adult_plus)+1;
-					$('#adult_value').attr("value",adult_plus);
-				});
-				
-				$('#child_minusBtn').click(function(){
-					var child_minus = $('#child_value').val();
-					if(child_minus > 0){
-						child_minus = parseInt(child_minus)-1;
-						$('#child_value').attr("value",child_minus);
-					}
-				});
-				
-				$('#child_plusBtn').click(function(){
-					var child_plus = $('#child_value').val();
-					child_plus = parseInt(child_plus)+1;
-					$('#child_value').attr("value",child_plus);
-				});
-				
-				$('#baby_minusBtn').click(function(){
-					var baby_minus = $('#baby_value').val();
-					if(baby_minus > 0){
-						baby_minus = parseInt(baby_minus)-1;
-						$('#baby_value').attr("value",baby_minus);
-					}
-				});
-				
-				$('#baby_plusBtn').click(function(){
-					var baby_plus = $('#baby_value').val();
-					baby_plus = parseInt(baby_plus)+1;
-					$('#baby_value').attr("value",baby_plus);
-				});
-				
-				$(document).on("click", "#selectRoom", function(){
-					var roomName = $(this).val();
-					
-					$('#rName').text(roomName);
-					$('#roomName_popup').hide();
-				});
-			});
-			
-			function selectPeople(){
-				let adult_value = $('#adult_value').val();
-				let child_value = $('#child_value').val();
-				let baby_value = $('#baby_value').val();
-				$('#pNum').text("성인"+adult_value+"명/아동"+child_value+"명/유아"+baby_value);
-				$('#pNum_popup').hide();
-			}
-			
-			function searchRoom(){
-				var fm = document.frm;
-				fm.action="${pageContext.request.contextPath}/reservation/reserveAction.do";
-				fm.method="post";
-				fm.submit();
-			}
-		</script>
 	</head>
 	<body onload="autoReload();" style="background:#fff;">
 		<jsp:include page="../header.jsp"/>
@@ -131,6 +64,8 @@
 						</div>	
 						<div id="roomName">
 							<a href="#roomName_popup" id="rName">방 이름</a>
+							<input type="text" id="select_roomName" name="select_roomName" readonly
+									style="display:none"/>
 						</div>
 						<div id="roomName_popup" style="display:none;border:1px solid black;">
 							<table>
@@ -202,6 +137,73 @@
 			</div>
 		</main>
 		<jsp:include page="../footer.jsp"></jsp:include>
-		<script type="text/javascript" src="table.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#adult_minusBtn').click(function(){
+					var adult_minus = $('#adult_value').val();
+					if(adult_minus > 0){
+						adult_minus = parseInt(adult_minus)-1;
+						$('#adult_value').attr("value",adult_minus);
+					}
+				});
+				
+				$('#adult_plusBtn').click(function(){
+					var adult_plus = $('#adult_value').val();
+					adult_plus = parseInt(adult_plus)+1;
+					$('#adult_value').attr("value",adult_plus);
+				});
+				
+				$('#child_minusBtn').click(function(){
+					var child_minus = $('#child_value').val();
+					if(child_minus > 0){
+						child_minus = parseInt(child_minus)-1;
+						$('#child_value').attr("value",child_minus);
+					}
+				});
+				
+				$('#child_plusBtn').click(function(){
+					var child_plus = $('#child_value').val();
+					child_plus = parseInt(child_plus)+1;
+					$('#child_value').attr("value",child_plus);
+				});
+				
+				$('#baby_minusBtn').click(function(){
+					var baby_minus = $('#baby_value').val();
+					if(baby_minus > 0){
+						baby_minus = parseInt(baby_minus)-1;
+						$('#baby_value').attr("value",baby_minus);
+					}
+				});
+				
+				$('#baby_plusBtn').click(function(){
+					var baby_plus = $('#baby_value').val();
+					baby_plus = parseInt(baby_plus)+1;
+					$('#baby_value').attr("value",baby_plus);
+				});
+				
+				$(document).on("click", "#selectRoom", function(){
+					var roomName = $(this).val();
+					
+					$('#rName').text(roomName);
+					$('#select_roomName').attr("value",roomName);
+					$('#roomName_popup').hide();
+				});
+			});
+			
+			function selectPeople(){
+				let adult_value = $('#adult_value').val();
+				let child_value = $('#child_value').val();
+				let baby_value = $('#baby_value').val();
+				$('#pNum').text("성인"+adult_value+"명/아동"+child_value+"명/유아"+baby_value);
+				$('#pNum_popup').hide();
+			}
+			
+			function searchRoom(){
+				var fm = document.frm;
+				fm.action="${pageContext.request.contextPath}/reservation/reserveAction.do";
+				fm.method="post";
+				fm.submit();
+			}
+		</script>
 	</body>
 </html>

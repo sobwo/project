@@ -2,8 +2,15 @@ package domain;
 
 public class ReservVo {
 	private int reservNo,adultNum,childNum,babyNum,totalPay,memberNo,roomNo;
-	private String extraPhone, arriveTime, request, checkIn, checkOut;
+	private String extraPhone, arriveTime, request, checkIn, checkOut,select_roomName;
 	private char payYn;
+	
+	public String getSelect_roomName() {
+		return select_roomName;
+	}
+	public void setSelect_roomName(String select_roomName) {
+		this.select_roomName = select_roomName;
+	}
 	public int getReservNo() {
 		return reservNo;
 	}

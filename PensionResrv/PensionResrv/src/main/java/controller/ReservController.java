@@ -50,7 +50,7 @@ public class ReservController extends HttpServlet {
     		ReservVo rv = new ReservVo();
     		ReservDao rd = new ReservDao();
     		RoomDao roomd = new RoomDao();
-    		String checkIn,checkOut,roomName;
+    		String checkIn,checkOut,select_roomName;
     		int adult,child,baby;
 
     		if(request.getParameter("checkIn")==null) checkIn="0";
@@ -63,17 +63,16 @@ public class ReservController extends HttpServlet {
     		else child = Integer.parseInt(request.getParameter("child"));
     		if(request.getParameter("baby")==null) baby=0;
     		else baby = Integer.parseInt(request.getParameter("baby"));
-    		if(request.getParameter("roomName")==null) roomName = "0호";
-    		else roomName = request.getParameter("roomName");
-    		System.out.println(roomName);
-    		int roomNo = rd.selectRoomNo(roomName);
+    		if(request.getParameter("roomName")==null) select_roomName = "0호";
+    		else select_roomName = request.getParameter("select_roomName");
+    		int roomNo = rd.selectRoomNo(select_roomName);
     		
+    		rv.setRoomNo(roomNo);
     		rv.setCheckIn(checkIn);
     		rv.setCheckOut(checkOut);
     		rv.setAdultNum(adult);
     		rv.setChildNum(child);
     		rv.setBabyNum(baby);
-    		rv.setRoomNo(roomNo);
     		
     		request.setAttribute("rv", rv);
     		
@@ -86,7 +85,27 @@ public class ReservController extends HttpServlet {
     	
     	else if(str.equals("/reservation/reserving_next.do")) {
     		System.out.println("reserving_next.do 들어옴");
+    		ReservDao rd = new ReservDao();
+    	
+    		String rlist_roomNo[] = request.getParameterValues("rlist_roomNo");
+    		int roomNo[] = null;
+    		for(int i=0;i<rlist_roomNo.length;i++)
+    			roomNo[i]= Integer.parseInt(rlist_roomNo[i]);
+    		String roomName[] = request.getParameterValues("roomName");
+    		String checkIn = request.getParameter("checkIn");
+    		String checkOut = request.getParameter("checkOut");
+    		int adult_num = Integer.parseInt(request.getParameter("adultNum"));
     		
+    		
+    		String room_check[] = request.getParameterValues("room_check");
+    		int check = 0;
+    		
+    		for(int i=0;i<room_check.length;i++) {
+    			if(room_check[i].equals("2")) {
+    				check=i;
+    			}
+    		}
+       		
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserving_next.jsp");
 			rd1.forward(request, response);
     	}

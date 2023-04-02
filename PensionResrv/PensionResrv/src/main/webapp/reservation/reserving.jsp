@@ -8,153 +8,7 @@
 		<title>oo펜션 실시간 예약하기</title>
 		<link href="../css/reserve/style_reserv_common.css" rel="stylesheet"/>
 		<link href="../css/reserve/style_reserving.css" rel="stylesheet"/>
-				<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-		<script>		
-			$(document).ready(function(){ //확인해볼것
-// 				var length = $('input[id=roomNameCheck]').length;
-// 				alert(length);
-// 				alert($('input[name=roomNameCheck]').val());
-// 				alert($('input[id=roomNameCheck]').siblings("input[type='button']").val());
-				
-// 				for(var i=0;i<length;i++){
-// 					if($('input[name=roomNameCheck]').eq(i).val()==${rv.roomNo}){
-// 						$('input[name=roomNameCheck]').eq(i).siblings("input[type='button']").trigger("click");
-// 					}
-// 				}
-			});
-			
-			$(document).on("click","#adult_minusBtn",function(){
-				var adult_minus = $(this).closest("div").find("input[type='text']").val();
-				if(adult_minus > 0){
-					adult_minus = parseInt(adult_minus)-1;
-					$(this).closest("div").find("input[type='text']").attr("value",adult_minus);
-				}
-			});
-			
-			$(document).on("click","#adult_plusBtn",function(){
-				var adult_plus = $(this).closest("div").find("input[type='text']").val();
-				adult_plus = parseInt(adult_plus)+1;
-				$(this).closest("div").find("input[type='text']").attr("value",adult_plus);
-				
-			});
-			
-			$(document).on("click","#child_minusBtn",function(){ 
-				var child_minus = $(this).closest("div").find("input[type='text']").val();
-				if(child_minus > 0){
-					child_minus = parseInt(child_minus)-1;
-					$(this).closest("div").find("input[type='text']").attr("value",child_minus);
-				}
-			});
-			
-			$(document).on("click","#child_plusBtn",function(){
-				var child_plus = $(this).closest("div").find("input[type='text']").val();
-				child_plus = parseInt(child_plus)+1;
-				$(this).closest("div").find("input[type='text']").attr("value",child_plus);
-			});
-				
-			$(document).on("click","#baby_minusBtn",function(){
-				var baby_minus = $(this).closest("div").find("input[type='text']").val();
-				if(baby_minus > 0){
-					baby_minus = parseInt(baby_minus)-1;
-					$(this).closest("div").find("input[type='text']").attr("value",baby_minus);
-				}
-			});
-			
-			$(document).on("click","#baby_plusBtn",function(){
-				var baby_plus = $(this).closest("div").find("input[type='text']").val();
-				baby_plus = parseInt(baby_plus)+1;
-				$(this).closest("div").find("input[type='text']").attr("value",baby_plus);
-			});
-			
-			$(document).on("click","#rBtn",function(){
-				var totalPrice = $("input[name=totalPrice]").val();
-				var rBtn_option = $(this).closest("div").find("input[type='text']").val();
-
-				var price = $(this).siblings("p").text();
-				var index = price.indexOf("원");
-				price = price.substring(0,index);
-				
-				if(rBtn_option=="1"){
-					totalPrice = parseInt(totalPrice) + parseInt(price);
-					
-					$("input[name=totalPrice]").attr("value",totalPrice);
-					$(this).css('background-color','rgb(211, 0, 0)');
-					$(this).closest("div").find("input[type='text']").attr("value","2");
-				}
-				else if(rBtn_option=="2"){
-					totalPrice = parseInt(totalPrice) - parseInt(price);
-					
-					$("input[name=totalPrice]").attr("value",totalPrice);
-					$(this).css('background-color','#3498db');
-					$(this).closest("div").find("input[type='text']").attr("value","1"); 
-				}
-			});
-			
-			$(document).on("click","#option_minusBtn",function(){
-				var option_minus = $(this).closest("div").find("input[type='text']").val();
-				if(option_minus > 0){
-					option_minus = parseInt(option_minus)-1;
-					$(this).closest("div").find("input[type='text']").attr("value",option_minus);
-					
-					var option_price = $('#optionPrice').text();
-					var index = option_price.indexOf("원");
-					option_price = option_price.substring(0,index);
-					option_price = parseInt(option_price) - 20000;
-					
-					$("#optionPrice").text(option_price+"원");
-				}
-			});
-			
-			$(document).on("click","#option_plusBtn",function(){
-				var option_plus = $(this).closest("div").find("input[type='text']").val();
-				option_plus = parseInt(option_plus)+1;
-				$(this).closest("div").find("input[type='text']").attr("value",option_plus);
-				
-				var option_price = $('#optionPrice').text();
-				var index = option_price.indexOf("원");
-				option_price = option_price.substring(0,index);
-				option_price = parseInt(option_price) + 20000;
-				
-				$("#optionPrice").text(option_price+"원");
-			});
-			
-			$(document).on("click","#oBtn",function(){
-				var totalPrice = $("input[name=totalPrice]").val();
-				var oBtn_option = $("#option_oBtn").val();
-				
-				var price = $(this).siblings("p").text();
-				var index = price.indexOf("원");
-				price = price.substring(0,index);
-				
-				if(price <= 0){
-					oBtn_option = 2;
-				}
-				
-				if(oBtn_option=="1"){
-					totalPrice = parseInt(totalPrice) + parseInt(price);
-					$("input[name=totalPrice]").attr("value",totalPrice);
-					$(this).css('background-color','rgb(211, 0, 0)');
-					$(this).closest("div").find("input[type='text']").attr("value","2");
-				}
-				
-				else if(oBtn_option=="2"){
-					$("#option_value").attr("value","0");  // 동적할당시 변경 필요
-					$("#optionPrice").text("0원"); // 동적할당시 변경 필요
-					totalPrice = parseInt(totalPrice) - parseInt(price);
-					$("input[name=totalPrice]").attr("value",totalPrice);
-					$(this).css('background-color','#3498db');
-					$(this).closest("div").find("input[type='text']").attr("value","1"); 
-				}
-			});
-					
-			function pay(){
-				var fm = document.frm;
-				fm.action="${pageContext.request.contextPath}/reservation/reserving_next.do";
-				fm.method="post";
-				fm.submit();
-			}
-
-		</script>
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp"/>
@@ -183,6 +37,8 @@
 				<div id="dateInfo_wrap">
 					<h4 class="h4">숙박기간</h4>
 					<div id="dateInfo">
+						<input type="text" name="roomNo" value="${rv.roomNo}" readonly 
+								style="display:none">
 						<div id="dateImage"></div>
 						<div id="begin">
 							<p>체크인</p>
@@ -230,21 +86,21 @@
 										<div class="adult">
 											<p>성인<p>
 											<input id="adult_minusBtn" type="button" value="&#45;">
-											<input id="adult_value" type="text" name="adult" value="${rv.adultNum}" readonly
+											<input id="adult_value" type="text" name="adultNum" value="${rv.adultNum}" readonly
 													style="border:0;"/>
 											<input id="adult_plusBtn" type="button" value="&#43;">
 										</div>
 										<div class="child">
 											<p>아동<p>
 											<input id="child_minusBtn" type="button" value="&#45;">
-											<input id="child_value" type="text" name="child" value="${rv.childNum}" readonly
+											<input id="child_value" type="text" name="childNum" value="${rv.childNum}" readonly
 													style="border:0;"/>
 											<input id="child_plusBtn" type="button" value="&#43;">
 										</div>
 										<div class="baby">
 											<p>유아<p>
 											<input id="baby_minusBtn" type="button" value="&#45;">
-											<input id="baby_value" type="text" name="baby" value="${rv.babyNum}" readonly
+											<input id="baby_value" type="text" name="babyNum" value="${rv.babyNum}" readonly
 													style="border:0;"/>
 											<input id="baby_plusBtn" type="button" value="&#43;">
 										</div>
@@ -253,8 +109,7 @@
 											<input id="rBtn" type="button" value="선택"/>
 											<input type="button" id="roomNameCheck" name="roomNameCheck" value="${rlist.roomNo}"
 												style="display:none"/>
-											<input id="rBtn_option" type="text" value="1" 
-													style="display:none"/>
+											<input type="text" value="1" name="room_check" style="display:none"/>
 											<p>${rlist.price}원</p>
 									</div>								
 								</div>
@@ -306,5 +161,164 @@
 		</div>
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<input type="text" name="test" value="test">
+		<script>		
+			$(document).ready(function(){ //확인해볼것
+// 				var length = $('input[id=roomNameCheck]').length;
+// 				var roomNameCheck = $('input[name=roomNameCheck]');
+// 				var roomNo = $('input[name=roomNo]').val();
+// 				alert(length);
+// 				alert($('input[name=roomNameCheck]').val());
+// 				alert($('input[id=roomNameCheck]').siblings("input[type='button']").val());
+				
+// 				for(var i=0;i<length;i++){
+// 					if(roomNameCheck.eq(i).val()==roomNo){
+// 						$('input[name=roomNameCheck]').eq(i).siblings("input[type='button']").trigger("click");
+// 					}
+// 				}
+			});
+			
+			//성인 인원수
+			$(document).on("click","#adult_minusBtn",function(){
+				var adult_minus = $(this).closest("div").find("input[type='text']").val();
+				if(adult_minus > 0){
+					adult_minus = parseInt(adult_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",adult_minus);
+				}
+			});
+			
+			$(document).on("click","#adult_plusBtn",function(){
+				var adult_plus = $(this).closest("div").find("input[type='text']").val();
+				adult_plus = parseInt(adult_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",adult_plus);
+				
+			});
+			
+			//아이 인원수
+			$(document).on("click","#child_minusBtn",function(){ 
+				var child_minus = $(this).closest("div").find("input[type='text']").val();
+				if(child_minus > 0){
+					child_minus = parseInt(child_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",child_minus);
+				}
+			});
+			
+			$(document).on("click","#child_plusBtn",function(){
+				var child_plus = $(this).closest("div").find("input[type='text']").val();
+				child_plus = parseInt(child_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",child_plus);
+			});
+			
+			//유아 인원수	
+			$(document).on("click","#baby_minusBtn",function(){
+				var baby_minus = $(this).closest("div").find("input[type='text']").val();
+				if(baby_minus > 0){
+					baby_minus = parseInt(baby_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",baby_minus);
+				}
+			});
+			
+			$(document).on("click","#baby_plusBtn",function(){
+				var baby_plus = $(this).closest("div").find("input[type='text']").val();
+				baby_plus = parseInt(baby_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",baby_plus);
+			});
+			
+			
+			//방 선택 버튼
+			$(document).on("click","#rBtn",function(){
+				var totalPrice = $("input[name=totalPrice]").val();
+				var rBtn_option = $(this).closest("div").find("input[type='text']").val();
+				
+				var price = $(this).siblings("p").text();
+				var index = price.indexOf("원");
+				price = price.substring(0,index);
+				
+				if(rBtn_option=="1"){
+					totalPrice = parseInt(totalPrice) + parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','rgb(211, 0, 0)');
+					$(this).closest("div").find("input[type='text']").attr("value","2");
+				}
+				else if(rBtn_option=="2"){
+					totalPrice = parseInt(totalPrice) - parseInt(price);
+					
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','#3498db');
+					$(this).closest("div").find("input[type='text']").attr("value","1"); 
+				}
+			});
+			
+			//옵션 수
+			$(document).on("click","#option_minusBtn",function(){
+				var option_minus = $(this).closest("div").find("input[type='text']").val();
+				if(option_minus > 0){
+					option_minus = parseInt(option_minus)-1;
+					$(this).closest("div").find("input[type='text']").attr("value",option_minus);
+					
+					var option_price = $('#optionPrice').text();
+					var index = option_price.indexOf("원");
+					option_price = option_price.substring(0,index);
+					option_price = parseInt(option_price) - 20000;
+					
+					$("#optionPrice").text(option_price+"원");
+				}
+			});
+			
+			$(document).on("click","#option_plusBtn",function(){
+				var option_plus = $(this).closest("div").find("input[type='text']").val();
+				option_plus = parseInt(option_plus)+1;
+				$(this).closest("div").find("input[type='text']").attr("value",option_plus);
+				
+				var option_price = $('#optionPrice').text();
+				var index = option_price.indexOf("원");
+				option_price = option_price.substring(0,index);
+				option_price = parseInt(option_price) + 20000;
+				
+				$("#optionPrice").text(option_price+"원");
+			});
+			
+			//옵션 선택 버튼
+			$(document).on("click","#oBtn",function(){
+				var totalPrice = $("input[name=totalPrice]").val();
+				var oBtn_option = $("#option_oBtn").val();
+				
+				var price = $(this).siblings("p").text();
+				var index = price.indexOf("원");
+				price = price.substring(0,index);
+				
+				if(price <= 0){
+					oBtn_option = 2;
+				}
+				
+				if(oBtn_option=="1"){
+					totalPrice = parseInt(totalPrice) + parseInt(price);
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','rgb(211, 0, 0)');
+					$(this).closest("div").find("input[type='text']").attr("value","2");
+				}
+				
+				else if(oBtn_option=="2"){
+					$("#option_value").attr("value","0");  // 동적할당시 변경 필요
+					$("#optionPrice").text("0원"); // 동적할당시 변경 필요
+					totalPrice = parseInt(totalPrice) - parseInt(price);
+					$("input[name=totalPrice]").attr("value",totalPrice);
+					$(this).css('background-color','#3498db');
+					$(this).closest("div").find("input[type='text']").attr("value","1"); 
+				}
+			});
+					
+			function pay(){
+				if($('#totalPrice').val().equals("0원"))
+					alert("방을 선택해 주세요.");
+				else{
+					var fm = document.frm;
+					fm.action="${pageContext.request.contextPath}/reservation/reserving_next.do";
+					fm.method="post";
+					fm.submit();
+				}
+			}
+
+		</script>
 	</body>
 </html>

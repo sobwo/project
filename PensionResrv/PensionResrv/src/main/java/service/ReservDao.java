@@ -15,7 +15,7 @@ private Connection conn;
 		this.conn = dbconn.getConnection();
 	}
 	
-	public int selectRoomNo(String roomName) {
+	public int selectRoomNo(String select_roomName) {
 		int value = 0; 
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
@@ -24,7 +24,7 @@ private Connection conn;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, roomName);
+			pstmt.setString(1, select_roomName);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				value = rs.getInt("roomNo");
