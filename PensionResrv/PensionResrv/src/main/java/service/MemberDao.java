@@ -4,11 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import dbconn.Dbconn;
 import domain.MemberVo;
-import domain.SearchVo;
 
 public class MemberDao {
 	private Connection conn;
@@ -22,7 +19,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		int value=0;
 		
-		String sql = "insert into member(memberNo,memberId,memberPw,memberName,memberBirth,memberPhone,memberEmail) values(memberNo_seqNum.nextval,?,?,?,?,?,?)";
+		String sql = "insert into member(memberNo,memberId,memberPw,memberName,memberBirth,memberPhone,memberEmail,joinYn) values(memberNo_seqNum.nextval,?,?,?,?,?,?,'Y')";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -42,7 +39,6 @@ public class MemberDao {
 				pstmt.close();
 				conn.close();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -78,7 +74,7 @@ public class MemberDao {
 
 	public MemberVo memberLogin(String memberId, String memberPw) {
 		MemberVo mv = null;
-		String sql = "select * from member where memberId =? and memberPw = ? and delYn='N'";
+		String sql = "select * from member where memberId =? and memberPw = ? and delYn='N' and joinYn='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -107,7 +103,6 @@ public class MemberDao {
 				pstmt.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}	
@@ -129,6 +124,7 @@ public class MemberDao {
 			
 			if(rs.next()) {
 				mv = new MemberVo();
+				mv.setMemberNo(rs.getInt("memberNo"));
 				mv.setMemberId(rs.getString("memberId"));
 				mv.setMemberPw(rs.getString("memberPw"));
 				mv.setMemberName(rs.getString("memberName"));
@@ -138,7 +134,6 @@ public class MemberDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			
@@ -147,7 +142,6 @@ public class MemberDao {
 				pstmt.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -173,14 +167,12 @@ public class MemberDao {
 			value = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			try {
 				pstmt.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -202,10 +194,66 @@ public class MemberDao {
 			value = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return value;
 	}
+	
+	public int OffrineMemberInsert(MemberVo mv) {
+		int value = 0;
+		PreparedStatement pstmt = null;
+		String sql = "insert into member(memberNo,memberName,memberBirth,memberPhone,memberEmail) values(memberNo_seqNum.nextval,?,?,?,?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mv.getMemberName());
+			pstmt.setString(2, mv.getMemberBirth());
+			pstmt.setString(3, mv.getMemberPhone());
+			pstmt.setString(4, mv.getMemberEmail());
+			value = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return value;
+	}
+	
+	public int selectMemberNo(String memberName) {
+		int value = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql="select memberNo from member where memberName=? and joinYn='N'";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,memberName);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				value = rs.getInt("memberNo");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
 
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return value;
+	}
 }

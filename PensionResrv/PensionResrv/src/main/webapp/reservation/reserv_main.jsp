@@ -205,5 +205,6 @@
 				fm.submit();
 			}
 		</script>
+		<script type="text/javascript" src="table.js"></script>
 	</body>
 </html>

@@ -127,7 +127,7 @@ public class MemberController extends HttpServlet {
 			System.out.println("memberInfo.do 들어옴");
 			HttpSession session = request.getSession();
 			int memberNo = 0;
-			if(session.getAttribute("memberNo")==null) memberNo = 0;
+			if(session.getAttribute("memberNo")==null) memberNo = 10001;
 			else memberNo = (int) session.getAttribute("memberNo");
 			MemberVo mv = new MemberVo();
 			MemberDao md = new MemberDao();

@@ -7,7 +7,7 @@
 }
 
 #reserv_wrap{
-	height:850px;
+	height:1500px;
 }
 
 #selectRoom_wrap, #insertInfo_wrap,#payInfo_wrap{
@@ -41,6 +41,17 @@
 	height:100px;
 	vertical-align:middle;
 	text-align:center;
+}
+
+#roomTable tbody td input{
+	width:150px;
+	font-size:15px;
+	border:0;
+	text-align:center;
+}
+
+#roomTable tbody td input:focus{
+	outline:none;
 }
 
 #insertInfo_wrap{
@@ -121,6 +132,16 @@
 
 #payInfo td{
 	height:80px;
+}
+
+#payInfo input[name=totalPrice]{
+	border:0;
+	font-size:18px;
+	font-weight:bold;
+	background:#e4e4e4;
+}
+#payInfo input[name=totalPrice]:focus{
+	outline:none;
 }
 
 #payBtn{

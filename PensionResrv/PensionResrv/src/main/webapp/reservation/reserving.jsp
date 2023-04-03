@@ -79,6 +79,9 @@
 										<input type="text" id="rlist_roomNo" name="rlist_roomNo" value="${rlist.roomNo}"
 												style="display:none"/>
 										<p>${rlist.roomName}</p><br/>
+										<input type="text" id="rlist_roomName" name="rlist_roomName" value="${rlist.roomName}"
+												style="display:none"/>
+										<input type="text" value="${rlist.price}" name="select_price" style="display:none"/>
 										<p id="capacity" class="capacity">${rlist.capacity}</p><br/>
 										<p>${rlist.numOfRoom} / ${rlist.sqft}</p>
 									</div>
@@ -123,7 +126,7 @@
 						<div id="option">
 							<div id="option_inner">
 								<div id="option_inner_m">
-									<p>숯, 그릴</p>
+									<p>숯,그릴</p>
 								</div>
 								<div id=optionCnt>
 									<div id="cnt">
@@ -163,18 +166,15 @@
 		<input type="text" name="test" value="test">
 		<script>		
 			$(document).ready(function(){ //확인해볼것
-// 				var length = $('input[id=roomNameCheck]').length;
-// 				var roomNameCheck = $('input[name=roomNameCheck]');
-// 				var roomNo = $('input[name=roomNo]').val();
-// 				alert(length);
-// 				alert($('input[name=roomNameCheck]').val());
-// 				alert($('input[id=roomNameCheck]').siblings("input[type='button']").val());
+				var length = $('input[id=roomNameCheck]').length;
+				var roomNameCheck = $('input[name=roomNameCheck]');
+				var roomNo = $('input[name=roomNo]').val();
 				
-// 				for(var i=0;i<length;i++){
-// 					if(roomNameCheck.eq(i).val()==roomNo){
-// 						$('input[name=roomNameCheck]').eq(i).siblings("input[type='button']").trigger("click");
-// 					}
-// 				}
+				for(var i=0;i<length;i++){
+					if(roomNameCheck.eq(i).val()==roomNo){
+						$('input[name=roomNameCheck]').eq(i).siblings("input[type='button']").trigger("click");
+					}
+				}
 			});
 			
 			//성인 인원수
@@ -309,8 +309,12 @@
 			});
 					
 			function pay(){
-				if($('#totalPrice').val().equals("0원"))
+				if($("input[name=totalPrice]").val()==0)
 					alert("방을 선택해 주세요.");
+				else if($("input[name=checkIn]").val()==0)
+					alert("체크인 날짜를 선택해 주세요.");
+				else if($("input[name=checkOut]").val()==0)
+					alert("체크아웃 날짜를 선택해 주세요.");
 				else{
 					var fm = document.frm;
 					fm.action="${pageContext.request.contextPath}/reservation/reserving_next.do";

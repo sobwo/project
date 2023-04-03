@@ -1,15 +1,45 @@
 package domain;
 
 public class ReservVo {
-	private int reservNo,adultNum,childNum,babyNum,totalPay,memberNo,roomNo;
-	private String extraPhone, arriveTime, request, checkIn, checkOut,select_roomName;
+	private int reservNo,adultNum,childNum,babyNum,totalPay,memberNo,roomNo,optionNum;
+	private String checkIn, checkOut,extraPhone, arriveTime, request,pickup;;
 	private char payYn;
-	
-	public String getSelect_roomName() {
-		return select_roomName;
+	public String getPickup() {
+		return pickup;
 	}
-	public void setSelect_roomName(String select_roomName) {
-		this.select_roomName = select_roomName;
+
+	public void setPickup(String pickup) {
+		this.pickup = pickup;
+	}
+
+	public String getExtraPhone() {
+		return extraPhone;
+	}
+
+	public void setExtraPhone(String extraPhone) {
+		this.extraPhone = extraPhone;
+	}
+
+	public String getArriveTime() {
+		return arriveTime;
+	}
+
+	public void setArriveTime(String arriveTime) {
+		this.arriveTime = arriveTime;
+	}
+
+	public String getRequest() {
+		return request;
+	}
+
+	public void setRequest(String request) {
+		this.request = request;
+	}
+	public int getOptionNum() {
+		return optionNum;
+	}
+	public void setOptionNum(int optionNum) {
+		this.optionNum = optionNum;
 	}
 	public int getReservNo() {
 		return reservNo;
@@ -53,24 +83,6 @@ public class ReservVo {
 	}
 	public void setRoomNo(int roomNo) {
 		this.roomNo = roomNo;
-	}
-	public String getExtraPhone() {
-		return extraPhone;
-	}
-	public void setExtraPhone(String extraPhone) {
-		this.extraPhone = extraPhone;
-	}
-	public String getArriveTime() {
-		return arriveTime;
-	}
-	public void setArriveTime(String arriveTime) {
-		this.arriveTime = arriveTime;
-	}
-	public String getRequest() {
-		return request;
-	}
-	public void setRequest(String request) {
-		this.request = request;
 	}
 	public String getCheckIn() {
 		return checkIn;
