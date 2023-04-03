@@ -17,33 +17,27 @@
 			<div id="reserv_wrap">
 				<div id="selectRoom_wrap">
 					<h4 class="h4">선택 객실목록</h4>
+					<input type="text" name="roomNo" value="${rv.roomNo}"
+								style="display:none"/>
 					<table id="roomTable">
 						<thead>
 							<tr>
 								<th>객실명</th>
-								<th>이용일</th>
+								<th>체크인</th>
+								<th>체크아웃</th>
 								<th>인원</th>
 								<th>옵션</th>
-								<th>이용요금</th>
 								<th>결제금액</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="rlist" items="${rlist}">
-							<input type="text" name="select_roomNo" value="${rlist.select_roomNo}"
-									style="display:none"/>
-								<tr>
-									<td><input type="text" name="select_roomName" value="${rlist.select_roomName}"readonly/></td>
-									<td>
-										체크인 : <input type="text" name="checkIn" value="${rlist.checkIn}"readonly/><br/>
-										체크아웃 : <input type="text" name="checkOut" value="${rlist.checkOut}" readonly/>
-									</td>
-									<td>성인:<input type="text" name="adultNum" value="${rlist.adultNum}" readonly><br/>아동:<input type="text" name="childNum" value="${rlist.childNum}" readonly/><br/>유아:<input type="text" name="babyNum" value="${rlist.babyNum}" readonly/></td>
-									<td>숯,그릴:<input type="text" name="optionNum" value="${rlist.optionNum}" readonly/></td>
-									<td><input type="text" name="select_price" value="${rlist.select_price}" readonly/></td>
-									<td><input type="text" name="select_totalPrice" value="${rlist.select_totalPrice}" readonly/></td>
-								</tr>
-							</c:forEach>
+							<tr>
+								<td><input type="text" name="roomName" value="${roomName}"readonly/></td>
+								<td><input type="text" name="checkIn" value="${rv.checkIn}"readonly/></td>
+								<td><input type="text" name="checkOut" value="${rv.checkOut}" readonly/></td>
+								<td>성인:<input type="text" name="adultNum" value="${rv.adultNum}" readonly><br/>아동:<input type="text" name="childNum" value="${rlist.childNum}" readonly/><br/>유아:<input type="text" name="babyNum" value="${rlist.babyNum}" readonly/></td>
+								<td>숯,그릴:<input type="text" name="optionNum" value="${rv.optionNum}" readonly/></td>
+								<td><input type="text" name="select_totalPrice" value="${rv.totalPrice}" readonly/></td>
 						</tbody>
 					</table>
 				</div>
@@ -59,38 +53,38 @@
 							<table id="insertInfo_table">
 								<tr>		
 									<td>예약자명 : </td>
-									<td><input type="text" name="reserv_memberName"></td>
+									<td><input type="text" name="memberName"></td>
 								</tr>
 								<tr>
 									<td>생년월일 : </td>
-									<td><input type="text" name="reserv_memberBirth"></td>
+									<td><input type="text" name="memberBirth"></td>
 								</tr>
 								<tr>
 									<td>연락처 : </td>
-									<td><input type="text" name="reserv_memberPhone"></td>
+									<td><input type="text" name="memberPhone"></td>
 								</tr>
 								<tr>
 									<td>비상연락처 : </td>
-									<td><input type="text" name="reserv_extraPhone"></td>
+									<td><input type="text" name="extraPhone"></td>
 								</tr>
 								<tr>
 									<td>이메일 : </td>
-									<td><input type="text" name="reserv_memberEmail"></td>
+									<td><input type="text" name="memberEmail"></td>
 								</tr>
 								<tr>
 									<td>픽업여부 : </td>
 									<td>
-										<label>요청함</label><input type="checkbox" name="reserv_pickup" value="Y">
-										<label>요청안함</label><input type="checkbox" name="reserv_pickup" value="N">
+										<label>요청함</label><input type="checkbox" name="pickup" value="Y">
+										<label>요청안함</label><input type="checkbox" name="pickup" value="N">
 									</td>
 								</tr>
 								<tr>
 									<td>도착 예상시간 : </td>
-									<td><input type="text" name="reserv_arriveTime"></td>
+									<td><input type="text" name="arriveTime"></td>
 								</tr>
 								<tr>
 									<td>예약요청사항 : </td>
-									<td><textarea name="reserv_request"></textarea></td>
+									<td><textarea name="request"></textarea></td>
 								</tr>
 							</table>
 						</div>
@@ -102,7 +96,7 @@
 						<table>
 							<tr>
 								<td>총 결제금액 :&nbsp;&nbsp;</td>
-								<td><input type="text" name="totalPrice" value="${totalPrice}" readonly/></td>
+								<td><input type="text" name="totalPrice" value="${rv.totalPrice}" readonly/></td>
 							</tr>
 							<tr>
 								<td>결제 수단 :</td>
@@ -123,37 +117,37 @@
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<script>
 			$(document).ready(function(){
-				$('input[type="checkbox"][name="reserv_pickup"]').click(function(){
+				$('input[type="checkbox"][name="pickup"]').click(function(){
 					if($(this).prop('checked')){
-						$('input[type="checkbox"][name="reserv_pickup"]').prop('checked',false);
+						$('input[type="checkbox"][name="pickup"]').prop('checked',false);
 						$(this).prop('checked',true); 
 					}
 				});
 			});
 		 	$("#infoCheck").change(function(){
 		 		if($("#infoCheck").is(":checked")){
-		 			$('input[name=reserv_memberName]').attr('value',${mv.memberName});
-		 			$('input[name=reserv_memberBirth]').attr('value',${mv.memberBirth});
-		 			$('input[name=reserv_memberPhone]').attr('value',${mv.memberPhone});
-		 			$('input[name=reserv_memberEmail]').attr('value',${mv.memberEmail});
+		 			$('input[name=memberName]').attr('value',${mv.memberName});
+		 			$('input[name=memberBirth]').attr('value',${mv.memberBirth});
+		 			$('input[name=memberPhone]').attr('value',${mv.memberPhone});
+		 			$('input[name=memberEmail]').attr('value',${mv.memberEmail});
 		 		}
 		 		else{
-		 			$('input[name=reserv_memberName]').attr('value','');
-		 			$('input[name=reserv_memberBirth]').attr('value','');
-		 			$('input[name=reserv_memberPhone]').attr('value','');
-		 			$('input[name=reserv_memberEmail]').attr('value','');
+		 			$('input[name=memberName]').attr('value','');
+		 			$('input[name=memberBirth]').attr('value','');
+		 			$('input[name=memberPhone]').attr('value','');
+		 			$('input[name=memberEmail]').attr('value','');
 		 		}
 		 	});
 		 	
 		 	function pay(){
-		 		alert($('input[name=reserv_memberBirth]').val());
-		 		var memberName=$('input[name=reserv_memberName]').val();
-		 		var memberBirth=$('input[name=reserv_memberBirth]').val();
-		 		var memberPhone=$('input[name=reserv_memberPhone]').val();
-		 		var extraPhone=$('input[name=reserv_extraPhone]').val();
-		 		var memberEmail=$('input[name=reserv_memberEmail]').val();
-		 		var pickup=$('input[name=reserv_pickup]').val();
-		 		var arriveTime=$('input[name=reserv_arriveTime]').val();
+		 		alert($('input[name=memberBirth]').val());
+		 		var memberName=$('input[name=memberName]').val();
+		 		var memberBirth=$('input[name=memberBirth]').val();
+		 		var memberPhone=$('input[name=memberPhone]').val();
+		 		var extraPhone=$('input[name=extraPhone]').val();
+		 		var memberEmail=$('input[name=memberEmail]').val();
+		 		var pickup=$('input[name=pickup]').val();
+		 		var arriveTime=$('input[name=arriveTime]').val();
 		 		if(memberName==""){
 		 			alert("예약자명을 입력해주세요.");
 		 		}

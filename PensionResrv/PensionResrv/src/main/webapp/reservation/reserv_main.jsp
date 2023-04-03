@@ -64,7 +64,7 @@
 						</div>	
 						<div id="roomName">
 							<a href="#roomName_popup" id="rName">방 이름</a>
-							<input type="text" id="select_roomName" name="select_roomName" readonly
+							<input type="text" id="select_roomName" name="roomName" readonly
 									style="display:none"/>
 						</div>
 						<div id="roomName_popup" style="display:none;border:1px solid black;">

@@ -2,7 +2,7 @@ package domain;
 
 public class ReservVo {
 	private int reservNo,adultNum,childNum,babyNum,totalPay,memberNo,roomNo,optionNum;
-	private String checkIn, checkOut,extraPhone, arriveTime, request,pickup;;
+	private String checkIn, checkOut,extraPhone, arriveTime, request,pickup;
 	private char payYn;
 	public String getPickup() {
 		return pickup;

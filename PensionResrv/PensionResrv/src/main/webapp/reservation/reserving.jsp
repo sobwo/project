@@ -165,7 +165,7 @@
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<input type="text" name="test" value="test">
 		<script>		
-			$(document).ready(function(){ //확인해볼것
+			$(document).ready(function(){
 				var length = $('input[id=roomNameCheck]').length;
 				var roomNameCheck = $('input[name=roomNameCheck]');
 				var roomNo = $('input[name=roomNo]').val();
@@ -231,9 +231,16 @@
 				
 				var price = $(this).siblings("p").text();
 				var index = price.indexOf("원");
+				var num = 0;
 				price = price.substring(0,index);
 				
-				if(rBtn_option=="1"){
+				for(int i=0;i<3;i++){
+					if($('input[name=room_check]').eq(i).val()=="2") num++;
+				}
+
+				if(num>1) alert("방은 1개만 선택할 수 있습니다."); 
+
+				else if(rBtn_option=="1"){
 					totalPrice = parseInt(totalPrice) + parseInt(price);
 					
 					$("input[name=totalPrice]").attr("value",totalPrice);
