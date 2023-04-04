@@ -19,16 +19,15 @@
 			});
 			function search(){
 				var fm = document.frm;
-				fm.action = "${pageContext.request.contextPath}/board/boardList.do";
+				fm.action = "${pageContext.request.contextPath}/board/boardNoti.do";
 				fm.method = "post";
 				fm.submit();
 			}
 			
 			function changePage(){
-				alert("");
 				var dataPerPage = $("#dataPerPage").val();
 				var fm2 = document.frm2;
-				fm2.action = "${pageContext.request.contextPath}/board/boardList.do?page=${pm.getScri().getPage()}&dataPerPage="+dataPerPage+"&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}";
+				fm2.action = "${pageContext.request.contextPath}/board/boardNoti.do&page=${pm.getScri().getPage()}&dataPerPage="+dataPerPage+"&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}";
 				fm2.method = "post";
 				fm2.submit();
 			} 
@@ -49,16 +48,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="bv" items="${boardList}">
+					<c:forEach var="bv" items="${boardNoti}">
 					<tr class="board_col">
 						<td style="text-align:center;">${bv.bidx}</td>
 						<td style="overflow:hidden">
-							<c:forEach var="i" begin="1" end="${bv.level_}" step="1">
-								out.println("&nbsp;");
-								<c:if test="${i==bv.level_}">
-									out.println("&#8618;");
-								</c:if>
-							</c:forEach>
 							<a href="${pageContext.request.contextPath}/board/boardContents.do?bidx=${bv.bidx}">${bv.subject}</a>
 						</td>		
 						<td>${bv.writer}</td>
@@ -80,13 +73,13 @@
 						</span>
 						<span class = "pagingNum">
 							<c:if test="${pm.prev==true}">
-								<a href="${pageContext.request.contextPath}/board/boardList.do?page=${pm.startPage-1}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">◁이전</a>
+								<a href="${pageContext.request.contextPath}/board/boardNoti.do?page=${pm.startPage-1}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">◁이전</a>
 							</c:if>
 							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-								<a href="${pageContext.request.contextPath}/board/boardList.do?page=${i}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">${i}</a>
+								<a href="${pageContext.request.contextPath}/board/boardNoti.do?page=${i}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">${i}</a>
 							</c:forEach>
 							<c:if test="${pm.next && pm.endPage>0}">
-								<a href="${pageContext.request.contextPath}/board/boardList.do?page=${pm.endPage+1}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">다음▷</a>
+								<a href="${pageContext.request.contextPath}/board/boardNoti.do?page=${pm.endPage+1}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">다음▷</a>
 							</c:if>
 						</span>
 					</div>

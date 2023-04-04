@@ -11,20 +11,29 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script>
 			$(document).ready(function(){
-				if(${dataPerPage}==10)
-					$("#dataPerPage").val("10").prop("selected",true);
-				else if(${dataPerPage}==15)
-					$("#dataPerPage").val("15").prop("selected",true);
-				else if(${dataPerPage}==20)
-					$("#dataPerPage").val("20").prop("selected",true);
+				if(${dataPerPage_faq}==10)
+					$("#dataPerPage_faq").val("10").prop("selected",true);
+				else if(${dataPerPage_faq}==15)
+					$("#dataPerPage_faq").val("15").prop("selected",true);
+				else if(${dataPerPage_faq}==20)
+					$("#dataPerPage_faq").val("20").prop("selected",true);
 			});
-			function search(){
+			
+			function changePage(){
+				alert();
+				var dataPerPage_faq = $("#dataPerPage_faq").val();
 				var fm = document.frm;
-				fm.action = "${pageContext.request.contextPath}/board/boardList.do";
+				fm.action = "${pageContext.request.contextPath}/board/faq.do?page=${pm_faq.getScri().getPage()}&dataPerPage="+dataPerPage_faq+"&searchOption=${pm_faq.scri.searchOption}&searchContext=${pm_faq.encoding(pm_faq.scri.searchContext)}";
 				fm.method = "post";
 				fm.submit();
-			}
+			} 
 			
+// 			function search(){
+// 				var fm = document.frm;
+// 				fm.action = "${pageContext.request.contextPath}/board/boardListAction.do";
+// 				fm.method = "post";
+// 				fm.submit();
+// 			}
 		</script>
 	</head>
 	<body>
@@ -44,44 +53,38 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="bv" items="${boardList}">
+						<c:forEach var="faq" items="${faq}">
 						<tr class="board_col">
-							<td style="text-align:center;">${bv.bidx}</td>
+							<td style="text-align:center;">${faq.bidx}</td>
 							<td style="overflow:hidden">
-								<c:forEach var="i" begin="1" end="${bv.level_}" step="1">
-									out.println("&nbsp;");
-									<c:if test="${i==bv.level_}">
-										out.println("&#8618;");
-									</c:if>
-								</c:forEach>
-								<a href="${pageContext.request.contextPath}/board/boardContents.do?bidx=${bv.bidx}">${bv.subject}</a>
+								<a href="${pageContext.request.contextPath}/board/boardContents.do?bidx=${faq.bidx}">${faq.subject}</a>
 							</td>		
-							<td>${bv.writer}</td>
-							<td>${bv.writeday}</td>
-							<td>${bv.viewCnt}</td>
+							<td>${faq.writer}</td>
+							<td>${faq.writeday}</td>
+							<td>${faq.viewCnt}</td>
 						</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 				<div id="bottom_wrap">	
-					<form name="frm2">	
+					<form name="frm">	
 						<div id="paging">
-							<span>
-								<select id="dataPerPage" name="dataPerPage" onchange="changePage()">
+							<span style="display:none;">
+								<select id="dataPerPage_faq" name="dataPerPage_faq" onchange="changePage()">
 			        				<option value="10" id="10">10개씩보기</option>
 			        				<option value="15" id="15">15개씩보기</option>
 			        				<option value="20" id="20">20개씩보기</option>
 								</select>
 							</span>
 							<span class = "pagingNum">
-								<c:if test="${pm.prev==true}">
-									<a href="${pageContext.request.contextPath}/board/boardList.do?page=${pm.startPage-1}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">◁이전</a>
+								<c:if test="${pm_faq.prev==true}">
+									<a href="${pageContext.request.contextPath}/board/faq.do?page=${pm_faq.startPage-1}&dataPerPage=${dataPerPage}&searchOption=${pm_faq.scri.searchOption}&searchContext=${pm_faq.encoding(pm_faq.scri.searchContext)}">◁이전</a>
 								</c:if>
-								<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-									<a href="${pageContext.request.contextPath}/board/boardList.do?page=${i}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">${i}</a>
+								<c:forEach var="i" begin="${pm_faq.startPage}" end="${pm_faq.endPage}" step="1">
+									<a href="${pageContext.request.contextPath}/board/faq.do?page=${i}&dataPerPage=${dataPerPage}&searchOption=${pm_faq.scri.searchOption}&searchContext=${pm_faq.encoding(pm_faq.scri.searchContext)}">${i}</a>
 								</c:forEach>
-								<c:if test="${pm.next && pm.endPage>0}">
-									<a href="${pageContext.request.contextPath}/board/boardList.do?page=${pm.endPage+1}&dataPerPage=${dataPerPage}&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}">다음▷</a>
+								<c:if test="${pm_faq.next && pm_faq.endPage>0}">
+									<a href="${pageContext.request.contextPath}/board/faq.do?page=${pm_faq.endPage+1}&dataPerPage=${dataPerPage}&searchOption=${pm_faq.scri.searchOption}&searchContext=${pm_faq.encoding(pm_faq.scri.searchContext)}">다음▷</a>
 								</c:if>
 							</span>
 						</div>
@@ -124,7 +127,7 @@
 					</tbody>
 				</table>
 				<div id="bottom_wrap">	
-					<form name="frm2">	
+					<form>	
 						<div id="paging">
 							<span>
 								<select id="dataPerPage" name="dataPerPage" onchange="changePage()">

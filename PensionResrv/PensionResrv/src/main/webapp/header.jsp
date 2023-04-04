@@ -32,12 +32,12 @@
 			</div>
 			<nav id="main_nav">
 				<ul>
-					<li><a href="${pageContext.request.contextPath}/board/boardNoti.jsp">공지사항</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/boardNoti.do?">공지사항</a></li>
 					<li><a href="#">객실 안내</a></li>
 					<li><a href="${pageContext.request.contextPath}/reservation/reserv_status.jsp">실시간 예약</a></li>
 					<li><a href="${pageContext.request.contextPath}/reservation/reserv_check.do">예약확인/취소</a></li>
 					<li><a href="#">오시는길</a></li>
-					<li><a href="${pageContext.request.contextPath}/board/faq.jsp">FAQ</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/faq.do">FAQ</a></li>
 				</ul>
 			</nav>
 		</header>

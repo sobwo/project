@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import domain.BoardVo;
 import domain.MemberVo;
 import domain.ReservVo;
 import domain.RoomVo;
+import service.BoardDao;
 import service.MemberDao;
 import service.ReservDao;
 import service.RoomDao;
@@ -32,9 +34,15 @@ public class ReservController extends HttpServlet {
     	if(str.equals("/reservation/reserv_main.do")) {
     		System.out.println("reserv_main.do 들어옴");
     		ArrayList<RoomVo> rlist = new ArrayList<>();
-    		RoomDao roomd = new RoomDao();
-    		rlist = roomd.selectAll();
+    		ArrayList<BoardVo> blist = new ArrayList<>();
     		
+    		RoomDao roomd = new RoomDao();
+    		BoardDao bd = new BoardDao();
+    		
+    		rlist = roomd.selectAll();
+    		blist = bd.reserv_main_board();
+    		
+    		request.setAttribute("blist", blist);
     		request.setAttribute("rlist", rlist);
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_main.jsp");
 			rd1.forward(request, response);
@@ -208,9 +216,10 @@ public class ReservController extends HttpServlet {
     		ReservDao rd = new ReservDao();
  
     		HttpSession session = request.getSession();
-    		int memberNo = (int)session.getAttribute("memberNo");
+    		int memberNo = 0;
+    		if(session.getAttribute("memberNo")==null) memberNo=0;
+    		else memberNo=(int)session.getAttribute("memberNo");
     		
-    		System.out.println("memberNo="+memberNo);
     		ArrayList<ReservVo> rlist = rd.selectReserv(memberNo);
     		
     		request.setAttribute("rlist", rlist);

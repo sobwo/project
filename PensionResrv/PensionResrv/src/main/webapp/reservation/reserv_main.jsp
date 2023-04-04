@@ -110,21 +110,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="bv" items="${boardList}">
+						<c:forEach var="blist" items="${blist}">
 						<tr class="board_col">
-							<td style="text-align:center;">${bv.bidx}</td>
+							<td style="text-align:center;">${blist.bidx}</td>
 							<td style="overflow:hidden">
-								<c:forEach var="i" begin="1" end="7" step="1">
-									out.println("&nbsp;");
-									<c:if test="${i==7}">
-										out.println("&#8618;");
-									</c:if>
-								</c:forEach>
-								<a href="${pageContext.request.contextPath}/board/boardContents.do?bidx=${bv.bidx}">${bv.subject}</a>
+								<a href="${pageContext.request.contextPath}/board/boardContents.do?bidx=${blist.bidx}">${blist.subject}</a>
 							</td>		
-							<td>${bv.writer}</td>
-							<td>${bv.writeday}</td>
-							<td>${bv.viewCnt}</td>
+							<td>${blist.writer}</td>
+							<td>${blist.writeday}</td>
+							<td>${blist.viewCnt}</td>
 						</tr>
 						</c:forEach>
 					</tbody>

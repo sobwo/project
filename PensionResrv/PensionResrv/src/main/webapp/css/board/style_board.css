@@ -26,11 +26,13 @@
   font-size:18px;
   line-height:30px;
   border-bottom: 1px solid #e4e4e4;
+  vertical-align:middle;
 }
 
 #main_board td {
   text-align: center;
   border-bottom: 1px solid #e4e4e4;
+  vertical-align:middle;
 }
 
 #main_board th:nth-child(1) {
