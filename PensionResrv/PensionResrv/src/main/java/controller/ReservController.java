@@ -67,7 +67,7 @@ public class ReservController extends HttpServlet {
     		else child = Integer.parseInt(request.getParameter("child"));
     		if(request.getParameter("baby")==null) baby=0;
     		else baby = Integer.parseInt(request.getParameter("baby"));
-    		if(request.getParameter("select_roomName")==null) roomName = "0호";
+    		if(request.getParameter("roomName")==null) roomName = "0호";
     		else roomName = request.getParameter("roomName");
     		int roomNo = rd.selectRoomNo(roomName);
     		
@@ -92,9 +92,9 @@ public class ReservController extends HttpServlet {
     		ReservVo rv = null;
     		String[] roomNo = request.getParameterValues("rlist_roomNo");
     		String[] roomName_list = request.getParameterValues("rlist_roomName");
-    		String[] adult_num = request.getParameterValues("adultNum");
-    		String[] child_num = request.getParameterValues("childNum");
-    		String[] baby_num = request.getParameterValues("babyNum");    		
+    		String[] adultNum = request.getParameterValues("adultNum");
+    		String[] childNum = request.getParameterValues("childNum");
+    		String[] babyNum = request.getParameterValues("babyNum");    		
     		String checkIn = request.getParameter("checkIn");
     		String checkOut = request.getParameter("checkOut");
     		int option_value = Integer.parseInt(request.getParameter("option_value"));
@@ -109,15 +109,16 @@ public class ReservController extends HttpServlet {
     				rv.setRoomNo(Integer.parseInt(roomNo[i]));
     				rv.setCheckIn(checkIn);
     				rv.setCheckOut(checkOut);
-    				rv.setAdultNum(Integer.parseInt(adult_num[i]));
-    				rv.setChildNum(Integer.parseInt(child_num[i]));
-    				rv.setBabyNum(Integer.parseInt(baby_num[i]));
+    				rv.setAdultNum(Integer.parseInt(adultNum[i]));
+    				rv.setChildNum(Integer.parseInt(childNum[i]));
+    				rv.setBabyNum(Integer.parseInt(babyNum[i]));
     				rv.setOptionNum(option_value);
     				rv.setTotalPay(totalPrice);
     				
     				roomName = roomName_list[i];
     			}
     		}
+    		
     		request.setAttribute("roomName", roomName);
     		request.setAttribute("rv", rv);
     		
@@ -158,22 +159,23 @@ public class ReservController extends HttpServlet {
     		String memberBirth = request.getParameter("memberBirth");
     		String memberPhone = request.getParameter("memberPhone");
     		String memberEmail = request.getParameter("memberEmail");
-    		
+		
     		String extraPhone = request.getParameter("extraPhone");
     		String pickup = request.getParameter("pickup");
     		String arriveTime = request.getParameter("arriveTime");
     		String request_ = request.getParameter("request");
-    		
+
     		mv.setMemberName(memberName);
     		mv.setMemberBirth(memberBirth);
     		mv.setMemberPhone(memberPhone);
     		mv.setMemberEmail(memberEmail);
     		
     		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-    		
     		if(memberNo==0) {
     			md.OffrineMemberInsert(mv);
     		}
+    		
+    		MemberVo value_member = md.memberLoginOff(mv);
     		
 			rv.setRoomNo(roomNo);
 			rv.setCheckIn(checkIn);
@@ -187,15 +189,48 @@ public class ReservController extends HttpServlet {
     		rv.setPickup(pickup);
     		rv.setArriveTime(arriveTime);
     		rv.setRequest(request_);
-			rv.setMemberNo(memberNo);   // reservation 테이블에서 memberNo를 외래키로 가지는게 아닌
-										// member테이블에서 reservNo를 외래키로 가지게 설정할 것
-    			
+    		rv.setMemberNo(value_member.getMemberNo());
+    		
     		int value = rd.reservInsert(rv);
+
+    		if(value==1) {
+				response.setContentType("text/html; charset=UTF-8");
+			    PrintWriter out = response.getWriter();
+			    out.println("<script>alert('예약 완료');location.href='"+request.getContextPath()+"/reservation/reserv_check.do'</script>");
+			    out.flush();
+			    return;
+    		}
+    		
+    	}
+    	else if(str.equals("/reservation/reserv_check.do")) {
+    		System.out.println("reserv_check.do 들어옴");
+    		
+    		ReservDao rd = new ReservDao();
+ 
+    		HttpSession session = request.getSession();
+    		int memberNo = (int)session.getAttribute("memberNo");
+    		
+    		System.out.println("memberNo="+memberNo);
+    		ArrayList<ReservVo> rlist = rd.selectReserv(memberNo);
+    		
+    		request.setAttribute("rlist", rlist);
+    		RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_check.jsp");
+			rd1.forward(request, response);
+    	}
+    	
+    	else if(str.equals("/reservation/reserv_cancel.do")) {
+    		System.out.println("reserv_cancel.do 들어옴");
+    		
+    		ReservDao rd = new ReservDao();
+    		
+    		int reservNo = Integer.parseInt(request.getParameter("reservNo"));
+    		
+    		int value = rd.reservCancel(reservNo);
     		
     		if(value==1) {
 				response.setContentType("text/html; charset=UTF-8");
 			    PrintWriter out = response.getWriter();
-			    out.println("<script>alert('예약 완료');location.href='"+request.getContextPath()+"/reservation/reserv_status.do'</script>");
+			    out.println("<script>alert('예약 취소 완료');location.href='"+request.getContextPath()+"/reservation/reserv_check.do'</script>");
 			    out.flush();
 			    return;
     		}

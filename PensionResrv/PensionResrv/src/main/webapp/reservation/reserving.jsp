@@ -164,12 +164,12 @@
 		</div>
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<input type="text" name="test" value="test">
-		<script>		
+		<script>	
+
 			$(document).ready(function(){
 				var length = $('input[id=roomNameCheck]').length;
 				var roomNameCheck = $('input[name=roomNameCheck]');
 				var roomNo = $('input[name=roomNo]').val();
-				
 				for(var i=0;i<length;i++){
 					if(roomNameCheck.eq(i).val()==roomNo){
 						$('input[name=roomNameCheck]').eq(i).siblings("input[type='button']").trigger("click");
@@ -228,25 +228,26 @@
 			$(document).on("click","#rBtn",function(){
 				var totalPrice = $("input[name=totalPrice]").val();
 				var rBtn_option = $(this).closest("div").find("input[type='text']").val();
-				
+				var num = $('input[name=room_check]').length;
 				var price = $(this).siblings("p").text();
 				var index = price.indexOf("원");
-				var num = 0;
+				
 				price = price.substring(0,index);
 				
-				for(int i=0;i<3;i++){
-					if($('input[name=room_check]').eq(i).val()=="2") num++;
+				for(var i=0;i<$('input[name=room_check]').length;i++){
+					if($('input[name=room_check]').eq(i).val()=="2") num--;
 				}
-
-				if(num>1) alert("방은 1개만 선택할 수 있습니다."); 
-
-				else if(rBtn_option=="1"){
-					totalPrice = parseInt(totalPrice) + parseInt(price);
-					
+				
+				if(rBtn_option=="1" && num==3){
+					totalPrice = parseInt(totalPrice) + parseInt(price); 
 					$("input[name=totalPrice]").attr("value",totalPrice);
 					$(this).css('background-color','rgb(211, 0, 0)');
 					$(this).closest("div").find("input[type='text']").attr("value","2");
 				}
+				
+				else if(rBtn_option=="1" && num<3)
+					alert("방을 1개만 선택해주세요.");
+				
 				else if(rBtn_option=="2"){
 					totalPrice = parseInt(totalPrice) - parseInt(price);
 					

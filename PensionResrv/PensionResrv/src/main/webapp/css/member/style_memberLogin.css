@@ -43,7 +43,7 @@
 	margin-bottom:15px;
 }
 
-#login_btn input, #login_kakao input,#searchInfo input{
+#login_btn input, #login_kakao input,#searchInfo input, #login_off input{
 	width:600px;
 	height:45px;
 	margin-bottom:15px;
@@ -61,6 +61,11 @@
 #login_kakao input{
 	background:#f1c40f
 }
+
+#login_off input{
+	background:gray;
+}
+
 #searchInfo input{
 	width:180px;
 	height:45px;

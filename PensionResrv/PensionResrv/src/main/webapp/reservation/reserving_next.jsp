@@ -35,9 +35,9 @@
 								<td><input type="text" name="roomName" value="${roomName}"readonly/></td>
 								<td><input type="text" name="checkIn" value="${rv.checkIn}"readonly/></td>
 								<td><input type="text" name="checkOut" value="${rv.checkOut}" readonly/></td>
-								<td>성인:<input type="text" name="adultNum" value="${rv.adultNum}" readonly><br/>아동:<input type="text" name="childNum" value="${rlist.childNum}" readonly/><br/>유아:<input type="text" name="babyNum" value="${rlist.babyNum}" readonly/></td>
+								<td>성인:<input type="text" name="adultNum" value="${rv.adultNum}" readonly><br/>아동:<input type="text" name="childNum" value="${rv.childNum}" readonly/><br/>유아:<input type="text" name="babyNum" value="${rv.babyNum}" readonly/></td>
 								<td>숯,그릴:<input type="text" name="optionNum" value="${rv.optionNum}" readonly/></td>
-								<td><input type="text" name="select_totalPrice" value="${rv.totalPrice}" readonly/></td>
+								<td><input type="text" name="totalPrice" value="${rv.totalPay}" readonly/></td>
 						</tbody>
 					</table>
 				</div>
@@ -49,7 +49,7 @@
 							<p>등록된 정보입력</p>
 						</div>
 						<div id="insertInfo_contents">
-							<input type="text" name="reserv_memberNo" value="${memberNo}" style="display:none">
+							<input type="text" name="memberNo" value="${memberNo}" style="display:none">
 							<table id="insertInfo_table">
 								<tr>		
 									<td>예약자명 : </td>
@@ -96,7 +96,7 @@
 						<table>
 							<tr>
 								<td>총 결제금액 :&nbsp;&nbsp;</td>
-								<td><input type="text" name="totalPrice" value="${rv.totalPrice}" readonly/></td>
+								<td><input type="text" name="totalPrice" value="${rv.totalPay}" readonly/></td>
 							</tr>
 							<tr>
 								<td>결제 수단 :</td>
@@ -140,7 +140,6 @@
 		 	});
 		 	
 		 	function pay(){
-		 		alert($('input[name=memberBirth]').val());
 		 		var memberName=$('input[name=memberName]').val();
 		 		var memberBirth=$('input[name=memberBirth]').val();
 		 		var memberPhone=$('input[name=memberPhone]').val();

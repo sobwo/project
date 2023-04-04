@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.MemberVo;
+import domain.ReservVo;
 import service.MemberDao;
+import service.ReservDao;
 
 @WebServlet("/MemberController")
 public class MemberController extends HttpServlet {
@@ -33,7 +36,6 @@ public class MemberController extends HttpServlet {
 			System.out.println("memberLoginAction 들어옴");
 			String memberId = request.getParameter("memberId");
 			String memberPw = request.getParameter("memberPw");
-
 			MemberDao md = new MemberDao();
 			MemberVo mv = md.memberLogin(memberId,memberPw);
 					
@@ -55,6 +57,43 @@ public class MemberController extends HttpServlet {
 				response.sendRedirect(request.getContextPath()+"/");
 			}
 			
+		}
+		
+		else if(str.equals("/member/memberLoginOffAction.do")) {
+			System.out.println("memberLoginOff.do 들어옴");
+			
+			MemberDao md = new MemberDao();
+			MemberVo mv = new MemberVo();
+			
+			String memberName = request.getParameter("memberName");
+			String memberBirth = request.getParameter("memberBirth");
+			String memberPhone = request.getParameter("memberPhone");
+			String memberEmail = request.getParameter("memberEmail");
+			
+			mv.setMemberName(memberName);
+			mv.setMemberBirth(memberBirth);
+			mv.setMemberPhone(memberPhone);
+			mv.setMemberEmail(memberEmail);
+			
+			MemberVo mv_value = md.memberLoginOff(mv);
+			
+			if(mv_value==null) {
+				response.setContentType("text/html; charset=UTF-8");
+			    PrintWriter out = response.getWriter();
+			    out.println("<script>alert('정보가 일치하지 않습니다.');history.go(-1);</script>");
+			    out.flush();
+			    return;
+			}
+			else {
+				int memberNoOff = mv_value.getMemberNo();
+				String memberNameOff = mv_value.getMemberName();
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("memberNo", memberNoOff);
+				session.setAttribute("memberName", memberNameOff);
+				
+				response.sendRedirect(request.getContextPath()+"/");
+			}
 		}
 		
 		else if(str.equals("/member/memberLogoutAction.do")) {
@@ -127,17 +166,21 @@ public class MemberController extends HttpServlet {
 			System.out.println("memberInfo.do 들어옴");
 			HttpSession session = request.getSession();
 			int memberNo = 0;
-			if(session.getAttribute("memberNo")==null) memberNo = 10001;
+			if(session.getAttribute("memberNo")==null) memberNo = 0;
 			else memberNo = (int) session.getAttribute("memberNo");
-			MemberVo mv = new MemberVo();
+			
+			
+			ReservDao rd = new ReservDao();
+			
 			MemberDao md = new MemberDao();
 			
-			mv = md.selectInfo(memberNo);
+			MemberVo mv = md.selectInfo(memberNo);
+			ArrayList<ReservVo> rlist = rd.selectReserv(memberNo);
 			
 			request.setAttribute("mv", mv);
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/member/memberInfo.jsp");
-			rd.forward(request, response);
+			request.setAttribute("rlist", rlist);
+			RequestDispatcher rd1 = request.getRequestDispatcher("/member/memberInfo.jsp");
+			rd1.forward(request, response);
 		}
 		
 		else if(str.equals("/member/memberInfoModifyAction.do")) {

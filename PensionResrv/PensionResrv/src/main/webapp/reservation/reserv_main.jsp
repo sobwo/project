@@ -138,7 +138,7 @@
 		</main>
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<script>
-			$(document).ready(function(){
+			$(document).ready(function(){		
 				$('#adult_minusBtn').click(function(){
 					var adult_minus = $('#adult_value').val();
 					if(adult_minus > 0){

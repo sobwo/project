@@ -74,6 +74,7 @@ public class MemberDao {
 
 	public MemberVo memberLogin(String memberId, String memberPw) {
 		MemberVo mv = null;
+		
 		String sql = "select * from member where memberId =? and memberPw = ? and delYn='N' and joinYn='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -88,12 +89,8 @@ public class MemberDao {
 			if(rs.next()) {
 				mv = new MemberVo();
 				mv.setMemberNo(rs.getInt("memberNo"));
-				mv.setMemberId(rs.getString("memberId"));
-				mv.setMemberPw(rs.getString("memberPw"));
 				mv.setMemberName(rs.getString("memberName"));
-				mv.setMemberBirth(rs.getString("memberBirth"));
-				mv.setMemberPhone(rs.getString("memberPhone"));
-				mv.setMemberEmail(rs.getString("memberEmail"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,6 +105,7 @@ public class MemberDao {
 		}	
 		return mv;
 	}
+	
 	
 	public MemberVo selectInfo(int memberNo){
 		MemberVo mv = null;
@@ -231,17 +229,22 @@ public class MemberDao {
 		return value;
 	}
 	
-	public int selectMemberNo(String memberName) {
-		int value = 0;
+	public MemberVo memberLoginOff(MemberVo mv) {
+		MemberVo value = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql="select memberNo from member where memberName=? and joinYn='N'";
+		String sql="select * from member where memberName=?and memberBirth=? and memberEmail=? and memberPhone=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,memberName);
+			pstmt.setString(1,mv.getMemberName());
+			pstmt.setString(2,mv.getMemberBirth());
+			pstmt.setString(3,mv.getMemberEmail());
+			pstmt.setString(4,mv.getMemberPhone());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				value = rs.getInt("memberNo");
+				value=new MemberVo();
+				value.setMemberNo(rs.getInt("memberNo"));
+				value.setMemberName(rs.getString("memberName"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -250,6 +253,7 @@ public class MemberDao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

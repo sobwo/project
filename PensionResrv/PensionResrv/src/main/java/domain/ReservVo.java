@@ -1,9 +1,26 @@
 package domain;
 
 public class ReservVo {
-	private int reservNo,adultNum,childNum,babyNum,totalPay,memberNo,roomNo,optionNum;
-	private String checkIn, checkOut,extraPhone, arriveTime, request,pickup;
+	private int reservNo,memberNo,adultNum,childNum,babyNum,totalPay,roomNo,optionNum;
+	private String checkIn, checkOut,extraPhone, arriveTime, request,pickup,roomName;
 	private char payYn;
+	
+	public String getRoomName() {
+		return roomName;
+	}
+
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
 	public String getPickup() {
 		return pickup;
 	}
@@ -71,12 +88,6 @@ public class ReservVo {
 	}
 	public void setTotalPay(int totalPay) {
 		this.totalPay = totalPay;
-	}
-	public int getMemberNo() {
-		return memberNo;
-	}
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
 	}
 	public int getRoomNo() {
 		return roomNo;

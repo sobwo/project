@@ -35,8 +35,11 @@
 					<div id="login_btn">
 						<span><input type="button" value="로그인" onclick="login()"></span>
 					</div>
-					<div id="login_kakao">
-						<span><input type="button" value="카카오톡으로 로그인"></span>
+<!-- 					<div id="login_kakao"> -->
+<!-- 						<span><input type="button" value="카카오톡으로 로그인"></span> -->
+<!-- 					</div> -->
+					<div id="login_off">
+						<span><input type="button" value="비회원으로 로그인" onclick="onclick=location.href='${pageContext.request.contextPath}/member/memberLogin_off.jsp'"></span>
 					</div>
 				</form>
 				<div id="searchInfo">
