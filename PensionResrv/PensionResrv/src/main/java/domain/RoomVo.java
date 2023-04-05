@@ -2,8 +2,7 @@ package domain;
 
 public class RoomVo {
 	private int roomNo,price,sqft;
-	private String roomName,capacity,numOfRoom;
-	private char reservYn;
+	private String roomName,capacity,numOfRoom,reservYn;
 	
 	public String getNumOfRoom() {
 		return numOfRoom;
@@ -41,10 +40,10 @@ public class RoomVo {
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
-	public char getReservYn() {
+	public String getReservYn() {
 		return reservYn;
 	}
-	public void setReservYn(char reservYn) {
+	public void setReservYn(String reservYn) {
 		this.reservYn = reservYn;
 	}
 }

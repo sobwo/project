@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import domain.BoardVo;
 import domain.MemberVo;
 import domain.ReservVo;
+import domain.RoomPriceVo;
 import domain.RoomVo;
 import service.BoardDao;
 import service.MemberDao;
@@ -38,18 +39,32 @@ public class ReservController extends HttpServlet {
     		
     		RoomDao roomd = new RoomDao();
     		BoardDao bd = new BoardDao();
+    		HttpSession session = request.getSession();
     		
     		rlist = roomd.selectAll();
     		blist = bd.reserv_main_board();
     		
     		request.setAttribute("blist", blist);
     		request.setAttribute("rlist", rlist);
+    		
+    		String url=request.getContextPath()+"/reservation/reserv_main.do";
+    		session.setAttribute("url", url);
+ 
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_main.jsp");
 			rd1.forward(request, response);
     	}
     	
     	else if(str.equals("/reservation/reserv_status.do")) {
     		System.out.println("reserv_status.do 들어옴");
+    		
+    		RoomDao rd = new RoomDao();
+    		
+    		ArrayList<RoomPriceVo> rpv = rd.roomCalendar();
+    		
+    		
+    		HttpSession session = request.getSession();
+    		String url=request.getContextPath()+"/reservation/reserv_status.do";
+    		session.setAttribute("url", url);
     		
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_status.jsp");
 			rd1.forward(request, response);
@@ -90,6 +105,10 @@ public class ReservController extends HttpServlet {
     		
     		rlist = roomd.selectAll();
     		request.setAttribute("rlist", rlist);
+    		
+    		HttpSession session = request.getSession();
+    		String url=request.getContextPath()+"/reservation/reserveAction.do";
+    		session.setAttribute("url", url);
     		
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserving.jsp");
 			rd1.forward(request, response);
@@ -223,6 +242,10 @@ public class ReservController extends HttpServlet {
     		ArrayList<ReservVo> rlist = rd.selectReserv(memberNo);
     		
     		request.setAttribute("rlist", rlist);
+    		
+    		String url=request.getContextPath()+"/reservation/reserv_check.do";
+    		session.setAttribute("url", url);
+    		
     		RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_check.jsp");
 			rd1.forward(request, response);
     	}

@@ -23,7 +23,7 @@
 						<a href="${pageContext.request.contextPath}/reservation/reserveAction.do">예약하기</a>
 					</div>
 					<div style="width:130px;">
-						<a href="${pageContext.request.contextPath}/reservation/reserv_check.jsp">예약확인/취소</a>
+						<a href="${pageContext.request.contextPath}/reservation/reserv_check.do">예약확인/취소</a>
 					</div>
 				</div>
 				<div id="pensionInfo_wrap">
@@ -75,7 +75,17 @@
 								<div class="roomInfo_inner">
 									<div class="roomImage"></div>
 									<div class="roomInfo_inner_m">
-										<p style="background:#20de07; color:#fff;">예약 가능</p><br/>
+										<c:choose>
+											<c:when test="${rlist.reservYn=='Y'}">
+												<p style="background:#20de07; color:#fff;">예약 가능</p><br/>
+											</c:when>
+											<c:when test="${rlist.reservYn=='I'}">
+												<p style="background:#ffd400; color:#fff;">예약 진행</p><br/>
+											</c:when>
+											<c:when test="${rlist.reservYn=='N'}">
+												<p style="background:##f05650; color:#fff;">예약 완료</p><br/>
+											</c:when>
+										</c:choose>
 										<input type="text" id="rlist_roomNo" name="rlist_roomNo" value="${rlist.roomNo}"
 												style="display:none"/>
 										<p>${rlist.roomName}</p><br/>

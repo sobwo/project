@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dbconn.Dbconn;
+import domain.RoomPriceVo;
 import domain.RoomVo;
 
 public class RoomDao {
@@ -35,7 +36,7 @@ private Connection conn;
 				rmv.setPrice(rs.getInt("price"));
 				rmv.setCapacity(rs.getString("capacity"));
 				rmv.setSqft(rs.getInt("sqft"));
-				rmv.setReservYn(rs.getString("reservYn").charAt(0));
+				rmv.setReservYn(rs.getString("reservYn"));
 				rmv.setNumOfRoom(rs.getString("numOfRoom"));
 				
 				rlist.add(rmv);
@@ -52,6 +53,39 @@ private Connection conn;
 				e.printStackTrace();
 			}
 		}	
+		return rlist;
+	}
+	
+	public ArrayList<RoomPriceVo> roomCalendar(){
+		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
+		RoomPriceVo rpv = null;
+		
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		
+		String sql = "select * from room a, roomPrice b where a.roomno = b.roomno";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				rpv = new RoomPriceVo();
+				rpv.setRoomNo(rs.getInt("roomNo"));
+				rpv.setRoomName(rs.getString("roomName"));
+				rpv.setReservYn(rs.getString("ReservYn"));
+				rpv.setPricePerDay(rs.getInt("pricePerDay"));
+				rlist.add(rpv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return rlist;
 	}
 

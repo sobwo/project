@@ -27,6 +27,11 @@ td > textarea {
   resize: none;
 }
 
+#contents{
+	height:410px;
+	vertical-align:top;
+}
+
 #submit {
   margin-top: 10px;
 }

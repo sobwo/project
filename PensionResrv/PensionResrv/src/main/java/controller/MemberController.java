@@ -53,8 +53,9 @@ public class MemberController extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("memberNo", memberNo);
 				session.setAttribute("memberName", memberName);
+				String url = (String)session.getAttribute("url");
 				
-				response.sendRedirect(request.getContextPath()+"/");
+				response.sendRedirect(url);
 			}
 			
 		}
@@ -101,9 +102,13 @@ public class MemberController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.removeAttribute("memberNo");
 			session.removeAttribute("memberName");
+
+			
+			String url = (String)session.getAttribute("url");
+			
+			response.sendRedirect(url);
+			
 			session.invalidate();
-				
-			response.sendRedirect(request.getContextPath()+"/");
 		}
 		
 		else if(str.equals("/member/memberJoin.do")) {

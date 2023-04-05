@@ -13,7 +13,7 @@
 	<style>
 	</style>
 	<body>
-		<div id="main_wrap" style="outline:1px solid #f00;">
+		<div id="main_wrap">
 			<header>
 				<div id="logo_menu">
 					<h1><a href="index.jsp">로고(홈)</a></h1>
@@ -25,6 +25,7 @@
 						<li><a href="${pageContext.request.contextPath}/reservation/reserv_status.jsp">실시간 예약</a></li>
 						<li><a href="#">예약가이드</a></li>
 						<li><a href="${pageContext.request.contextPath}/reservation/reserv_check.do">예약확인/취소</a></li>
+						<li><a href="${pageContext.request.contextPath}/board/faq.do">FAQ</a>
 						<c:choose>
 							<c:when test="${sessionScope.memberNo == null}">
 								<li><a href="${pageContext.request.contextPath}/member/memberLogin.do">로그인</a></li>

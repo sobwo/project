@@ -8,10 +8,27 @@
 
 #noti_wrap{
 	width:1000px;
-	height:1000px;
+	height:700px;
 	background:#fff;
 	padding-top:50px;
 	margin-bottom:100px;
+}
+
+#write {
+	margin-bottom: 5px;
+	margin-left: 710px;
+}
+
+#write input {
+	font-size: 14px;
+	font-weight: bold;
+	width: 70px;
+	height: 35px;
+	cursor: pointer;
+}
+
+#write input:hover{
+	background-color: gray;
 }
 
 #main_board {
@@ -70,15 +87,16 @@
 	width:771px;
 	background:#e9e9e9;
 	padding:5px 0;
+	vertical-align:middle;
 }
 
-#search,#paging {
-  margin:20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#search{
+	text-align:center;
 }
 
+.pagingNum{
+	margin-left:30px;
+}
 #dataPerPage{
 	width:150px;
 }
@@ -88,8 +106,8 @@
 }
 
 .pagingNum a{
-	font-size:15px;
-	margin-left:20px;
+	font-size:17px;
+	margin-right:20px;
 }
 
 #search{

@@ -8,35 +8,17 @@
 		<title>oo펜션 공지사항</title>
 		<link href="../css/board/style_board.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-		<script>
-			$(document).ready(function(){
-				if(${dataPerPage}==10)
-					$("#dataPerPage").val("10").prop("selected",true);
-				else if(${dataPerPage}==15)
-					$("#dataPerPage").val("15").prop("selected",true);
-				else if(${dataPerPage}==20)
-					$("#dataPerPage").val("20").prop("selected",true);
-			});
-			function search(){
-				var fm = document.frm;
-				fm.action = "${pageContext.request.contextPath}/board/boardNoti.do";
-				fm.method = "post";
-				fm.submit();
-			}
-			
-			function changePage(){
-				var dataPerPage = $("#dataPerPage").val();
-				var fm2 = document.frm2;
-				fm2.action = "${pageContext.request.contextPath}/board/boardNoti.do&page=${pm.getScri().getPage()}&dataPerPage="+dataPerPage+"&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}";
-				fm2.method = "post";
-				fm2.submit();
-			} 
-		</script>
+	
 	</head>
 	<body>
 		<jsp:include page="../header.jsp"/>
 		<h2 id="h2">공지사항</h2>
 		<div id="noti_wrap">
+			<c:if test="${sessionScope.memberNo==1}">
+				<div id="write" style="margin-left: 820px;">
+					<input type="button" onclick="location.href='${pageContext.request.contextPath}/board/boardWrite.jsp'" value="글쓰기">
+				</div>
+			</c:if>
 			<table id="main_board">
 				<thead>
 					<tr class="board_col">
@@ -63,7 +45,7 @@
 			</table>
 			<div id="bottom_wrap">	
 				<form name="frm2">	
-					<div id="paging">
+					<div id="paging" style="margin-left:160px;">
 						<span>
 							<select id="dataPerPage" name="dataPerPage" onchange="changePage()">
 		        				<option value="10" id="10">10개씩보기</option>
@@ -104,5 +86,36 @@
 			</div>
 		</div>
 		<jsp:include page="../footer.jsp"></jsp:include>
+			<script>
+			$(document).ready(function(){
+				if(${dataPerPage}==10){
+					$("#dataPerPage").val("10").prop("selected",true);
+					$("#noti_wrap").css("height","700px");
+				}
+				else if(${dataPerPage}==15){
+					$("#dataPerPage").val("15").prop("selected",true);
+					$("#noti_wrap").css("height","900px");
+				}
+				else if(${dataPerPage}==20){
+					$("#dataPerPage").val("20").prop("selected",true);
+					$("#noti_wrap").css("height","1100px");
+				}
+			});
+			
+			function search(){
+				var fm = document.frm;
+				fm.action = "${pageContext.request.contextPath}/board/boardNoti.do";
+				fm.method = "post";
+				fm.submit();
+			}
+			
+			function changePage(){
+				var dataPerPage = $("#dataPerPage").val();
+				var fm2 = document.frm2;
+				fm2.action = "${pageContext.request.contextPath}/board/boardNoti.do?page=${pm.getScri().getPage()}&dataPerPage="+dataPerPage+"&searchOption=${pm.scri.searchOption}&searchContext=${pm.encoding(pm.scri.searchContext)}";
+				fm2.method = "post";
+				fm2.submit();
+			} 
+		</script>
 	</body>
 </html>

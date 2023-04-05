@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%	if (session.getAttribute("memberNo") == null){	
+		out.println("<script>alert('로그인이 필요합니다.'); history.back(-1);</script>");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>

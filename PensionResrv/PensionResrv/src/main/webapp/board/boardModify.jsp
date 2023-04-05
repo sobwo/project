@@ -2,35 +2,34 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	if (session.getAttribute("memberNo") == null){	
-		out.println("<script>alert('로그인이 필요합니다.'); history.back(-1);</script>");
-	}
+// 	if (session.getAttribute("memberNo") == null){	
+// 		out.println("<script>alert('로그인이 필요합니다.'); history.back(-1);</script>");
+// 	}
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>게시판 작성 페이지</title>
+		<title>게시판 수정 페이지</title>
 		<link href="../css/board/style_boardWrite.css" rel="stylesheet"/>
 	</head>
 	<body>
 		<jsp:include page="../header.jsp"></jsp:include>
 		<form name="frm">
-		<div id="write_wrap">
-			<h4 class="h4">문의사항 작성</h4>
-				<input type="text" name="varCheck" value="${param.varCheck}" style="display:none"/>
-				<table>
+			<div id="write_wrap">
+				<table id="contents_board">
 					<thead>
 						<tr>
-							<th><input type="text" name="subject" placeholder="제목을 입력해 주세요."></th>
+							<th style="display:none;"><input type="text" name="bidx" value="${bv.bidx}"></th>
+							<th><input type="text" name="subject" value="${bv.subject}"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" name="writer" value="${sessionScope.memberName}" readonly></td>
+							<td><input type="text" name="writer" value="${bv.writer}" readonly></td>
 						</tr>
 						<tr>
-							<td><textarea style="vertical-align:top;" name="contents" placeholder="내용을 입력하세요."></textarea></td>
+							<td><input type="text" id="contents" name="contents" value="${bv.contents}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -55,7 +54,7 @@
 				}
 				
 				else{
-					fm.action = "${pageContext.request.contextPath}/board/boardWriteAction.do";
+					fm.action = "${pageContext.request.contextPath}/board/boardModifyAction.do";
 					fm.method="post";
 					fm.submit();
 				}

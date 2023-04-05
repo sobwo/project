@@ -1,14 +1,14 @@
 package domain;
 
 public class BoardVo {
-	private int bidx, memberNo, originbidx,depth,level_;
-	private String subject, contents, writer, delyn, writeday, viewCnt,pwd;
-	
-	public String getPwd() {
-		return pwd;
+	private int bidx, memberNo, originbidx,depth,level_,viewCnt;
+	private String subject, contents, writer, writeday, boardCheck;
+
+	public String getBoardCheck() {
+		return boardCheck;
 	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setBoardCheck(String boardCheck) {
+		this.boardCheck = boardCheck;
 	}
 	public int getBidx() {
 		return bidx;
@@ -60,22 +60,16 @@ public class BoardVo {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public String getDelyn() {
-		return delyn;
-	}
-	public void setDelyn(String delyn) {
-		this.delyn = delyn;
-	}
 	public String getWriteday() {
 		return writeday;
 	}
 	public void setWriteday(String writeday) {
 		this.writeday = writeday;
 	}
-	public String getViewCnt() {
+	public int getViewCnt() {
 		return viewCnt;
 	}
-	public void setViewCnt(String viewCnt) {
+	public void setViewCnt(int viewCnt) {
 		this.viewCnt = viewCnt;
 	}
 }
