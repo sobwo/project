@@ -14,7 +14,7 @@
 		<link href="../css/reserve/style_reserv_main.css" rel="stylesheet"/>
 		<link href="../css/reserve/style_reserv_common.css" rel="stylesheet"/>
 		<link href="../css/reserve/style_reserv_status.css" rel="stylesheet"/>
-				<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	</head>
 	<body onload="autoReload();">
 		<jsp:include page="../header.jsp"/>
@@ -31,13 +31,20 @@
 					<a href="${pageContext.request.contextPath}/reservation/reserv_check.do">예약확인/취소</a>
 				</div>
 			</div>
+					<input type="text" name="date_" value="20230406" style="display:none">
+					<input type="text" name="date_" value="20230409" style="display:none">
+					<input type="text" name="date_" value="20230501" style="display:none">
+					<input type="text" name="roomName" value="101호" style="display:none">
+					<input type="text" name="roomName" value="102호" style="display:none">
+					<input type="text" name="roomName" value="103호" style="display:none">
 			<div id="reserv_calendar">
-				<c:forEach var="rpvlist" items="${rpvlist}">
-					<input type="text" name="roomName" value="${rpvlist.roomName}" style="display:none">
-					<input type="text" name="reservYn" value="${rpvlist.reservYn}" style="display:none">
-					<input type="text" name="date_" value="${rpvlist.date_}" style="display:none">
-					<input type="text" name="pricePerDay" value="${rpvlist.pricePerDay}" style="display:none">
-				</c:forEach>
+<%-- 				<c:forEach var="rpvlist" items="${rpvlist}"> --%>
+<%-- 					<input type="text" name="roomName" value="${rpvlist.roomName}" style="display:none"> --%>
+<%-- 					<input type="text" name="reservYn" value="${rpvlist.reservYn}" style="display:none"> --%>
+<%-- 					<input type="text" name="date_" value="${rpvlist.date_}" style="display:none"> --%>
+<%-- 					<input type="text" name="pricePerDay" value="${rpvlist.pricePerDay}" style="display:none"> --%>
+<%-- 				</c:forEach> --%>
+
 				<div id="calendar_inner_wrap">
 					<h3 id="date" style="border:0">날짜(연,월,일)</h3>
 					<p id="current_date"></p>
@@ -198,7 +205,6 @@
 					
 					str += "<div>"+i+"</div>";
 					var day = (i<10) ? "0"+i : i;
-					dateValue=year+month+day;
 					str += "<div id='"+day+"'></div>"; //나중에 원하는 날에 일정을 넣기위해 id값을 날자로 설정
 					cell.innerHTML = str;
 					
@@ -250,22 +256,22 @@
 // 				원하는 날짜 영역에 내용 추가하기
 
 				var month_val = (month<10)? "0"+month : month;
-				
+				var month_result = ((today.getMonth()+1)<10)? "0"+(today.getMonth()+1) : (today.getMonth()+1);
 				var fullday;
-				var tdId;
 				var returnValue;
-				for(var i=1;i<=lastDate;i++){
-					var day = (i<10) ? "0"+i : i;
-					tdId = str;
-					var fullday = year+month_val+str;
-	 				
-					
-	 				document.getElementById(tdId).innerHTML = fullday;
-				}
 				
-
+				for(var i=1;i<=lastDate.getDate();i++){
+					var day_val = (i<10) ? "0"+i : i;
+					fullday = year+month_val+day_val;
+					
+					for(var j=0;j<$("input[name=date_]").length;j++){ 
+						if($("input[name=date_]").eq(j).val()==fullday && month_val==month_result){
+							returnValue = $("input[name=roomName]").eq(j).val();
+							document.getElementById(day_val).innerHTML = returnValue;
+						}						
+					}			
+				}
 			}
-			
 		</script>
 	</body>
 </html>
