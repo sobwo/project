@@ -126,6 +126,22 @@
 
 			//달력 스크립트 ///////////////////////////////////////////////////
 
+			function loadReservationData(date) {
+			  $.ajax({
+			    url: "${pageContext.request.contextPath}/reservation/reserv_status.do",
+			    type: "GET",
+			    data: { "date": date },
+			    success: function() {
+			    
+			      autoReload();
+			    },
+			    error: function(jqXHR, textStatus, errorThrown) {
+			      alert("Error: " + textStatus + " " + errorThrown);
+			    }
+			  });
+			}
+			
+			
 			var today = new Date(); //오늘 날짜        
 			var date = new Date();
 
@@ -133,7 +149,8 @@
 			function beforem() //이전 달을 today에 값을 저장
 			{ 
 				today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-				autoReload(); //만들기
+				loadReservationData(today.getMonth()+1);
+				autoReload(); //만들기		
 			}
 
 			//다음달
@@ -174,7 +191,6 @@
 					next.innerHTML=(today.getMonth()+2)+"월"+"▶";
 				}
 
-
 				// 남은 테이블 줄 삭제
 				while (tbcal.rows.length > 2) 
 				{
@@ -195,7 +211,6 @@
 						cell.style.backgroundColor = "#f7f7f7";
 					}
 				}
-
 
 				// 달력 출력
 				for (i = 1; i <= lastDate.getDate(); i++) // 1일부터 마지막 일까지
@@ -249,8 +264,7 @@
 							cell = row.insertCell();
 							cnt = cnt + 1;
 						}
-					}
-					  
+					}  
 				}
 									
 // 				원하는 날짜 영역에 내용 추가하기
@@ -272,6 +286,8 @@
 					}			
 				}
 			}
+			
+	
 		</script>
 	</body>
 </html>

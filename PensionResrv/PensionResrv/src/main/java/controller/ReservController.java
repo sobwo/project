@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,10 +57,15 @@ public class ReservController extends HttpServlet {
     	
     	else if(str.equals("/reservation/reserv_status.do")) {
     		System.out.println("reserv_status.do 들어옴");
-    		
+    		Calendar cal = Calendar.getInstance();
+    		String month = Integer.toString(cal.get(Calendar.MONTH)+1);
+    		String today_date = null;
+    		if(request.getParameter("date")==null) today_date = month; 
+    		else today_date = request.getParameter("date");
     		RoomDao rd = new RoomDao();
     		
-    		ArrayList<RoomPriceVo> rpvlist = rd.roomCalendar();
+    		
+    		ArrayList<RoomPriceVo> rpvlist = rd.roomCalendar(today_date);
     		
     		request.setAttribute("rpvlist", rpvlist);
     		

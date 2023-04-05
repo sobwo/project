@@ -56,7 +56,7 @@ private Connection conn;
 		return rlist;
 	}
 	
-	public ArrayList<RoomPriceVo> roomCalendar(){
+	public ArrayList<RoomPriceVo> roomCalendar(String date){
 		ArrayList<RoomPriceVo> rpvlist = new ArrayList<>();
 		RoomPriceVo rpv = null;
 		
@@ -64,8 +64,10 @@ private Connection conn;
 		ResultSet rs = null;
 		
 		String sql = "select a.roomNo,a.roomName,a.ReservYn,to_char(b.date_,'yyyymmdd') as date_, b.pricePerDay from room a, roomPrice b where a.roomno = b.roomno and b.date_ >= TRUNC(sysdate, 'MM') AND b.date_ < ADD_MONTHS(TRUNC(sysdate, 'MM'), 1)";
+//		String sql = "select a.roomNo,a.roomName,a.ReservYn,to_char(b.date_,'yyyymmdd') as date_, b.pricePerDay from room a, roomPrice b where a.roomno = b.roomno and to_char(date_,'mm')=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, date);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				rpv = new RoomPriceVo();
