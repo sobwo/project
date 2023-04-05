@@ -59,8 +59,9 @@ public class ReservController extends HttpServlet {
     		
     		RoomDao rd = new RoomDao();
     		
-    		ArrayList<RoomPriceVo> rpv = rd.roomCalendar();
+    		ArrayList<RoomPriceVo> rpvlist = rd.roomCalendar();
     		
+    		request.setAttribute("rpvlist", rpvlist);
     		
     		HttpSession session = request.getSession();
     		String url=request.getContextPath()+"/reservation/reserv_status.do";

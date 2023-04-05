@@ -57,13 +57,13 @@ private Connection conn;
 	}
 	
 	public ArrayList<RoomPriceVo> roomCalendar(){
-		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
+		ArrayList<RoomPriceVo> rpvlist = new ArrayList<>();
 		RoomPriceVo rpv = null;
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		
-		String sql = "select * from room a, roomPrice b where a.roomno = b.roomno";
+		String sql = "select a.roomNo,a.roomName,a.ReservYn,to_char(b.date_,'yyyymmdd') as date_, b.pricePerDay from room a, roomPrice b where a.roomno = b.roomno and b.date_ >= TRUNC(sysdate, 'MM') AND b.date_ < ADD_MONTHS(TRUNC(sysdate, 'MM'), 1)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -71,9 +71,10 @@ private Connection conn;
 				rpv = new RoomPriceVo();
 				rpv.setRoomNo(rs.getInt("roomNo"));
 				rpv.setRoomName(rs.getString("roomName"));
-				rpv.setReservYn(rs.getString("ReservYn"));
+				rpv.setReservYn(rs.getString("reservYn"));
+				rpv.setDate_(rs.getString("date_"));
 				rpv.setPricePerDay(rs.getInt("pricePerDay"));
-				rlist.add(rpv);
+				rpvlist.add(rpv);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,7 +87,7 @@ private Connection conn;
 				e.printStackTrace();
 			}
 		}
-		return rlist;
+		return rpvlist;
 	}
 
 }
