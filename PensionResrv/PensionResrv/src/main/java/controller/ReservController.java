@@ -2,8 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,11 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import domain.BoardVo;
+import domain.DataWrapper;
 import domain.MemberVo;
 import domain.ReservVo;
 import domain.RoomPriceVo;
-import domain.RoomVo;
+
 import service.BoardDao;
 import service.MemberDao;
 import service.ReservDao;
@@ -35,15 +39,40 @@ public class ReservController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	if(str.equals("/reservation/reserv_main.do")) {
     		System.out.println("reserv_main.do 들어옴");
-    		ArrayList<RoomVo> rlist = new ArrayList<>();
+    		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
     		ArrayList<BoardVo> blist = new ArrayList<>();
     		
     		RoomDao roomd = new RoomDao();
     		BoardDao bd = new BoardDao();
     		HttpSession session = request.getSession();
+
+    		String checkIn = null;
+    		String checkOut = null;
     		
-    		rlist = roomd.selectAll();
+    		LocalDate now = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formatedNow = now.format(formatter);
+
+            if(request.getParameter("checkIn")==null) checkIn=formatedNow;
+    		else checkIn = request.getParameter("checkIn");
+    		if(request.getParameter("checkOut")==null) checkOut=formatedNow;
+    		else checkOut = request.getParameter("checkOut");
+            
+    		rlist = roomd.selectAll(checkIn,checkOut);
     		blist = bd.reserv_main_board();
+    		
+//    		Gson gson = new Gson();
+//
+//    		DataWrapper dataWrapper = new DataWrapper(rlist,blist);
+    		// JSON 문자열로 변환
+//    		String json = gson.toJson(dataWrapper);
+//
+//    		// JSON 데이터 전송
+//    		response.setContentType("application/json");
+//    		response.setCharacterEncoding("UTF-8");
+//    		PrintWriter out = response.getWriter();
+//    		out.print(json);
+//    		out.flush();
     		
     		request.setAttribute("blist", blist);
     		request.setAttribute("rlist", rlist);
@@ -57,40 +86,40 @@ public class ReservController extends HttpServlet {
     	
     	else if(str.equals("/reservation/reserv_status.do")) {
     		System.out.println("reserv_status.do 들어옴");
-    		Calendar cal = Calendar.getInstance();
-    		String month = Integer.toString(cal.get(Calendar.MONTH)+1);
-    		String today_date = null;
-    		if(request.getParameter("date")==null) today_date = month; 
-    		else today_date = request.getParameter("date");
+
     		RoomDao rd = new RoomDao();
     		
-    		
-    		ArrayList<RoomPriceVo> rpvlist = rd.roomCalendar(today_date);
+    		ArrayList<RoomPriceVo> rpvlist = rd.roomCalendar();
     		
     		request.setAttribute("rpvlist", rpvlist);
-    		
     		HttpSession session = request.getSession();
     		String url=request.getContextPath()+"/reservation/reserv_status.do";
     		session.setAttribute("url", url);
     		
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_status.jsp");
 			rd1.forward(request, response);
+			
     	}
     	
     	else if(str.equals("/reservation/reserveAction.do")) {
     		System.out.println("reserveAction.do 들어옴");
     		
-    		ArrayList<RoomVo> rlist = new ArrayList<>();
+    		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
     		ReservVo rv = new ReservVo();
     		ReservDao rd = new ReservDao();
     		RoomDao roomd = new RoomDao();
     		String checkIn,checkOut,roomName;
     		int adult,child,baby;
-
-    		if(request.getParameter("checkIn")==null) checkIn="0";
+    		
+    		LocalDate now = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formatedNow = now.format(formatter);
+            
+    		if(request.getParameter("checkIn")==null) checkIn=formatedNow;
     		else checkIn = request.getParameter("checkIn");
-    		if(request.getParameter("checkOut")==null) checkOut="0";
+    		if(request.getParameter("checkOut")==null) checkOut=formatedNow;
     		else checkOut = request.getParameter("checkOut");
+ 		
     		if(request.getParameter("adult")==null) adult=0;
     		else adult = Integer.parseInt(request.getParameter("adult"));
     		if(request.getParameter("child")==null) child=0;
@@ -110,7 +139,7 @@ public class ReservController extends HttpServlet {
 
     		request.setAttribute("rv", rv);
     		
-    		rlist = roomd.selectAll();
+    		rlist = roomd.selectAll(checkIn,checkOut);
     		request.setAttribute("rlist", rlist);
     		
     		HttpSession session = request.getSession();
@@ -166,6 +195,7 @@ public class ReservController extends HttpServlet {
 			MemberDao md = new MemberDao();
 			
 			mv = md.selectInfo(memberNo);
+			
 			request.setAttribute("memberNo", memberNo);
 			request.setAttribute("mv", mv);
 			
@@ -178,11 +208,14 @@ public class ReservController extends HttpServlet {
     		ReservDao rd = new ReservDao();
     		MemberDao md = new MemberDao();
     		MemberVo mv = new MemberVo();
-    		ReservVo rv = new ReservVo();;
+    		ReservVo rv = new ReservVo();
+    		RoomDao rmd = new RoomDao();
 
     		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
     		String checkIn = request.getParameter("checkIn");
     		String checkOut = request.getParameter("checkOut");
+    		
+    		
     		int adultNum = Integer.parseInt(request.getParameter("adultNum"));
     		int childNum = Integer.parseInt(request.getParameter("childNum"));
     		int babyNum = Integer.parseInt(request.getParameter("babyNum"));    			
@@ -204,9 +237,13 @@ public class ReservController extends HttpServlet {
     		mv.setMemberPhone(memberPhone);
     		mv.setMemberEmail(memberEmail);
     		
+    		int value_off = 0;
     		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
     		if(memberNo==0) {
-    			md.OffrineMemberInsert(mv);
+    			value_off=md.OffrineMemberInsert(mv);
+    		}
+    		if(value_off==1) {
+    			System.out.println("비회원 등록 성공");
     		}
     		
     		MemberVo value_member = md.memberLoginOff(mv);
@@ -227,7 +264,13 @@ public class ReservController extends HttpServlet {
     		
     		int value = rd.reservInsert(rv);
 
-    		if(value==1) {
+    		HttpSession session = request.getSession();
+    		String url=request.getContextPath()+"/reservation/reserving.do";
+    		session.setAttribute("url", url);
+    		
+    		int value2 = rmd.roomChkInsert(checkIn,checkOut);
+    		System.out.println("value1 : "+value+" value2:"+value2);
+    		if(value==1 && value2>=0) {
 				response.setContentType("text/html; charset=UTF-8");
 			    PrintWriter out = response.getWriter();
 			    out.println("<script>alert('예약 완료');location.href='"+request.getContextPath()+"/reservation/reserv_check.do'</script>");

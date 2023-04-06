@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+#reserv_wrap{
+	height:1600px;
+}
+
 #calendar_inner_wrap{
 	height:300px;
 	margin-bottom:30px;
@@ -64,6 +68,6 @@
 	border:1px solid #444;
 }
 #calendar td{
-	height:100px;
+	height:200px;
 	width:130px;
 }

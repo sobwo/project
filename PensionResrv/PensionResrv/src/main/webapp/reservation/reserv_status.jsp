@@ -31,25 +31,25 @@
 					<a href="${pageContext.request.contextPath}/reservation/reserv_check.do">예약확인/취소</a>
 				</div>
 			</div>
-					<input type="text" name="date_" value="20230406" style="display:none">
-					<input type="text" name="date_" value="20230409" style="display:none">
-					<input type="text" name="date_" value="20230501" style="display:none">
-					<input type="text" name="roomName" value="101호" style="display:none">
-					<input type="text" name="roomName" value="102호" style="display:none">
-					<input type="text" name="roomName" value="103호" style="display:none">
+<!-- 					<input type="text" name="date_" value="20230406" style="display:none"> -->
+<!-- 					<input type="text" name="date_" value="20230409" style="display:none"> -->
+<!-- 					<input type="text" name="date_" value="20230501" style="display:none"> -->
+<!-- 					<input type="text" name="roomName" value="101호" style="display:none"> -->
+<!-- 					<input type="text" name="roomName" value="102호" style="display:none"> -->
+<!-- 					<input type="text" name="roomName" value="103호" style="display:none"> -->
 			<div id="reserv_calendar">
-<%-- 				<c:forEach var="rpvlist" items="${rpvlist}"> --%>
-<%-- 					<input type="text" name="roomName" value="${rpvlist.roomName}" style="display:none"> --%>
-<%-- 					<input type="text" name="reservYn" value="${rpvlist.reservYn}" style="display:none"> --%>
-<%-- 					<input type="text" name="date_" value="${rpvlist.date_}" style="display:none"> --%>
-<%-- 					<input type="text" name="pricePerDay" value="${rpvlist.pricePerDay}" style="display:none"> --%>
-<%-- 				</c:forEach> --%>
+				<c:forEach var="rpvlist" items="${rpvlist}">
+					<input type="text" name="roomName" value="${rpvlist.roomName}" style="display:none">
+					<input type="text" name="reservYn" value="${rpvlist.reservYn}" style="display:none">
+					<input type="text" name="date_" value="${rpvlist.date_}" style="display:none">
+					<input type="text" name="pricePerDay" value="${rpvlist.pricePerDay}" style="display:none">
+				</c:forEach>
 
 				<div id="calendar_inner_wrap">
 					<h3 id="date" style="border:0">날짜(연,월,일)</h3>
 					<p id="current_date"></p>
 					<div id="payPerDate">
-						<input type="checkbox">
+						<input type="checkbox" name="checkbox">
 						<p style="font-size:17px;">날짜 별 요금보기</p>
 					</div>
 				</div>
@@ -125,23 +125,7 @@
 			}
 
 			//달력 스크립트 ///////////////////////////////////////////////////
-
-			function loadReservationData(date) {
-			  $.ajax({
-			    url: "${pageContext.request.contextPath}/reservation/reserv_status.do",
-			    type: "GET",
-			    data: { "date": date },
-			    success: function() {
-			    
-			      autoReload();
-			    },
-			    error: function(jqXHR, textStatus, errorThrown) {
-			      alert("Error: " + textStatus + " " + errorThrown);
-			    }
-			  });
-			}
-			
-			
+				
 			var today = new Date(); //오늘 날짜        
 			var date = new Date();
 
@@ -149,7 +133,6 @@
 			function beforem() //이전 달을 today에 값을 저장
 			{ 
 				today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-				loadReservationData(today.getMonth()+1);
 				autoReload(); //만들기		
 			}
 
@@ -220,7 +203,7 @@
 					
 					str += "<div>"+i+"</div>";
 					var day = (i<10) ? "0"+i : i;
-					str += "<div id='"+day+"'></div>"; //나중에 원하는 날에 일정을 넣기위해 id값을 날자로 설정
+					str += "<div id='"+day+"'style='font-size:12px'></div>"; //나중에 원하는 날에 일정을 넣기위해 id값을 날자로 설정
 					cell.innerHTML = str;
 					
 					cnt = cnt + 1;
@@ -228,7 +211,7 @@
 						var str="";
 						str += "<div>"+i+"</div>";
 						var day = (i<10) ? "0"+i : i;            	
-						str += "<div id='"+day+"'>";
+						str += "<div id='"+day+"'style='font-size:12px'>";
 						str += "</div>";
 						cell.innerHTML = str;                  
 					}
@@ -236,7 +219,7 @@
 						var str="";
 						str += "<div>"+i+"</div>";
 						var day = (i<10) ? "0"+i : i;            	
-						str += "<div id='"+day+"'>";
+						str += "<div id='"+day+"'style='font-size:12px'>";
 						str += "</div>";
 						cell.innerHTML = str;
 						row = calendar.insertRow();// 줄 추가
@@ -266,28 +249,98 @@
 						}
 					}  
 				}
-									
+				
 // 				원하는 날짜 영역에 내용 추가하기
-
-				var month_val = (month<10)? "0"+month : month;
+				
 				var month_result = ((today.getMonth()+1)<10)? "0"+(today.getMonth()+1) : (today.getMonth()+1);
 				var fullday;
 				var returnValue;
-				
 				for(var i=1;i<=lastDate.getDate();i++){
 					var day_val = (i<10) ? "0"+i : i;
-					fullday = year+month_val+day_val;
-					
-					for(var j=0;j<$("input[name=date_]").length;j++){ 
-						if($("input[name=date_]").eq(j).val()==fullday && month_val==month_result){
-							returnValue = $("input[name=roomName]").eq(j).val();
-							document.getElementById(day_val).innerHTML = returnValue;
+					var strValue="";
+					fullday = year+month_result+day_val;
+					for(var j=0;j<$("input[name=date_]").length;j++){
+						if($("input[name=date_]").eq(j).val()==fullday && $("input[name=date_]").eq(j).val().substring(4,6) == month_result){
+							returnValue = "<div>"+$("input[name=roomName]").eq(j).val();
+							strValue = strValue+returnValue;
+							
+							if($("input[name=reservYn]").eq(j).val()=='Y'){
+								strValue = strValue+"<div style='width:10px;background:#20de07;height:10px;display:inline-block;'></div></div>"
+							}
+							else if($("input[name=reservYn]").eq(j).val()=='I'){
+								strValue = strValue+"<div style='width:10px;background:#ffd400;height:10px;display:inline-block;'></div></div>"
+							}
+							else if($("input[name=reservYn]").eq(j).val()=='N'){
+								strValue = strValue+"<div style='width:10px;background:#f05650;height:10px;display:inline-block;'></div></div>"
+							}
+							document.getElementById(day_val).innerHTML = strValue;
 						}						
-					}			
+					}
+				}
+
+				$('input[name=checkbox]').click(function() {
+					var month_result = ((today.getMonth()+1)<10)? "0"+(today.getMonth()+1) : (today.getMonth()+1);
+					var fullday;
+					var returnValue;
+				
+					if ($(this).is(':checked')){
+						for(var i=1;i<=lastDate.getDate();i++){
+							var day_val = (i<10) ? "0"+i : i;
+							var strValue="";
+							fullday = year+month_result+day_val;
+							for(var j=0;j<$("input[name=date_]").length;j++){
+								if($("input[name=date_]").eq(j).val()==fullday && $("input[name=date_]").eq(j).val().substring(4,6) == month_result){
+									returnValue = "<div style='width:130px'>"+$("input[name=pricePerDay]").eq(j).val()+"원";
+									strValue = strValue+returnValue;
+									
+									if($("input[name=reservYn]").eq(j).val()=='Y'){
+										strValue = strValue+"<div style='width:10px;background:#20de07;height:10px;display:inline-block;'></div></div>"
+									}
+									else if($("input[name=reservYn]").eq(j).val()=='I'){
+										strValue = strValue+"<div style='width:10px;background:#ffd400;height:10px;display:inline-block;'></div></div>"
+									}
+									else if($("input[name=reservYn]").eq(j).val()=='N'){
+										strValue = strValue+"<div style='width:10px;background:#f05650;height:10px;display:inline-block;'></div></div>"
+									}
+									document.getElementById(day_val).innerHTML = strValue;
+								}						
+							}
+						}
+					}
+					
+					else{
+						for(var i=1;i<=lastDate.getDate();i++){
+							var day_val = (i<10) ? "0"+i : i;
+							var strValue="";
+							fullday = year+month_result+day_val;
+							
+							for(var j=0;j<$("input[name=date_]").length;j++){
+								if($("input[name=date_]").eq(j).val()==fullday && $("input[name=date_]").eq(j).val().substring(4,6) == month_result){
+									returnValue = "<div style='width:130px'>"+$("input[name=roomName]").eq(j).val();
+									strValue = strValue+returnValue;
+									
+									if($("input[name=reservYn]").eq(j).val()=='Y'){
+										strValue = strValue+"<div style='width:10px;background:#20de07;height:10px;display:inline-block;'></div></div>"
+									}
+									else if($("input[name=reservYn]").eq(j).val()=='I'){
+										strValue = strValue+"<div style='width:10px;background:#ffd400;height:10px;display:inline-block;'></div></div>"
+									}
+									else if($("input[name=reservYn]").eq(j).val()=='N'){
+										strValue = strValue+"<div style='width:10px;background:#f05650;height:10px;display:inline-block;'></div></div>"
+									}
+									document.getElementById(day_val).innerHTML = strValue;
+								}						
+							}
+						}
+					}
+						
+				});
+				
+				function roomName_(){
+					
 				}
 			}
-			
-	
+
 		</script>
 	</body>
 </html>

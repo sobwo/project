@@ -40,6 +40,7 @@
 
 							<tr>
 								<th style="display:none">객실번호</th>
+								<th>선택</th>
 								<th>객실명</th>
 								<th>체크인</th>
 								<th>체크아웃</th>
@@ -51,7 +52,7 @@
 						<tbody>
 							<c:forEach var="rlist" items="${rlist}">
 								<tr>
-									<td style="display:none"><input type="text" name="reservNo" value="${rlist.reservNo}"></td>
+									<td><input type="radio" name="reservNo" value="${rlist.reservNo}"></td>
 									<td>${rlist.roomName}</td>
 									<td>${rlist.checkIn}</td>
 									<td>${rlist.checkOut}</td>

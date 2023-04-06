@@ -11,6 +11,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	</head>
 	<body>
+		<input type="text" name="contextPath" value="${pageContext.request.contextPath}" style="display:none;"/>
 		<jsp:include page="../header.jsp"/>
 		<h2 id="h2">실시간 예약</h2>
 		<div id="reserv_wrap">
@@ -48,7 +49,7 @@
 									required
 					 				aria-required="true"
 					 				value="${rv.checkIn}"
-					  				onChange={StartDateValueHandler}/>
+					  				onChange="submitDay()"/>
 			  				</div>
 				  		</div>
 				  		<div id="nights">
@@ -62,7 +63,7 @@
 									required
 				 					aria-required="true"
 				 					value="${rv.checkOut}"
-				  					onChange={StartDateValueHandler}>
+				  					onChange="submitDay()">
 							</div>
 						</div>
 					</div>
@@ -175,8 +176,24 @@
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<input type="text" name="test" value="test">
 		<script>	
-
 			$(document).ready(function(){
+				var checkIn = $("input[name=checkIn]").val();
+				var checkOut = $("input[name=checkOut]").val();
+				var contextPath = $("input[name=contextPath]").val();
+				alert(contextPath);
+// 				$.ajax({
+// 				    type: "GET",
+// 				    url:contextPath+"/reservation/reserv_main.do",
+// 				    data: {"checkIn":checkIn,"checkOut":checkOut},
+// 				    dataType: "json",
+// 				    success: function () {
+// 				    	location.href = contextPath+"/reservation/reserv_main.jsp";
+// 				    },
+// 				    error: function () {
+// 				        alert("전송 실패");
+// 				    }
+// 				});
+				
 				var length = $('input[id=roomNameCheck]').length;
 				var roomNameCheck = $('input[name=roomNameCheck]');
 				var roomNo = $('input[name=roomNo]').val();
@@ -327,18 +344,45 @@
 			});
 					
 			function pay(){
+				
+				var checkIn = new Date($("input[name=checkIn]").val());
+				var checkOut = new Date($("input[name=checkOut]").val());
+ 				var timeDiff = checkOut.getTime()-checkIn.getTime();
+				var dayDiff = timeDiff/(1000*3600*24);
+
 				if($("input[name=totalPrice]").val()==0)
 					alert("방을 선택해 주세요.");
-				else if($("input[name=checkIn]").val()==0)
+				else if(checkIn==0)
 					alert("체크인 날짜를 선택해 주세요.");
-				else if($("input[name=checkOut]").val()==0)
+				else if(checkOut==0)
 					alert("체크아웃 날짜를 선택해 주세요.");
+				else if(dayDiff<=0)
+					alert("체크인,체크아웃 날짜를 확인해주세요.");
 				else{
 					var fm = document.frm;
 					fm.action="${pageContext.request.contextPath}/reservation/reserving_next.do";
 					fm.method="post";
 					fm.submit();
 				}
+			}
+			
+			function submitDay(){
+				var checkIn = $("input[name=checkIn]").val();
+				var checkOut = $("input[name=checkOut]").val();
+				var contextPath = $("input[name=contextPath]").val();
+				
+// 				$.ajax({
+// 				    type: "GET",
+// 				    url:"${pageContext.request.contextPath}/reservation/reserv_main.do",
+// 				    data: { "checkIn":checkIn,"checkOut":checkOut},
+// 				    dataType: "json",
+// 				    success: function () {
+// 				    	location.href = contextPath+"/reservation/reserv_main.jsp";
+// 				    },
+// 				    error: function () {
+// 				        alert("전송 실패");
+// 				    }
+// 				});
 			}
 
 		</script>

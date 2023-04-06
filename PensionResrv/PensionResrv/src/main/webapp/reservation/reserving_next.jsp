@@ -45,7 +45,7 @@
 					<div id="insertInfo_subject">
 						<h4 class="h4">예약자 정보</h4>
 						<div id="check">
-							<input id="infoCheck" type="checkbox">
+							<input id="infoCheck" name="infoCheck" type="checkbox">
 							<p>등록된 정보입력</p>
 						</div>
 						<div id="insertInfo_contents">
@@ -53,23 +53,27 @@
 							<table id="insertInfo_table">
 								<tr>		
 									<td>예약자명 : </td>
-									<td><input type="text" name="memberName"></td>
+									<td style="display:none;"><input type="text" name="valueName" value="${mv.memberName}"></td>
+									<td><input type="text" name="memberName" value=''></td>
 								</tr>
 								<tr>
 									<td>생년월일 : </td>
-									<td><input type="text" name="memberBirth"></td>
+									<td style="display:none;"><input type="text" name="valueBirth" value="${mv.memberBirth}"></td>
+									<td><input type="text" name="memberBirth" value=''></td>
 								</tr>
 								<tr>
 									<td>연락처 : </td>
-									<td><input type="text" name="memberPhone"></td>
+									<td style="display:none;"><input type="text" name="valuePhone" value="${mv.memberPhone}"></td>
+									<td><input type="text" name="memberPhone" value=''></td>
 								</tr>
 								<tr>
 									<td>비상연락처 : </td>
-									<td><input type="text" name="extraPhone"></td>
+									<td><input type="text" name="extraPhone" value=''></td>
 								</tr>
 								<tr>
 									<td>이메일 : </td>
-									<td><input type="text" name="memberEmail"></td>
+									<td style="display:none;"><input type="text" name="valueEmail" value="${mv.memberEmail}"></td>
+									<td><input type="text" name="memberEmail" value=''></td>
 								</tr>
 								<tr>
 									<td>픽업여부 : </td>
@@ -123,13 +127,14 @@
 						$(this).prop('checked',true); 
 					}
 				});
+				alert(${mv.memberName});
 			});
-		 	$("#infoCheck").change(function(){
-		 		if($("#infoCheck").is(":checked")){
-		 			$('input[name=memberName]').attr('value',${mv.memberName});
-		 			$('input[name=memberBirth]').attr('value',${mv.memberBirth});
-		 			$('input[name=memberPhone]').attr('value',${mv.memberPhone});
-		 			$('input[name=memberEmail]').attr('value',${mv.memberEmail});
+		 	$('input[name=infoCheck]').change(function(){
+		 		if($(this).is(":checked")){
+		 			$('input[name=memberName]').attr('value',$('input[name=valueName]').val());
+		 			$('input[name=memberBirth]').attr('value',$('input[name=valueBirth]').val());
+		 			$('input[name=memberPhone]').attr('value',$('input[name=valuePhone]').val());
+		 			$('input[name=memberEmail]').attr('value',$('input[name=valueEmail]').val());
 		 		}
 		 		else{
 		 			$('input[name=memberName]').attr('value','');

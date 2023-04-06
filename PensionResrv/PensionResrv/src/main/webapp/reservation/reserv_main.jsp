@@ -17,6 +17,7 @@
 	</head>
 	<body onload="autoReload();" style="background:#fff;">
 		<jsp:include page="../header.jsp"/>
+		<input type="text" name="contextPath" value="${pageContext.request.contextPath}" style="display:none;"/>
 		<main>
 			<form name="frm">
 				<div id="reserv_wrap">
@@ -64,7 +65,7 @@
 							</div>
 							<div id="popup_btn" style="display:block;">
 								<input type="button" value="확인" class="btn_check" onclick="selectPeople()">
-								<input type="button" value="취소" class="btn_close">
+								<input type="button" value="취소" class="btn_close" onclick="quitMenu1()">
 							</div>
 						</div>	
 						<div id="roomName">
@@ -92,7 +93,7 @@
 								</tbody>
 							</table>
 							<div id="popup_btn2" style="display:block;">
-								<input type="button" value="닫기" class="btn_close2">
+								<input type="button" value="닫기" class="btn_close2" onclick="quitMenu2()">
 							</div>
 						</div>
 						<div id="reservBtn">
@@ -137,7 +138,29 @@
 		</main>
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<script>
-			$(document).ready(function(){		
+			$(document).ready(function(){
+				var contextPath = $("input[name=contextPath]").val();
+// 				alert(contextPath);
+// 				$.ajax({
+// 				    type: "GET",
+// 				    url: contextPath + "/reservation/reserv_main.do",
+// 				    data: { "checkIn": checkIn, "checkOut": checkOut },
+// 				    dataType: "json",
+// 				    success: function(data) {
+// 				    	alert("성공");
+// 				    	location.replace(contextPath+"/reservation/reserv_main.jsp");
+// 				    },
+// 				    error: function() {
+// 				        alert("전송 실패");
+// 				    }
+// 				});
+				
+				$('#peopleNum').click(function(){
+					$('#pNum_popup').show();
+				});
+				$('#roomName').click(function(){
+					$('#roomName_popup').show();
+				});
 				$('#adult_minusBtn').click(function(){
 					var adult_minus = $('#adult_value').val();
 					if(adult_minus > 0){
@@ -203,7 +226,14 @@
 				fm.method="post";
 				fm.submit();
 			}
+			
+			function quitMenu1(){
+				$('#pNum_popup').hide();
+			}
+			
+			function quitMenu2(){
+				$('#roomName_popup').hide();
+			}
 		</script>
-		<script type="text/javascript" src="table.js"></script>
 	</body>
 </html>

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import dbconn.Dbconn;
 import domain.RoomPriceVo;
-import domain.RoomVo;
 
 public class RoomDao {
 private Connection conn;
@@ -17,27 +16,31 @@ private Connection conn;
 		Dbconn dbconn = new Dbconn();
 		this.conn = dbconn.getConnection();
 	}
-	public ArrayList<RoomVo> selectAll(){
-		ArrayList<RoomVo> rlist = new ArrayList<>();
-		RoomVo rmv = null;
+	public ArrayList<RoomPriceVo> selectAll(String checkIn,String checkOut){
+		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
+		RoomPriceVo rmv = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		
-		String sql = "select * from room";
+		String sql = "select a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn "
+				+ "from room a, roomPrice b where a.roomno=b.roomno AND b.reservYn='Y' and b.date_ between ? and ? "
+				+ "GROUP BY a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, checkIn);
+			pstmt.setString(2, checkOut);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				rmv = new RoomVo();
+				rmv = new RoomPriceVo();
 				rmv.setRoomNo(rs.getInt("roomNo"));
 				rmv.setRoomName(rs.getString("roomName"));
 				rmv.setPrice(rs.getInt("price"));
 				rmv.setCapacity(rs.getString("capacity"));
 				rmv.setSqft(rs.getInt("sqft"));
-				rmv.setReservYn(rs.getString("reservYn"));
 				rmv.setNumOfRoom(rs.getString("numOfRoom"));
+				rmv.setReservYn(rs.getString("reservYn"));
 				
 				rlist.add(rmv);
 			}
@@ -56,18 +59,16 @@ private Connection conn;
 		return rlist;
 	}
 	
-	public ArrayList<RoomPriceVo> roomCalendar(String date){
+	public ArrayList<RoomPriceVo> roomCalendar(){
 		ArrayList<RoomPriceVo> rpvlist = new ArrayList<>();
 		RoomPriceVo rpv = null;
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		
-		String sql = "select a.roomNo,a.roomName,a.ReservYn,to_char(b.date_,'yyyymmdd') as date_, b.pricePerDay from room a, roomPrice b where a.roomno = b.roomno and b.date_ >= TRUNC(sysdate, 'MM') AND b.date_ < ADD_MONTHS(TRUNC(sysdate, 'MM'), 1)";
-//		String sql = "select a.roomNo,a.roomName,a.ReservYn,to_char(b.date_,'yyyymmdd') as date_, b.pricePerDay from room a, roomPrice b where a.roomno = b.roomno and to_char(date_,'mm')=?";
+		String sql = "select a.roomNo,a.roomName,b.ReservYn,to_char(b.date_,'yyyymmdd') as date_, b.pricePerDay from room a, roomPrice b where a.roomno = b.roomno order by a.roomName asc";
 		try {
 			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, date);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				rpv = new RoomPriceVo();
@@ -90,6 +91,30 @@ private Connection conn;
 			}
 		}
 		return rpvlist;
+	}
+	
+	public int roomChkInsert(String checkIn,String checkOut) {
+		int value = 0;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE roomPrice SET reservYn = 'I' WHERE roomNo IN (SELECT r.roomNo FROM reservation r WHERE r.checkIn = ?) AND DATE_ >= TO_DATE(?, 'YYYY-MM-DD') AND DATE_ < TO_DATE(?, 'YYYY-MM-DD')";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, checkIn);
+			pstmt.setString(2, checkIn);
+			pstmt.setString(3, checkOut);
+			value = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return value;
 	}
 
 }

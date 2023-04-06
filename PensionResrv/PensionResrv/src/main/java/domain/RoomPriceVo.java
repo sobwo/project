@@ -1,8 +1,14 @@
 package domain;
 
 public class RoomPriceVo extends RoomVo{
-	private String date_;
+	private String date_,reservYn;
 	private int pricePerDay;
+	public String getReservYn() {
+		return reservYn;
+	}
+	public void setReservYn(String reservYn) {
+		this.reservYn = reservYn;
+	}
 	public String getDate_() {
 		return date_;
 	}
