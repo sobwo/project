@@ -28,7 +28,7 @@
 								required
 			 					aria-required="true"
 			 					value={startDateValue}
-			  					onChange={StartDateValueHandler}/>
+			  					onChange="submitDay()"/>
 		  				</div>
 						<div id="checkOut">
 							<input type="date" name="checkOut" 
@@ -36,7 +36,7 @@
 								required
 			 					aria-required="true"
 			 					value={startDateValue}
-			  					onChange={StartDateValueHandler}>
+			  					onChange="submitDay()">
 						</div>
 						<div id="peopleNum">
 							<a href="#pNum_popup" id="pNum">인원(성인/유아)</a>
@@ -74,7 +74,7 @@
 									style="display:none"/>
 						</div>
 						<div id="roomName_popup" style="display:none;border:1px solid black;">
-							<table>
+							<table id="roomName_table"style="text-align:center">
 								<thead>
 									<tr>
 										<th>방이름</th>
@@ -138,23 +138,7 @@
 		</main>
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<script>
-			$(document).ready(function(){
-				var contextPath = $("input[name=contextPath]").val();
-// 				alert(contextPath);
-// 				$.ajax({
-// 				    type: "GET",
-// 				    url: contextPath + "/reservation/reserv_main.do",
-// 				    data: { "checkIn": checkIn, "checkOut": checkOut },
-// 				    dataType: "json",
-// 				    success: function(data) {
-// 				    	alert("성공");
-// 				    	location.replace(contextPath+"/reservation/reserv_main.jsp");
-// 				    },
-// 				    error: function() {
-// 				        alert("전송 실패");
-// 				    }
-// 				});
-				
+			$(document).ready(function(){	
 				$('#peopleNum').click(function(){
 					$('#pNum_popup').show();
 				});
@@ -233,6 +217,37 @@
 			
 			function quitMenu2(){
 				$('#roomName_popup').hide();
+			}
+			
+			function submitDay(){
+				var checkIn = $("input[name=checkIn]").val();
+				var checkOut = $("input[name=checkOut]").val();
+				var contextPath = $("input[name=contextPath]").val();
+				
+				$.ajax({
+				    type: "GET",
+				    url:contextPath+"/reservation/reserv_ajax.do",
+				    data: {"checkIn":checkIn,"checkOut":checkOut},
+				    dataType: "json",
+				    success: function (data) {
+				    	alert("성공");
+				    	alert(data.length);
+				    	$("#roomName_table").empty();
+				    	var table = $("#roomName_table");
+			    	    for (var i = 0; i < data.rlist.length; i++){ 
+			    	        var row = table.insertRow(-1);
+			    	        var cell1 = row.insertCell(0);
+			    	        var cell2 = row.insertCell(1);
+			    	        var cell3 = row.insertCell(2);
+			    	        cell1.innerHTML = '<input type="button" id="selectRoom" value="' + data.rlist[i].roomName + '"/>';
+			    	        cell2.innerHTML = data.rlist[i].capacity;
+			    	        cell3.innerHTML = data.rlist[i].price;
+			    	    }
+				    },
+				    error: function () {
+				        alert("전송 실패");
+				    }
+				});
 			}
 		</script>
 	</body>

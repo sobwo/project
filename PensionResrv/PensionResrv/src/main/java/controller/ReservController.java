@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import domain.BoardVo;
-import domain.DataWrapper;
 import domain.MemberVo;
 import domain.ReservVo;
 import domain.RoomPriceVo;
@@ -60,28 +59,45 @@ public class ReservController extends HttpServlet {
             
     		rlist = roomd.selectAll(checkIn,checkOut);
     		blist = bd.reserv_main_board();
-    		
-//    		Gson gson = new Gson();
-//
-//    		DataWrapper dataWrapper = new DataWrapper(rlist,blist);
-    		// JSON 문자열로 변환
-//    		String json = gson.toJson(dataWrapper);
-//
-//    		// JSON 데이터 전송
-//    		response.setContentType("application/json");
-//    		response.setCharacterEncoding("UTF-8");
-//    		PrintWriter out = response.getWriter();
-//    		out.print(json);
-//    		out.flush();
+    		String url=request.getContextPath()+"/reservation/reserv_main.do";
+    		session.setAttribute("url", url); 
     		
     		request.setAttribute("blist", blist);
     		request.setAttribute("rlist", rlist);
-    		
-    		String url=request.getContextPath()+"/reservation/reserv_main.do";
-    		session.setAttribute("url", url);
  
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_main.jsp");
 			rd1.forward(request, response);
+    	}
+    	
+    	else if(str.equals("/reservation/reserv_ajax.do")) {
+    		System.out.println("reserv_status.do 들어옴");
+    		Gson gson = new Gson();
+    		RoomDao roomd = new RoomDao();
+    		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
+    		
+    		String checkIn = null;
+     		String checkOut = null;
+     		
+    		LocalDate now = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formatedNow = now.format(formatter);
+
+            if(request.getParameter("checkIn")==null) checkIn=formatedNow;
+    		else checkIn = request.getParameter("checkIn");
+    		if(request.getParameter("checkOut")==null) checkOut=formatedNow;
+    		else checkOut = request.getParameter("checkOut");
+     		
+    		rlist = roomd.selectAll(checkIn,checkOut);
+    		
+//   		 JSON 문자열로 변환
+    		String json = gson.toJson(rlist);
+    		
+    		// JSON 데이터 전송
+    		response.setContentType("application/json");
+    		response.setCharacterEncoding("UTF-8");
+    		PrintWriter out = response.getWriter();
+    		out.print(json);
+    		out.flush();
     	}
     	
     	else if(str.equals("/reservation/reserv_status.do")) {

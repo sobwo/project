@@ -371,18 +371,18 @@
 				var checkOut = $("input[name=checkOut]").val();
 				var contextPath = $("input[name=contextPath]").val();
 				
-// 				$.ajax({
-// 				    type: "GET",
-// 				    url:"${pageContext.request.contextPath}/reservation/reserv_main.do",
-// 				    data: { "checkIn":checkIn,"checkOut":checkOut},
-// 				    dataType: "json",
-// 				    success: function () {
-// 				    	location.href = contextPath+"/reservation/reserv_main.jsp";
-// 				    },
-// 				    error: function () {
-// 				        alert("전송 실패");
-// 				    }
-// 				});
+				$.ajax({
+				    type: "GET",
+				    url:"${pageContext.request.contextPath}/reservation/reserv_main.do",
+				    data: { "checkIn":checkIn,"checkOut":checkOut},
+				    dataType: "json",
+				    success: function () {
+				    	location.href = contextPath+"/reservation/reserv_main.jsp";
+				    },
+				    error: function () {
+				        alert("전송 실패");
+				    }
+				});
 			}
 
 		</script>

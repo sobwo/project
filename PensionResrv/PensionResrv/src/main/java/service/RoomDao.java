@@ -24,7 +24,7 @@ private Connection conn;
 		
 		String sql = "select a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn "
 				+ "from room a, roomPrice b where a.roomno=b.roomno AND b.reservYn='Y' and b.date_ between ? and ? "
-				+ "GROUP BY a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn";
+				+ "GROUP BY a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn order by a.roomNo asc";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
