@@ -23,14 +23,16 @@
 				<div id="reserv_wrap">
 					<div id="reserv_inner_wrap">
 						<div id="checkIn">
-							<input type="date" name="checkIn" 
-								data-placeholder="숙박 시작일" 
-								required
-			 					aria-required="true"
-			 					value={startDateValue}
-			  					onChange="submitDay()"/>
+							<div class="label">숙박시작일</div>
+							<input
+							  type="date" name="checkOut"
+							  required
+							  aria-required="true"
+							  value={startDateValue}
+							  onChange="submitDay()">
 		  				</div>
 						<div id="checkOut">
+							<div class="label">숙박종료일</div>
 							<input type="date" name="checkOut" 
 								data-placeholder="숙박 종료일" 
 								required
@@ -39,7 +41,8 @@
 			  					onChange="submitDay()">
 						</div>
 						<div id="peopleNum">
-							<a href="#pNum_popup" id="pNum">인원(성인/유아)</a>
+							<div class="label">인원(성인/아동/유아)</div>
+							<a href="#pNum_popup" id="pNum">인원(성인/아동/유아)</a>
 						</div>
 						<div id="pNum_popup" style="display:none; border:1px solid black;">
 							<div id="adult">
@@ -69,6 +72,7 @@
 							</div>
 						</div>	
 						<div id="roomName">
+							<div class="label">방</div>
 							<a href="#roomName_popup" id="rName">방 이름</a>
 							<input type="text" id="select_roomName" name="roomName" readonly
 									style="display:none"/>
@@ -82,14 +86,7 @@
 										<th>가격</th>
 									</tr>
 								</thead>
-								<tbody>
-									<c:forEach var="rlist" items="${rlist}">
-										<tr>
-											<td><input type="button" id="selectRoom" value="${rlist.roomName}"/></td>
-											<td>${rlist.capacity}</td>
-											<td>${rlist.price}</td>
-										</tr>
-									</c:forEach>
+								<tbody id="room_tbody">
 								</tbody>
 							</table>
 							<div id="popup_btn2" style="display:block;">
@@ -230,19 +227,15 @@
 				    data: {"checkIn":checkIn,"checkOut":checkOut},
 				    dataType: "json",
 				    success: function (data) {
-				    	alert("성공");
 				    	alert(data.length);
-				    	$("#roomName_table").empty();
-				    	var table = $("#roomName_table");
-			    	    for (var i = 0; i < data.rlist.length; i++){ 
-			    	        var row = table.insertRow(-1);
-			    	        var cell1 = row.insertCell(0);
-			    	        var cell2 = row.insertCell(1);
-			    	        var cell3 = row.insertCell(2);
-			    	        cell1.innerHTML = '<input type="button" id="selectRoom" value="' + data.rlist[i].roomName + '"/>';
-			    	        cell2.innerHTML = data.rlist[i].capacity;
-			    	        cell3.innerHTML = data.rlist[i].price;
-			    	    }
+				    	var str = "";
+				    	for(var i =0;i<data.length;i++){
+					    	str+="<tr><td><input type='button' id='selectRoom' value='"+data[i].roomName+"'/></td>";
+					    	str+="<td>"+data[i].capacity+"</td>";
+					    	str+="<td>"+data[i].pricePerDay+"</td></tr>";
+				    	}
+				    	$('#room_tbody').html(str);
+// 						location.href=contextPath+"/reservation/reserv_ajax.do";
 				    },
 				    error: function () {
 				        alert("전송 실패");

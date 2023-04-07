@@ -14,7 +14,7 @@
 }
 #reserv_inner_wrap div{
 	display:inline-block;
-	margin-top:40px;
+	margin-top:15px;
 	border:0;
 }
 
@@ -42,15 +42,11 @@
 	cursor:pointer;
 }
 
-input[type='date']::before {
-	content: attr(data-placeholder);
-	width: 100%;
+.label{
+	font-size:20px;
+	padding-bottom:10px;
 }
 
-input[type='date']:focus::before,
-input[type='date']:valid::before {
-	display: none;
-}
 #pNum_popup, #roomName_popup{
 	background:#fff;
 	width:320px;
@@ -62,7 +58,8 @@ input[type='date']:valid::before {
 	text-align:center;
 }
 #pNum_popup{
-	height:400px;
+	height:300px;
+	padding-top:30px;
 }
 #adult,#child,#baby{
 	height:50px;
@@ -80,6 +77,7 @@ input[type='date']:valid::before {
 	cursor:pointer;
 	margin:0 15px;
 }
+
 
 #adult_value,#child_value,#baby_value{
 	margin-left:30px;
@@ -134,6 +132,7 @@ input[type='date']:valid::before {
 	border:0;
 	border-radius:10px;
 	cursor:pointer;
+	margin-top:20px;
 }
 
 #reserv_status_wrap{
@@ -156,7 +155,6 @@ input[type='date']:valid::before {
 	font-size:17px;
 	font-weight:bold;
 }
-
 
 #calendar{
 	margin:0 auto;

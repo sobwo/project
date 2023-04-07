@@ -18,13 +18,13 @@ private Connection conn;
 	}
 	public ArrayList<RoomPriceVo> selectAll(String checkIn,String checkOut){
 		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
-		RoomPriceVo rmv = null;
+		RoomPriceVo rpv = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		
-		String sql = "select a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn "
+		String sql = "select a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn, b.pricePerDay "
 				+ "from room a, roomPrice b where a.roomno=b.roomno AND b.reservYn='Y' and b.date_ between ? and ? "
-				+ "GROUP BY a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn order by a.roomNo asc";
+				+ "GROUP BY a.roomNo, a.roomName, a.price, a.capacity, a.sqft, a.numOfRoom, b.reservYn ,b.pricePerDay order by a.roomNo asc";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -33,16 +33,16 @@ private Connection conn;
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				rmv = new RoomPriceVo();
-				rmv.setRoomNo(rs.getInt("roomNo"));
-				rmv.setRoomName(rs.getString("roomName"));
-				rmv.setPrice(rs.getInt("price"));
-				rmv.setCapacity(rs.getString("capacity"));
-				rmv.setSqft(rs.getInt("sqft"));
-				rmv.setNumOfRoom(rs.getString("numOfRoom"));
-				rmv.setReservYn(rs.getString("reservYn"));
+				rpv = new RoomPriceVo();
+				rpv.setRoomNo(rs.getInt("roomNo"));
+				rpv.setRoomName(rs.getString("roomName"));
+				rpv.setPricePerDay(rs.getInt("pricePerDay"));
+				rpv.setCapacity(rs.getString("capacity"));
+				rpv.setSqft(rs.getInt("sqft"));
+				rpv.setNumOfRoom(rs.getString("numOfRoom"));
+				rpv.setReservYn(rs.getString("reservYn"));
 				
-				rlist.add(rmv);
+				rlist.add(rpv);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

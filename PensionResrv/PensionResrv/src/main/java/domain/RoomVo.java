@@ -1,7 +1,7 @@
 package domain;
 
 public class RoomVo {
-	private int roomNo,price,sqft;
+	private int roomNo,sqft;
 	private String roomName,capacity,numOfRoom;
 	
 	public String getNumOfRoom() {
@@ -15,12 +15,6 @@ public class RoomVo {
 	}
 	public void setRoomNo(int roomNo) {
 		this.roomNo = roomNo;
-	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
 	}
 	public int getSqft() {
 		return sqft;

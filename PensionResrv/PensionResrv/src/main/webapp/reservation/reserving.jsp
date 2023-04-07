@@ -11,7 +11,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	</head>
 	<body>
-		<input type="text" name="contextPath" value="${pageContext.request.contextPath}" style="display:none;"/>
+		<input type="hidden" name="contextPath" value="${pageContext.request.contextPath}"/>
 		<jsp:include page="../header.jsp"/>
 		<h2 id="h2">실시간 예약</h2>
 		<div id="reserv_wrap">
@@ -80,19 +80,13 @@
 											<c:when test="${rlist.reservYn=='Y'}">
 												<p style="background:#20de07; color:#fff;">예약 가능</p><br/>
 											</c:when>
-											<c:when test="${rlist.reservYn=='I'}">
-												<p style="background:#ffd400; color:#fff;">예약 진행</p><br/>
-											</c:when>
-											<c:when test="${rlist.reservYn=='N'}">
-												<p style="background:##f05650; color:#fff;">예약 완료</p><br/>
-											</c:when>
 										</c:choose>
 										<input type="text" id="rlist_roomNo" name="rlist_roomNo" value="${rlist.roomNo}"
 												style="display:none"/>
 										<p>${rlist.roomName}</p><br/>
 										<input type="text" id="rlist_roomName" name="rlist_roomName" value="${rlist.roomName}"
 												style="display:none"/>
-										<input type="text" value="${rlist.price}" name="select_price" style="display:none"/>
+										<input type="text" value="${rlist.pricePerDay}" name="select_price" style="display:none"/>
 										<p id="capacity" class="capacity">${rlist.capacity}</p><br/>
 										<p>${rlist.numOfRoom} / ${rlist.sqft}</p>
 									</div>
@@ -124,7 +118,7 @@
 											<input type="button" id="roomNameCheck" name="roomNameCheck" value="${rlist.roomNo}"
 												style="display:none"/>
 											<input type="text" value="1" name="room_check" style="display:none"/>
-											<p>${rlist.price}원</p>
+											<p>${rlist.pricePerDay}원</p>
 									</div>								
 								</div>
 							</div>
@@ -176,24 +170,7 @@
 		<jsp:include page="../footer.jsp"></jsp:include>
 		<input type="text" name="test" value="test">
 		<script>	
-			$(document).ready(function(){
-				var checkIn = $("input[name=checkIn]").val();
-				var checkOut = $("input[name=checkOut]").val();
-				var contextPath = $("input[name=contextPath]").val();
-				alert(contextPath);
-// 				$.ajax({
-// 				    type: "GET",
-// 				    url:contextPath+"/reservation/reserv_main.do",
-// 				    data: {"checkIn":checkIn,"checkOut":checkOut},
-// 				    dataType: "json",
-// 				    success: function () {
-// 				    	location.href = contextPath+"/reservation/reserv_main.jsp";
-// 				    },
-// 				    error: function () {
-// 				        alert("전송 실패");
-// 				    }
-// 				});
-				
+			$(document).ready(function(){			
 				var length = $('input[id=roomNameCheck]').length;
 				var roomNameCheck = $('input[name=roomNameCheck]');
 				var roomNo = $('input[name=roomNo]').val();
@@ -255,25 +232,17 @@
 			$(document).on("click","#rBtn",function(){
 				var totalPrice = $("input[name=totalPrice]").val();
 				var rBtn_option = $(this).closest("div").find("input[type='text']").val();
-				var num = $('input[name=room_check]').length;
 				var price = $(this).siblings("p").text();
 				var index = price.indexOf("원");
 				
 				price = price.substring(0,index);
 				
-				for(var i=0;i<$('input[name=room_check]').length;i++){
-					if($('input[name=room_check]').eq(i).val()=="2") num--;
-				}
-				
-				if(rBtn_option=="1" && num==3){
+				if(rBtn_option=="1"){
 					totalPrice = parseInt(totalPrice) + parseInt(price); 
 					$("input[name=totalPrice]").attr("value",totalPrice);
 					$(this).css('background-color','rgb(211, 0, 0)');
 					$(this).closest("div").find("input[type='text']").attr("value","2");
 				}
-				
-				else if(rBtn_option=="1" && num<3)
-					alert("방을 1개만 선택해주세요.");
 				
 				else if(rBtn_option=="2"){
 					totalPrice = parseInt(totalPrice) - parseInt(price);
@@ -349,7 +318,10 @@
 				var checkOut = new Date($("input[name=checkOut]").val());
  				var timeDiff = checkOut.getTime()-checkIn.getTime();
 				var dayDiff = timeDiff/(1000*3600*24);
-
+				var num = 0;
+				for(var i=0;i<$('input[name=room_check]').length;i++){
+					if($('input[name=room_check]').val()=='2') num++;
+				}
 				if($("input[name=totalPrice]").val()==0)
 					alert("방을 선택해 주세요.");
 				else if(checkIn==0)
@@ -358,6 +330,8 @@
 					alert("체크아웃 날짜를 선택해 주세요.");
 				else if(dayDiff<=0)
 					alert("체크인,체크아웃 날짜를 확인해주세요.");
+				else if(num>1)
+					alert("방을 1개만 선택해주세요.");
 				else{
 					var fm = document.frm;
 					fm.action="${pageContext.request.contextPath}/reservation/reserving_next.do";
@@ -373,11 +347,56 @@
 				
 				$.ajax({
 				    type: "GET",
-				    url:"${pageContext.request.contextPath}/reservation/reserv_main.do",
-				    data: { "checkIn":checkIn,"checkOut":checkOut},
+				    url:contextPath+"/reservation/reserv_ajax.do",
+				    data: {"checkIn":checkIn,"checkOut":checkOut},
 				    dataType: "json",
-				    success: function () {
-				    	location.href = contextPath+"/reservation/reserv_main.jsp";
+				    success: function (data) {
+						var str ="";
+						for(var i=0;i<data.length;i++){
+							str+="<div class='room'>";
+							str+="<div class='roomInfo_inner'>";
+							str+="<div class='roomImage'></div>";
+							str+="<div class='roomInfo_inner_m'>";
+							str+="<p style='background:#20de07; color:#fff;'>예약 가능</p><br/>";
+							str+="<input type='text' id='rlist_roomNo' name='rlist_roomNo' value='"+data[i].roomNo+"' style='display:none'/>";
+							str+="<p>"+data[i].roomName+"</p><br/>";
+							str+="<input type='text' id='rlist_roomName' name='rlist_roomName' value='"+data[i].roomName+"' style='display:none'/>";
+							str+="<input type='text' value='"+data[i].pricePerDay+"' name='select_price' style='display:none'/>";
+							str+="<p id='capacity' class='capacity'>"+data[i].capacity+"</p><br/>";
+							str+="<p>"+data[i].numOfRoom+" / "+data[i].sqft+"</p>";
+							str+="</div>";
+							str+="<div class='roomPeople'>";
+							str+="<div class='adult'>";
+							str+="<p>성인<p>";
+							str+="<input id='adult_minusBtn' type='button' value='&#45;'>";
+							str+="<input id='adult_value' type='text' name='adultNum' value=0 readonly style='border:0;'/>";
+							str+="<input id='adult_plusBtn' type='button' value='&#43;'>";
+							str+="</div>";
+							str+="<div class='child'>";
+							str+="<p>아동<p>";
+							str+="<input id='child_minusBtn' type='button' value='&#45;'>";
+							str+="<input id='child_value' type='text' name='childNum' value=0 readonly style='border:0;'/>";
+							str+="<input id='child_plusBtn' type='button' value='&#43;'>";
+							str+="</div>";
+							str+="<div class='baby'>";
+							str+="<p>유아<p>";
+							str+="<input id='baby_minusBtn' type='button' value='&#45;'>";
+							str+="<input id='baby_value' type='text' name='babyNum' value=0 readonly style='border:0;'/>";
+							str+="<input id='baby_plusBtn' type='button' value='&#43;'>";
+							str+="</div>";
+							str+="</div>";
+							str+="<div class='roomBtn'>";
+							str+="<input id='rBtn' type='button' value='선택'/>";
+							str+="<input type='button' id='roomNameCheck' name='roomNameCheck' value='"+data[i].roomNo+"' style='display:none'/>";
+							str+="<input type='text' value='1' name='room_check' style='display:none'/>";
+							str+="<p>"+data[i].pricePerDay+"원</p>";
+							str+="</div>";								
+							str+="</div>";
+							str+="</div>";
+						}
+						
+						$('.roomInfo').html(str);
+// 						location.href=contextPath+"/reservation/reserv_ajax.do";
 				    },
 				    error: function () {
 				        alert("전송 실패");

@@ -38,39 +38,23 @@ public class ReservController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	if(str.equals("/reservation/reserv_main.do")) {
     		System.out.println("reserv_main.do 들어옴");
-    		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
     		ArrayList<BoardVo> blist = new ArrayList<>();
     		
-    		RoomDao roomd = new RoomDao();
     		BoardDao bd = new BoardDao();
     		HttpSession session = request.getSession();
-
-    		String checkIn = null;
-    		String checkOut = null;
-    		
-    		LocalDate now = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String formatedNow = now.format(formatter);
-
-            if(request.getParameter("checkIn")==null) checkIn=formatedNow;
-    		else checkIn = request.getParameter("checkIn");
-    		if(request.getParameter("checkOut")==null) checkOut=formatedNow;
-    		else checkOut = request.getParameter("checkOut");
             
-    		rlist = roomd.selectAll(checkIn,checkOut);
     		blist = bd.reserv_main_board();
     		String url=request.getContextPath()+"/reservation/reserv_main.do";
     		session.setAttribute("url", url); 
     		
     		request.setAttribute("blist", blist);
-    		request.setAttribute("rlist", rlist);
  
 			RequestDispatcher rd1 = request.getRequestDispatcher("/reservation/reserv_main.jsp");
 			rd1.forward(request, response);
     	}
     	
     	else if(str.equals("/reservation/reserv_ajax.do")) {
-    		System.out.println("reserv_status.do 들어옴");
+    		System.out.println("reserv_ajax.do 들어옴");
     		Gson gson = new Gson();
     		RoomDao roomd = new RoomDao();
     		ArrayList<RoomPriceVo> rlist = new ArrayList<>();
@@ -86,6 +70,11 @@ public class ReservController extends HttpServlet {
     		else checkIn = request.getParameter("checkIn");
     		if(request.getParameter("checkOut")==null) checkOut=formatedNow;
     		else checkOut = request.getParameter("checkOut");
+    		
+    		if(checkIn.compareTo(checkOut)>0)
+    			checkOut = checkIn;
+    		
+    		System.out.println("checkOut="+checkOut);
      		
     		rlist = roomd.selectAll(checkIn,checkOut);
     		
